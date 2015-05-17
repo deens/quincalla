@@ -1,5 +1,5 @@
 ## Quincalla
-Simple E-commerce site.
+Simple E-commerce site with laravel 5
 
 ## Todo
 Home
