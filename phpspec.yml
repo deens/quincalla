@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: App
-        psr4_prefix: App
+        namespace: Quincalla
+        psr4_prefix: Quincalla
         src_path: app

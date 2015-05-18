@@ -1,6 +1,6 @@
-<?php namespace App\Services;
+<?php namespace Quincalla\Services;
 
-use App\User;
+use Quincalla\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

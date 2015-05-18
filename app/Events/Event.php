@@ -1,4 +1,4 @@
-<?php namespace App\Events;
+<?php namespace Quincalla\Events;
 
 abstract class Event {
 

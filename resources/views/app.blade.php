@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Laravel</title>
+    <title>Quincalla</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
@@ -19,7 +19,7 @@
 	<![endif]-->
 </head>
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -28,12 +28,15 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Laravel</a>
+                <a class="navbar-brand" href="{{ url('/') }}">Quincalla</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="{{ url('/category') }}">Sample Category</a></li>
+                    <li><a href="{{ url('/product') }}">Sample Product</a></li>
+                    <li><a href="{{ url('/cart') }}">Sample Cart</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -55,6 +58,17 @@
 
 	@yield('content')
 
+    <!-- Footer -->
+    <hr>
+    <div class="container">
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Quincalla 2015</p>
+                </div>
+            </div>
+        </footer>
+    </div>
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
