@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-md-7">
-            <h1>Product Name</h1>
+            <h1>{{ $product->name }}</h1>
 
             <div class="ratings">
                 <p class="pull-right">5 reviews | <a href=""> Write a review</a></p>
@@ -40,11 +40,18 @@
 
             <div class="pricing">
                 <div class="row">
-                    <div class="col-md-6">
-                        <h2>$99.99</h2>
+                    <div class="col-md-4">
+                        <h2>${{ $product->price }}</h2>
                     </div>
-                    <div class="col-md-6">
-                        <a class="btn btn-primary btn-lg pull-right">Add To Shopping Bag</a>
+                    <div class="col-md-8">
+                        {!! Form::open(['route' => 'cart.store', 'method' => 'POST', 'class' => 'form-inline']) !!}
+                            {!! Form::hidden('product', $product->slug) !!} 
+                            <div class="form-group">
+                                {!! Form::label('qty', 'Quantity:') !!}
+                                {!! Form::text('qty', '1', ['class' => 'form-control']) !!} 
+                                {!! Form::submit('Add To Shopping Bag', ['class' => 'btn btn-danger']) !!}
+                            </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
@@ -53,7 +60,7 @@
 
             <div class="description">
                 <h3>Product Description</h3>
-                <p>Consectetur itaque nulla deleniti quod dolor animi dicta cumque hic. Molestias ipsum voluptatem expedita vitae temporibus architecto! Ad eveniet consequatur quas nemo corrupti consequuntur voluptates a minima. Natus dolorum at.</p>
+                <p>{{ $product->description }}</p>
             </div>
 
             <hr>

@@ -34,12 +34,10 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ url('/category') }}">Sample Category</a></li>
-                    <li><a href="{{ url('/product') }}">Sample Product</a></li>
-                    <li><a href="{{ url('/cart') }}">Sample Cart</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('cart.index') }}">Shopping Bag</a></li>
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">Login</a></li>
 						<li><a href="{{ url('/auth/register') }}">Register</a></li>

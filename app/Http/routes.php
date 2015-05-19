@@ -1,19 +1,12 @@
 <?php
 
-Route::get('/', 'WelcomeController@index');
-Route::get('category', function() {
-    return view('category');
-});
+Route::get('/', 'HomeController@index');
+Route::get('collections/{slug}', ['as' => 'collections.show', 'uses' => 'CollectionsController@show']);
+Route::get('products/{slug}', ['as' => 'products.show', 'uses' => 'ProductsController@show']);
+Route::resource('cart', 'CartController');
 
-Route::get('product', function() {
-    return view('product');
-});
-
-Route::get('cart', function() {
-    return view('cart');
-});
-
-Route::get('home', 'HomeController@index');
+// Protected
+Route::get('account', 'AccountController@index');
 
 
 Route::controllers([

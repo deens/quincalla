@@ -145,6 +145,11 @@ return [
 		'Quincalla\Providers\EventServiceProvider',
 		'Quincalla\Providers\RouteServiceProvider',
 
+		/*
+		 * Packages Service Providers...
+		 */
+        'Illuminate\Html\HtmlServiceProvider',
+        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 	],
 
 	/*
@@ -192,6 +197,13 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+
+        /**
+         * Packages Aliases
+         */
+        'Form'      => 'Illuminate\Html\FormFacade', 
+        'HTML'      => 'Illuminate\Html\HtmlFacade',
+        'Cart'      => 'Gloudemans\Shoppingcart\Facades\Cart',
 
 	],
 
