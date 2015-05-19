@@ -2,48 +2,36 @@
 @section('content')
 <div class="container">
     <h1>Shopping Bag</h1>
+    @if($products->count())
     <table class="table">
-            <tr>
-                <td><img src="http://placehold.it/50x50" alt=""></td>
-                <td>
-                    <p><a href="">First product</a></p>
-                </td>
-                <td>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <input class="form-control input-sm" type="text" value="1">
-                            <button class="btn btn-sm">Update</button>
-                        </div>
-                    </form>
-                </td>
-                <td>
-                    <a href="">remove</a>
-                </td>
-                <td>
-                    <p>$99.99</p>
-                </td>
-            </tr>
-            <tr>
-                <td><img src="http://placehold.it/50x50" alt=""></td>
-                <td>
-                    <p><a href="">First product</a></p>
-                </td>
-                <td>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <input class="form-control input-sm" type="text" value="1">
-                            <button class="btn btn-sm">Update</button>
-                        </div>
-                    </form>
-                </td>
-                <td>
-                    <a href="">remove</a>
-                </td>
-                <td>
-                    <p>$99.99</p>
-                </td>
-            </tr>
+        @foreach($products as $product)
+        {{ var_dump($product)}}
+        <tr>
+            <td><img src="http://placehold.it/50x50" alt=""></td>
+            <td>
+                <p><a href="">{{ $product->name }}</a></p>
+            </td>
+            <td>
+                {!! Form::open(['route' => ['cart.update', $product->rowid], 'method' => 'put', 'class' => 'form-inline']) !!}
+                    <div class="form-group">
+                        {!! Form::text('qty', $product->qty, ['class' => 'form-control input-sm']) !!}
+                        {!! Form::submit('Update', ['class' => 'btn btn-default']) !!}
+                    </div>
+                {!! Form::close() !!}
+            </td>
+            <td>
+                <p>${{ $product->price }}</p>
+            </td>
+            <td>
+                <a href="">remove</a>
+            </td>
+            <td>
+                <p>${{ $product->subtotal }}</p>
+            </td>
+        </tr>
+        @endforeach
     </table>
+
     <hr>
     <div class="row">
         <div class="col-md-4 col-md-offset-8">
@@ -51,7 +39,7 @@
                 <tbody>
                     <tr>
                         <td><h4>Subtotal</h4></td>
-                        <td><h4>$99.00</h4></td>
+                        <td><h4>${{ $cartTotal }}</h4></td>
                     </tr>
                     <tr>
                         <td>Shipping</td>
@@ -63,7 +51,7 @@
                     </tr>
                     <tr>
                         <td><h4>Total</h4></td>
-                        <td><h4>$99.00</h4></td>
+                        <td><h4>${{ $cartTotal }}</h4></td>
                     </tr>
                 </tbody>
             </table>
@@ -77,14 +65,18 @@
 
     <hr>
 
-    <div class="well">
-        <h2 class="text-center">
-            Your shopping bag is empty.
-        </h2>
-        <div class="text-center">
-            <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>
+    @else
+
+        <div class="well">
+            <h2 class="text-center">
+                Your shopping bag is empty.
+            </h2>
+            <div class="text-center">
+                <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>
+            </div>
         </div>
-    </div>
+
+    @endif
 </div>
 
 @stop
