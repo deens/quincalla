@@ -35,7 +35,12 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
 				</ul>
-
+                {!! Form::open(['route' => 'search.index', 'method' => 'get', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
+                    <div class="form-group">
+                      <input type="text" name="query" value="{{ $query or ''}}" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                {!! Form::close() !!}
 				<ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('cart.index') }}">Shopping Bag</a></li>
 					@if (Auth::guest())
