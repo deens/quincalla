@@ -5,7 +5,6 @@
     @if($products->count())
     <table class="table">
         @foreach($products as $product)
-        {{ var_dump($product)}}
         <tr>
             <td><img src="http://placehold.it/50x50" alt=""></td>
             <td>
@@ -23,7 +22,11 @@
                 <p>${{ $product->price }}</p>
             </td>
             <td>
-                <a href="">remove</a>
+                {!! Form::open(['route' => ['cart.destroy', $product->rowid], 'method' => 'delete', 'class' => 'form-inline']) !!}
+                    <div class="form-group">
+                        {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                    </div>
+                {!! Form::close() !!}
             </td>
             <td>
                 <p>${{ $product->subtotal }}</p>

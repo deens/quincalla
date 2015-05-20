@@ -23,13 +23,14 @@ class CartController extends Controller {
 
 	public function update($id)
 	{
-        $product = \Cart::update($id, \Request::get('qty', 1));
+        \Cart::update($id, \Request::get('qty'));
         return redirect()->route('cart.index')->with('sucess', 'Product quantity updated');
 	}
 
 	public function destroy($id)
 	{
-		//
+        \Cart::remove($id);
+        return redirect()->route('cart.index')->with('sucess', 'Product has beeen deleted from your Shopping bag');
 	}
 
 }
