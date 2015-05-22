@@ -2,10 +2,12 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Laracasts\Presenter\PresentableTrait;
 
 class Product extends Model {
 
     use SearchableTrait;
+    use PresentableTrait;
 
     protected $table = 'products';
     protected $fillable = [];
@@ -15,6 +17,8 @@ class Product extends Model {
             'description' => 5,
         ]
     ];
+
+    protected $presenter = 'Quincalla\Http\Presenters\ProductPresenter';
 
     public function collection()
     {
