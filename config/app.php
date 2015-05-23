@@ -144,7 +144,7 @@ return [
 		'Quincalla\Providers\ConfigServiceProvider',
 		'Quincalla\Providers\EventServiceProvider',
 		'Quincalla\Providers\RouteServiceProvider',
-
+        'Quincalla\Providers\ComposerServiceProvider',
 		/*
 		 * Packages Service Providers...
 		 */

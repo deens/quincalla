@@ -10,11 +10,10 @@ class CollectionsController extends Controller {
 
 	public function show($slug)
 	{
-        $collections = Collection::all();
         $collection = Collection::whereSlug($slug)->first();
         $products = $collection->products()->get();
 
-        return view('collection', compact('collections', 'collection', 'products'));
+        return view('collection', compact('collection', 'products'));
 	}
 
 }

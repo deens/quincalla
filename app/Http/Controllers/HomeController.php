@@ -9,9 +9,9 @@ class HomeController extends Controller {
 	public function index()
 	{
         $products = Product::orderBy('created_at', 'desc')->take(4)->get();
-        $collections = Collection::all();
+        // $collections = Collection::all();
 
-        return view('home', compact('products', 'collections'));
+        return view('home', compact('products'));
 	}
 
 }
