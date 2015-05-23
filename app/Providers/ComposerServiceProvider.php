@@ -13,10 +13,11 @@ class ComposerServiceProvider extends ServiceProvider {
 	public function boot()
 	{
         View::composer([
-            'home', 
-            'collection', 
+            'home',
+            'collection',
             'product',
-            'search'
+            'search',
+            'cart'
         ], 'Quincalla\Http\ViewComposers\CollectionComposer');
 	}
 
