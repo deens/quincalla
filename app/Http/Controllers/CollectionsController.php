@@ -11,7 +11,7 @@ class CollectionsController extends Controller {
 	public function show($slug)
 	{
         $collection = Collection::whereSlug($slug)->first();
-        $products = $collection->products()->get();
+        $products = $collection->products()->simplePaginate(6);
 
         return view('collection', compact('collection', 'products'));
 	}
