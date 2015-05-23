@@ -34,9 +34,11 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
-                    @foreach($collections as $collection)
-                        <li><a href="{{ route('collections.show', [$collection->slug]) }}">{{ $collection->name }}</a></li>
-                    @endforeach
+                    @if(isset($collections) && $collections->count())
+                        @foreach($collections as $collection)
+                            <li><a href="{{ route('collections.show', [$collection->slug]) }}">{{ $collection->name }}</a></li>
+                        @endforeach
+                    @endif
 				</ul>
                 {!! Form::open(['route' => 'search.index', 'method' => 'get', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
                     <div class="form-group">
@@ -61,6 +63,16 @@
 			</div>
 		</div>
 	</nav>
+
+    <div class="container">
+        @if(Session::has('success'))
+            <div class="alert alert-success">{{ Session::get('success') }}</div>
+        @endif
+
+        @if(Session::has('error'))
+            <div class="alert alert-danger">{{ Session::get('error') }}</div>
+        @endif
+    </div>
 
 	@yield('content')
 

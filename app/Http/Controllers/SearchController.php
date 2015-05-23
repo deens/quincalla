@@ -11,6 +11,7 @@ class SearchController extends Controller {
 	{
         $query = \Request::get('query');
         $results = Product::search($query)->get();
+
         return view('search', compact('query', 'results'));
 	}
 

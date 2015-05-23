@@ -11,6 +11,7 @@ class CartController extends Controller {
 	{
         $products = \Cart::content();
         $cartTotal = \Cart::total();
+
         return view('cart', compact('products', 'cartTotal'));
 	}
 
@@ -18,19 +19,22 @@ class CartController extends Controller {
 	{
         $product = Product::whereSlug(\Request::get('product'))->first();
         \Cart::add($product->id, $product->name, \Request::get('qty', 1), $product->price);
-        return redirect()->route('cart.index')->with('sucess', 'Product has been added to your shopping bag');
+
+        return redirect()->route('cart.index')->with('success', 'Product has been added to your shopping bag');
 	}
 
 	public function update($id)
 	{
         \Cart::update($id, \Request::get('qty'));
-        return redirect()->route('cart.index')->with('sucess', 'Product quantity updated');
+
+        return redirect()->route('cart.index')->with('success', 'Product quantity updated');
 	}
 
 	public function destroy($id)
 	{
         \Cart::remove($id);
-        return redirect()->route('cart.index')->with('sucess', 'Product has beeen deleted from your Shopping bag');
+
+        return redirect()->route('cart.index')->with('success', 'Product has beeen deleted from your Shopping bag');
 	}
 
 }
