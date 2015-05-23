@@ -5,13 +5,13 @@ use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider {
 
-	/**
-	 * Bootstrap the application services.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
+    /**
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
         View::composer([
             'home',
             'collection',
@@ -19,16 +19,16 @@ class ComposerServiceProvider extends ServiceProvider {
             'search',
             'cart'
         ], 'Quincalla\Http\ViewComposers\CollectionComposer');
-	}
+    }
 
-	/**
-	 * Register the application services.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		//
-	}
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
 
 }

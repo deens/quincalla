@@ -8,12 +8,12 @@ use Quincalla\Request;
 
 class SearchController extends Controller {
 
-	public function index(SearchQueryRequest $request)
-	{
+    public function index(SearchQueryRequest $request)
+    {
         $query = \Request::get('query');
         $results = Product::search($query)->simplePaginate(6);
 
         return view('search', compact('query', 'results'));
-	}
+    }
 
 }
