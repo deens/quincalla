@@ -18,7 +18,6 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -28,26 +27,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">Quincalla</a>
+                <a class="navbar-brand" href="{{ url('/admin') }}">Quincalla Admin</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/') }}">Home</a></li>
-                    @if(isset($collections) && $collections->count())
-                        @foreach($collections as $collection)
-                            <li><a href="{{ route('collections.show', [$collection->slug]) }}">{{ $collection->name }}</a></li>
-                        @endforeach
-                    @endif
                 </ul>
-                {!! Form::open(['route' => 'search.index', 'method' => 'get', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
-                    <div class="form-group">
-                      <input type="text" name="query" value="{{ $query or ''}}" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                {!! Form::close() !!}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('cart.index') }}">Shopping Bag</a></li>
                     @if (Auth::guest())
                         <li><a href="{{ url('/auth/login') }}">Login</a></li>
                         <li><a href="{{ url('/auth/register') }}">Register</a></li>
@@ -74,8 +61,24 @@
         @endif
     </div>
 
-    @yield('content')
 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <h2>Store</h2>
+                <ul class="nav nav-stacked">
+                    <li>{!! link_to_route('admin.dashboard', 'Dashboard') !!}</li>
+                    <li>{!! link_to_route('admin.orders.index', 'Orders') !!}</li>
+                    <li>{!! link_to_route('admin.products.index', 'Products') !!}</li>
+                    <li>{!! link_to_route('admin.collections.index', 'Collections') !!}</li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                @yield('content')
+            </div>
+        </div>
+
+    </div>
     <!-- Footer -->
     <hr>
     <div class="container">
@@ -92,3 +95,4 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+<body>
