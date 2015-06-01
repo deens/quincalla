@@ -2,9 +2,7 @@
 
 use Quincalla\Product;
 use Quincalla\Http\Requests;
-use Quincalla\Http\Controllers\Controller;
 use Quincalla\Http\Requests\StoreCartRequest;
-use Illuminate\Http\Request;
 
 class CartController extends Controller {
 

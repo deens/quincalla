@@ -18,8 +18,8 @@
                 <h2>{{ $collection->name }}</h2>
                 <div class="row">
                     @if ($products->count())
-                    @foreach($products as $product)
-                        <div class="col-sm-4 col-lg-4 col-md-4">
+                    @foreach($products as $key=>$product)
+                        <div class="col-sm-6 col-lg-4 col-md-4">
                             <div class="thumbnail">
                                 <a href="{{ route('products.show', [$product->slug]) }}">
                                     <img src="http://placehold.it/320x150" alt="">
@@ -43,6 +43,9 @@
                                 </div>
                             </div>
                         </div>
+                        @if (($key + 1) % 3 == 0)
+                            <div class="clearfix hidden-sm"></div>
+                        @endif
                     @endforeach
                     @else
                         <div class="col-md-12">
@@ -62,4 +65,3 @@
 
     </div>
 @stop
-

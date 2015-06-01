@@ -61,7 +61,7 @@
 
             <div class="text-right">
                 <a class="text-left" href="">continue shopping</a>
-                <a class="btn btn-lg btn-danger " href="">Checkout</a>
+                <a class="btn btn-lg btn-danger " href="{{ route('checkout')}}">Checkout</a>
             </div>
         </div>
     </div>
