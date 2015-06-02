@@ -4,7 +4,10 @@
 Route::get('/', 'HomeController@index');
 Route::get('collections/{slug}', ['as' => 'collections.show', 'uses' => 'CollectionsController@show']);
 Route::get('products/{slug}', ['as' => 'products.show', 'uses' => 'ProductsController@show']);
-Route::resource('cart', 'CartController', ['except' => ['create', 'edit']]);
+
+Route::get('cart/{id}/delete', ['as' => 'cart.destroy', 'uses' => 'CartController@destroy']);
+Route::put('cart/update', ['as' => 'cart.update', 'uses' => 'CartController@update']);
+Route::resource('cart', 'CartController', ['except' => ['create', 'update', 'edit', 'destroy']]);
 Route::get('search', ['as' => 'search.index', 'uses' => 'SearchController@index']);
 
 // Account

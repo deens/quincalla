@@ -24,9 +24,13 @@ class CartController extends Controller {
         return redirect()->route('cart.index')->with('success', 'Product has been added to your shopping bag');
     }
 
-    public function update(StoreCartRequest $request, $id)
+    public function update()
     {
-        \Cart::update($id, \Request::get('qty'));
+        $quantities = \Request::get('quantities');
+
+        foreach ($quantities as $rowid => $quantity) {
+            \Cart::update($rowid, $quantity);
+        }
 
         return redirect()->route('cart.index')->with('success', 'Product quantity updated');
     }
