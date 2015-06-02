@@ -28,7 +28,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">Quincalla</a>
+                <img class="navbar-brand" src="{{ asset('images/logo.png')}}" alt="Quincalla">
+                <a class="navbar-brand" href="{{ url('/') }}">quincalla</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
