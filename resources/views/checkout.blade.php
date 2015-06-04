@@ -1,358 +1,82 @@
-@extends('app')
-@section('content')
-<!-- Page Content -->
-    <div class="container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quincalla</title>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Checkout</h1>
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img class="navbar-brand" src="{{ asset('images/logo.png')}}" alt="Quincalla">
+                <a class="navbar-brand" href="{{ url('/') }}">quincalla</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                </ul>
+                {!! Form::open(['route' => 'search.index', 'method' => 'get', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
+                    <div class="form-group">
+                      <input type="text" name="query" value="{{ $query or ''}}" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                {!! Form::close() !!}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('cart.index') }}">Shopping Bag</a></li>
+                    @if (Auth::guest())
+                        <li><a href="{{ url('/auth/login') }}">Login</a></li>
+                        <li><a href="{{ url('/auth/register') }}">Register</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
             </div>
         </div>
+    </nav>
 
-        <!-- Row -->
+    <div class="container">
+        @if(Session::has('success'))
+            <div class="alert alert-success">{{ Session::get('success') }}</div>
+        @endif
+
+        @if(Session::has('error'))
+            <div class="alert alert-danger">{{ Session::get('error') }}</div>
+        @endif
+
         <div class="row">
-
-            <!-- Main Col -->
-            <div class="main-col col-md-9 mgb-30-xs">
-
-                <!-- Checkout Accordion -->
-                <div class="panel-group checkout" id="accordion">
-
-                    <!-- Panel -->
-                    <div class="panel panel-default">
-                        <!-- Heading -->
-                        <div class="panel-heading heading-iconed">
-                            <h4 class="panel-title case-c">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                    <i class="icon-left">1</i> checkout method
-                                </a>
-                            </h4>
-                        </div>
-                        <!-- /Heading -->
-
-                        <!-- Collapse -->
-                        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-
-                            <!-- Panel Body -->
-                            <div class="panel-body">
-
-                                <!-- Row -->
-                                <div class="row">
-
-                                    <!-- Col -->
-                                    <div class="col-md-6 mgb-30-xs">
-                                        <h6>New Customer</h6>
-                                        <p>Dont have an account? Pick one of the options below.</p>
-                                        <div class="radio"><label><input value="" name="acnt-opt" type="radio" checked="">Register Account</label></div>
-                                        <div class="radio"><label><input value="" name="acnt-opt" type="radio">Checkout as guest</label></div>
-                                        <p>Register with us for a fast and easy checkout and easy access to your order history and status</p>
-                                        <button class="btn btn-default btn-bigger">continue</button>
-                                    </div>
-                                    <!-- /Col -->
-
-                                    <!-- Col -->
-                                    <div class="col-md-6">
-
-                                        <h6>Sign In</h6>
-
-                                        <!-- Form -->
-                                        <form>
-                                            <!-- Form Group -->
-                                            <div class="form-group">
-                                                <label>Email Address</label>
-                                                <input type="email" class="form-control" placeholder="Enter email">
-                                            </div>
-                                            <!-- /Form Group -->
-
-                                            <!-- Form Group -->
-                                            <div class="form-group">
-                                                <label>Password</label>
-                                                <input type="password" class="form-control" placeholder="password">
-                                            </div>
-                                            <!-- /Form Group -->
-
-                                            <!-- Form Group -->
-                                            <div class="form-group">
-                                                <label class="checkbox-inline"><input type="checkbox" value="">Remember me </label>
-                                            </div>
-                                            <!-- /Form Group -->
-
-                                            <button class="btn btn-default btn-bigger">sign in</button>
-
-                                        </form>
-                                        <!-- /Form -->
-
-                                    </div>
-                                    <!-- /Col -->
-
-                                </div>
-                                <!-- /Row -->
-
-                            </div>
-                            <!-- /Panel Body -->
-
-                        </div>
-                        <!-- /Collapse -->
-
-                    </div>
-                    <!-- /Panel -->
-
-                    <!-- Panel -->
-                    <div class="panel panel-default">
-                        <!-- Heading -->
-                        <div class="panel-heading heading-iconed">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
-                                    <i class="icon-left">2</i> Billing Information
-                                </a>
-                            </h4>
-                        </div>
-                        <!-- /Heading -->
-
-                        <!-- Collapse -->
-                        <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-
-                            <!-- Panel Body -->
-                            <div class="panel-body">
-                                <!-- Form -->
-                                <form>
-                                    <!-- Row -->
-                                    <div class="row">
-                                        <!-- Col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter Name">
-                                            </div>
-                                        </div>
-                                        <!-- /Col -->
-
-                                        <!-- Col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Second Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter Name">
-                                            </div>
-                                        </div>
-                                        <!-- /Col -->
-
-                                        <!-- Col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Country</label>
-                                                <select class="form-control">
-                                                    <option>Select country</option>
-                                                    <option>England</option>
-                                                    <option>Germany</option>
-                                                    <option>France</option>
-                                                    <option>Spain</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!-- /Col -->
-
-                                        <!-- Col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>City / Town</label>
-                                                <select class="form-control">
-                                                    <option>Select city</option>
-                                                    <option>New York</option>
-                                                    <option>Paris</option>
-                                                    <option>Nairobi</option>
-                                                    <option>Cairo</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!-- /Col -->
-
-                                        <!-- Col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Phone Number</label>
-                                                <input type="text" class="form-control" placeholder="Enter Name">
-                                            </div>
-                                        </div>
-                                        <!-- /Col -->
-
-                                        <!-- Col -->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input type="text" class="form-control" placeholder="Enter Name">
-                                            </div>
-                                        </div>
-                                        <!-- /Col -->
-
-                                    </div>
-                                    <!-- /Row -->
-
-                                    <!-- Form Group -->
-                                    <div class="form-group">
-                                        <label>Address Line 1</label>
-                                        <input type="text" class="form-control" placeholder="Enter Name">
-                                    </div>
-                                    <!-- /Form Group -->
-
-                                    <!-- Form Group -->
-                                    <div class="form-group">
-                                        <label>Address Line 2</label>
-                                        <input type="text" class="form-control" placeholder="Enter Name">
-                                    </div>
-                                    <!-- /Form Group -->
-
-                                </form>
-                                <!-- Form -->
-
-                            </div>
-                            <!-- /Panel Body -->
-
-                        </div>
-                        <!-- /Collapse -->
-
-                    </div>
-                    <!-- /Panel -->
-
-                    <!-- Panel -->
-                    <div class="panel panel-default">
-                        <!-- Heading -->
-                        <div class="panel-heading heading-iconed">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
-                                    <i class="icon-left">3</i> Shippping Information
-                                </a>
-                            </h4>
-                        </div>
-                        <!-- /Heading -->
-
-                        <!-- Collapse -->
-                        <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-
-                            <!-- Panel Body -->
-                            <div class="panel-body">
-                                <p>Please select a shipping method.</p>
-                                <div class="radio"><label><input value="" name="acnt-opt" type="radio" checked="">Cash on delivery</label></div>
-                                <div class="radio"><label><input value="" name="acnt-opt" type="radio">Send by courier</label></div>
-                            </div>
-                            <!-- /Panel Body -->
-
-                        </div>
-                        <!-- /Collapse -->
-
-                    </div>
-                    <!-- /Panel -->
-
-                    <!-- Panel -->
-                    <div class="panel panel-default">
-                        <!-- Heading -->
-                        <div class="panel-heading heading-iconed">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed" aria-expanded="false">
-                                    <i class="icon-left">4</i> Payment Information
-                                </a>
-                            </h4>
-                        </div>
-                        <!-- /Heading -->
-
-                        <!-- Collapse -->
-                        <div id="collapseFour" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-
-                            <!-- Panel Body -->
-                            <div class="panel-body">
-
-                                <p>Please select a payment method.</p>
-                                <div class="radio"><label><input value="" name="acnt-opt" type="radio">Cash on delivery</label></div>
-                                <div class="radio"><label><input value="" name="acnt-opt" type="radio">Paypal</label></div>
-                                <div class="radio"><label><input value="" name="acnt-opt" type="radio" checked="">Credit Card</label></div>
-
-                                <hr>
-
-                                <!-- Row -->
-                                <div class="row">
-
-                                    <!-- Col -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Name on card</label>
-                                            <input type="text" class="form-control" placeholder="Enter Name">
-                                        </div>
-                                    </div>
-                                    <!-- /Col -->
-
-                                    <!-- Col -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Credit card number</label>
-                                            <input type="text" class="form-control" placeholder="Enter Name">
-                                        </div>
-                                    </div>
-                                    <!-- /Col -->
-
-                                    <!-- Col -->
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Card Type</label>
-                                            <select class="form-control">
-                                                <option>Select country</option>
-                                                <option>England</option>
-                                                <option>Germany</option>
-                                                <option>France</option>
-                                                <option>Spain</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- /Col -->
-
-                                    <!-- Col -->
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Expiration date</label>
-                                            <select class="form-control">
-                                                <option>Select city</option>
-                                                <option>New York</option>
-                                                <option>Paris</option>
-                                                <option>Nairobi</option>
-                                                <option>Cairo</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- /Col -->
-
-                                    <!-- Col -->
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>CCV Code</label>
-                                            <input type="text" class="form-control" placeholder="3 digits only">
-                                        </div>
-                                    </div>
-                                    <!-- /Col -->
-
-                                </div>
-                                <!-- /Row -->
-
-                                <hr>
-
-                                <button class="btn btn-primary btn-sm btn-bigger">complete order</button>
-                            </div>
-                            <!-- /Panel Body -->
-                        </div>
-                        <!-- /Collapse -->
-
-                    </div>
-                    <!-- /Panel -->
-
-                </div>
-                <!-- /Accordion -->
-
+            <div class="col-md-9">
+                @yield('content')
             </div>
-            <!-- /Main Col -->
-
-            <!-- Side Col -->
-            <div class="side-col col-md-3">
-
-                <!-- Side Widget -->
-                <div class="order-summary">
-                    <table>
+            <div class="col-md-3">
+                <div class="order-summary well well-sm">
+                    <h3>Order Summary</h3>
+                    <table class="table">
                         <tbody>
                         <tr>
                             <td>(6) Items</td>
@@ -372,17 +96,26 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-default btn-block btn-bigger">edit cart</button>
-                    <button class="btn btn-primary btn-block btn-bigger">complete order</button>
+                    <a class="btn btn-default btn-block btn-bigger" href="{{ url('cart')}}">Edit cart</a>
                 </div>
-                <!-- /Side Widget -->
-
-
             </div>
-            <!-- /Side Col -->
-
         </div>
-        <!-- /Row -->
-
     </div>
-@stop
+
+    <!-- Footer -->
+    <hr>
+    <div class="container">
+        <footer>
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Quincalla 2015</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Scripts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
