@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 {!! Form::label('qty', 'Quantity:') !!}
                                 {!! Form::text('qty', '1', ['class' => 'form-control']) !!} 
-                                {!! Form::submit('Add To Shopping Bag', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::submit('Add To Shopping Cart', ['class' => 'btn btn-danger']) !!}
                             </div>
                         {!! Form::close() !!}
                     </div>

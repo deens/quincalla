@@ -43,7 +43,7 @@
                     <button type="submit" class="btn btn-default">Search</button>
                 {!! Form::close() !!}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('cart.index') }}">Shopping Bag</a></li>
+                    <li><a href="{{ route('cart.index') }}">Shopping Cart ({{ $cart_count }})</a></li>
                     @if (Auth::guest())
                         <li><a href="{{ url('/auth/login') }}">Login</a></li>
                         <li><a href="{{ url('/auth/register') }}">Register</a></li>
@@ -79,24 +79,26 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <td>(6) Items</td>
-                            <td class="price">$550.00</td>
+                            <td>{{ $cart_count }} Item(s)</td>
+                            <td class="price">${{ number_format($cart_total, 2) }}</td>
                         </tr>
                         <tr>
                             <td>Shipping</td>
-                            <td class="price"><span class="success">$50.00</span></td>
+                            <td class="price"><span class="success">$0.00</span></td>
                         </tr>
                         <tr>
                             <td>Taxation</td>
-                            <td class="price">15.00</td>
+                            <td class="price">$0.00</td>
                         </tr>
                         <tr class="total">
                             <td> Total </td>
-                            <td class="price">$615.00</td>
+                            <td class="price">${{ number_format($cart_total, 2) }}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <a class="btn btn-default btn-block btn-bigger" href="{{ url('cart')}}">Edit cart</a>
+                    <div class="text-right">
+                        <a class="" href="{{ url('cart')}}">edit cart</a>
+                    </div>
                 </div>
             </div>
         </div>
