@@ -74,7 +74,7 @@
                     <div class="text-center">
                         <a class="btn btn-lg btn-block btn-danger " href="{{ route('checkout') }}">Continue to checkout</a>
 
-                        <p class="lead"><a href="{{ url('/')}}">Continue Shopping</a></p>
+                        <p><a href="{{ url('/')}}">Continue Shopping</a></p>
                     </div>
 
                 </div>
