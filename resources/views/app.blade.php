@@ -48,7 +48,7 @@
                     <button type="submit" class="btn btn-default">Search</button>
                 {!! Form::close() !!}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('cart.index') }}">Shopping Bag</a></li>
+                    <li><a href="{{ route('cart.index') }}">Shopping Bag ({{ $cart_count }})</a></li>
                     @if (Auth::guest())
                         <li><a href="{{ url('/auth/login') }}">Login</a></li>
                         <li><a href="{{ url('/auth/register') }}">Register</a></li>

@@ -19,6 +19,15 @@ class ComposerServiceProvider extends ServiceProvider {
             'search',
             'cart'
         ], 'Quincalla\Http\ViewComposers\CollectionComposer');
+        
+        View::composer([
+            'home',
+            'collection',
+            'product',
+            'search',
+            'cart',
+            'checkout'
+        ], 'Quincalla\Http\ViewComposers\CartComposer');
     }
 
     /**
