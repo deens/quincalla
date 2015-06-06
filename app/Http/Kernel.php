@@ -25,6 +25,7 @@ class Kernel extends HttpKernel {
 	 */
 	protected $routeMiddleware = [
 		'auth' => 'Quincalla\Http\Middleware\Authenticate',
+        'auth.checkout' => 'Quincalla\Http\Middleware\AuthCheckout',
 		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
 		'guest' => 'Quincalla\Http\Middleware\RedirectIfAuthenticated',
 	];

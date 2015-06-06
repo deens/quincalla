@@ -26,8 +26,9 @@ class ComposerServiceProvider extends ServiceProvider {
             'product',
             'search',
             'cart',
-            'checkout',
-            'auth/*'
+            'checkout/*',
+            'auth/*',
+            'account',
         ], 'Quincalla\Http\ViewComposers\CartComposer');
     }
 
