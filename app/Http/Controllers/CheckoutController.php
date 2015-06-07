@@ -53,11 +53,17 @@ class CheckoutController extends Controller {
 
     public function postShipping()
     {
+        $checkout = session('checkout');
+        $account_type = $checkout['account_type'];
+
         return redirect()->route('checkout.billing');
+
     }
 
     public function billing()
     {
+        $checkout = session('checkout');
+
         return view('checkout.billing');
     }
 

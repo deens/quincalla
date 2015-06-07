@@ -10,21 +10,21 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>First Name</label>
-                        <input type="text" class="form-control" placeholder="Enter Name">
+                        <input type="text" name="account_first_name" class="form-control" placeholder="Enter Name">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" placeholder="Enter Name">
+                        <input type="text" name="account_last_name" class="form-control" placeholder="Enter Name">
                     </div>
                 </div>
 
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" placeholder="Enter Email">
+                        <input type="email" name="account_email" class="form-control" placeholder="Enter Email">
                     </div>
                 </div>
 
