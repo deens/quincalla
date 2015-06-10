@@ -32,7 +32,7 @@ class AuthCheckout {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->guest())
+		if (! \Session::has('checkout'))
 		{
 			if ($request->ajax())
 			{

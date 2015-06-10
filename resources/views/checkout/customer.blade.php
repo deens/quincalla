@@ -41,7 +41,9 @@
                 </div>
             @endif
 
-            {!! Form::open(['url' => '/auth/login']) !!}
+            {!! Form::open(['route' => 'checkout.customer']) !!}
+
+                {!! Form::hidden('account_type', 'existing') !!}
 
                 <div class="form-group">
                     <label>Email Address</label>
