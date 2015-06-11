@@ -9,18 +9,18 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" name="first_name" class="form-control" placeholder="Enter Name">
+                    <input type="text" name="first_name" class="form-control" placeholder="Enter first name">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Second Name</label>
-                    <input type="text" name="last_name" class="form-control" placeholder="Enter Name">
+                    <input type="text" name="last_name" class="form-control" placeholder="Enter last name">
                 </div>
             </div>
             @if ($account_type !== 'existing')
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" name="email" class="form-control" placeholder="Enter Email address">
@@ -28,17 +28,35 @@
             </div>
             @endif
 
-            <div class="col-md-12">
+            @if ($account_type === 'new')
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter password">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm_password" class="form-control" placeholder="Enter confirm password">
+                    </div>
+                </div>
+
+            @endif
+
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Address Line 1</label>
-                    <input type="text" name="address" class="form-control" placeholder="Enter Name">
+                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
                 </div>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Address Line 2</label>
-                    <input type="text" name="address1" class="form-control" placeholder="Enter Name">
+                    <input type="text" name="address1" class="form-control" placeholder="Enter Apt.">
                 </div>
             </div>
 
@@ -67,14 +85,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="text" name="phone"class="form-control" placeholder="Enter Name">
+                    <input type="text" name="phone"class="form-control" placeholder="Enter phone">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Postal Code</label>
-                    <input type="text" name="zipcode" class="form-control" placeholder="Enter Name">
+                    <input type="text" name="zipcode" class="form-control" placeholder="Enter zipcode">
                 </div>
             </div>
 

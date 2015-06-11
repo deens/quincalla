@@ -24,6 +24,7 @@ class CheckoutController extends Controller {
 
     public function customer()
     {
+        // Check if cart is empty
         if ( ! Cart::content()->count()) {
             return redirect()
                 ->route('cart.index')
@@ -83,10 +84,14 @@ class CheckoutController extends Controller {
     public function postShipping()
     {
         $checkout = session('checkout');
-        $account_type = $checkout['account_type'];
+        $accountType = $checkout['account_type'];
 
-        if ($account_type !== 'existing') {
+        if ($accountType !== 'existing') {
             $checkout['account_email'] = Request::get('email');
+        }
+
+        if ($accountType === 'new') {
+            $checkout['account_password'] = \Hash::make(Request::get('password'));
         }
 
         $shippingAddress = [
@@ -151,7 +156,7 @@ class CheckoutController extends Controller {
             ];
         }
 
-        $checkout['customer_name'] = $billingAddress['full_name'];
+        $checkout['account_name'] = $billingAddress['full_name'];
         $checkout['payment'] = $payment;
         $checkout['billing'] = $billingAddress;
 
