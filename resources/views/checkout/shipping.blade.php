@@ -6,6 +6,7 @@
         <div class="row">
             <h3>Shipping Address</h3>
             {{ var_dump($checkout) }}
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label>First Name</label>
@@ -46,8 +47,7 @@
                 <div class="form-group">
                     <label>Country</label>
                     <select name="country" class="form-control">
-                        <option>Select country</option>
-                        <option>England</option>
+                        <option>USA</option>
                         <option>Germany</option>
                         <option>France</option>
                         <option>Spain</option>
@@ -58,12 +58,11 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>City / Town</label>
-                    <select name="city" class="form-control">
+                    <select name="state" class="form-control">
                         <option>Select city</option>
+                        <option>California</option>
+                        <option>Florida</option>
                         <option>New York</option>
-                        <option>Paris</option>
-                        <option>Nairobi</option>
-                        <option>Cairo</option>
                     </select>
                 </div>
             </div>

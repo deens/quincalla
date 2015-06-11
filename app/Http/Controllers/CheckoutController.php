@@ -1,6 +1,7 @@
 <?php namespace Quincalla\Http\Controllers;
 
 use Auth;
+use Cart;
 use Request;
 use Session;
 use Quincalla\Product;
@@ -23,13 +24,20 @@ class CheckoutController extends Controller {
 
     public function customer()
     {
-        \Session::forget('checkout');
+        if ( ! Cart::content()->count()) {
+            return redirect()
+                ->route('cart.index')
+                ->with('error', 'Please add products to your shopping cart');
+        }
+
+        Session::forget('checkout');
+
         return view('checkout.customer');
     }
 
     public function postCustomer()
     {
-        $accountType = \Request::get("account_type");
+        $accountType = Request::get("account_type");
 
         if ($accountType === 'existing') {
 
@@ -39,7 +47,8 @@ class CheckoutController extends Controller {
             ]);
 
             if (! $validUser) {
-                return back()->with('error', 'Invalid email address or password');
+                return back()
+                    ->with('error', 'Invalid email address or password');
             }
 
             $accountId = Auth::user()->id;
@@ -87,7 +96,7 @@ class CheckoutController extends Controller {
             'address' => Request::get('address'),
             'address1' => Request::get('address1'),
             'country' => Request::get('country'),
-            'city' => Request::get('city'),
+            'state' => Request::get('state'),
             'phone' => Request::get('phone'),
             'zipcode' => Request::get('zipcode')
         ];
@@ -106,7 +115,8 @@ class CheckoutController extends Controller {
         $checkout = session('checkout');
 
         if (! isset($checkout['shipping']) || !count($checkout['shipping'])) {
-            return back()->with('error', 'Invalid shipping address');
+            return back()
+                ->with('error', 'Invalid shipping address');
         }
 
         return view('checkout.billing', compact('checkout'));
@@ -120,22 +130,28 @@ class CheckoutController extends Controller {
             'name_on_cart' => Request::get('name_on_cart'),
             'number' => Request::get('cart_number'),
             'cart_type' => Request::get('cart_type'),
-            'expiration_date' => Request::get('expiration_date'),
+            'expiration_date_month' => Request::get('expiration_date_month'),
+            'expiration_date_year' => Request::get('expiration_date_year'),
             'ccv_code' => Request::get('ccv_code')
         ];
 
-        $billingAddress = [
-            'first_name' => Request::get('first_name'),
-            'last_name' => Request::get('last_name'),
-            'full_name' => Request::get('first_name') . ' ' . Request::get('last_name'),
-            'address' => Request::get('address'),
-            'address1' => Request::get('address1'),
-            'country' => Request::get('country'),
-            'city' => Request::get('city'),
-            'phone' => Request::get('phone'),
-            'zipcode' => Request::get('zipcode')
-        ];
+        if (Request::get('same_address')) {
+            $billingAddress = $checkout['shipping'];
+        } else {
+            $billingAddress = [
+                'first_name' => Request::get('first_name'),
+                'last_name' => Request::get('last_name'),
+                'full_name' => Request::get('first_name') . ' ' . Request::get('last_name'),
+                'address' => Request::get('address'),
+                'address1' => Request::get('address1'),
+                'country' => Request::get('country'),
+                'city' => Request::get('city'),
+                'phone' => Request::get('phone'),
+                'zipcode' => Request::get('zipcode')
+            ];
+        }
 
+        $checkout['customer_name'] = $billingAddress['full_name'];
         $checkout['payment'] = $payment;
         $checkout['billing'] = $billingAddress;
 
@@ -148,7 +164,7 @@ class CheckoutController extends Controller {
     {
         $checkout = session('checkout');
 
-        if (! isset($checkout['payment']) || !count($checkout['payment'])) {
+        if (! isset($checkout['payment']) || ! count($checkout['payment'])) {
             return back()->with('error', 'Invalid payment');
         }
 

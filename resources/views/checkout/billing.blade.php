@@ -25,25 +25,45 @@
             <div class="form-group">
                 <label>Card Type</label>
                 <select name="cart_type" class="form-control">
-                    <option>Select country</option>
-                    <option>England</option>
-                    <option>Germany</option>
-                    <option>France</option>
-                    <option>Spain</option>
+                    <option>Select Cart Type</option>
+                    <option>American Express</option>
+                    <option>Discover</option>
+                    <option>MasterCard</option>
+                    <option>Visa</option>
                 </select>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="form-group">
-                <label>Expiration date</label>
-                <select name="expiration_date" class="form-control">
-                    <option>Select city</option>
-                    <option>New York</option>
-                    <option>Paris</option>
-                    <option>Nairobi</option>
-                    <option>Cairo</option>
-                </select>
+            <label>Expiration date</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <select name="expiration_date_month" class="form-control">
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                        <option>09</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select name="expiration_date_year" class="form-control">
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                    </select>
+                </div>
+            </div>
             </div>
         </div>
 
@@ -58,7 +78,7 @@
     </div>
     <div class="checkbox">
         <label>
-            <input name="same_address" type="checkbox"> Use my shipping address as my billing address
+            <input name="same_address" type="checkbox" value="true"> Use my shipping address as my billing address
         </label>
         <hr>
     </div>
@@ -94,10 +114,8 @@
                 <label>Country</label>
                 <select name="country" class="form-control">
                     <option>Select country</option>
+                    <option>USA</option>
                     <option>England</option>
-                    <option>Germany</option>
-                    <option>France</option>
-                    <option>Spain</option>
                 </select>
             </div>
         </div>
@@ -107,10 +125,9 @@
                 <label>City / Town</label>
                 <select name="city" class="form-control">
                     <option>Select city</option>
-                    <option>New York</option>
-                    <option>Paris</option>
-                    <option>Nairobi</option>
-                    <option>Cairo</option>
+                        <option>California</option>
+                        <option>Florida</option>
+                        <option>New York</option>
                 </select>
             </div>
         </div>
