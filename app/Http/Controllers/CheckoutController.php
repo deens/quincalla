@@ -42,6 +42,16 @@ class CheckoutController extends Controller {
 
         if ($accountType === 'existing') {
 
+            $existingAccountRules = [
+                'email' => 'required',
+                'password' => 'required'
+            ];
+
+            $validator = \Validator::make(Request::only(['email', 'password']), $existingAccountRules);
+            if ($validator->fails()) {
+                return back()->withErrors($validator->errors());
+            }
+
             $validUser = Auth::attempt([
                 'email' => Request::get('email'),
                 'password' => Request::get('password')
@@ -86,12 +96,30 @@ class CheckoutController extends Controller {
         $checkout = session('checkout');
         $accountType = $checkout['account_type'];
 
+        $shippginRules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'address' => 'required',
+            'country' => 'required',
+            'state' => 'required',
+            'zipcode' => 'required',
+            'phone' => 'required',
+        ];
+
         if ($accountType !== 'existing') {
             $checkout['account_email'] = Request::get('email');
+            $shippginRules['email'] = 'required';
         }
 
         if ($accountType === 'new') {
             $checkout['account_password'] = \Hash::make(Request::get('password'));
+            $shippginRules['password'] = 'required|confirmed';
+        }
+
+        $validator = \Validator::make(Request::all(), $shippginRules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
         }
 
         $shippingAddress = [
@@ -112,7 +140,6 @@ class CheckoutController extends Controller {
 
 
         return redirect()->route('checkout.billing');
-
     }
 
     public function billing()
@@ -130,10 +157,17 @@ class CheckoutController extends Controller {
     public function postBilling()
     {
         $checkout = session('checkout');
+        $billingRules = [
+            'name_on_cart' => 'required',
+            'cart_number' => 'required',
+            'expiration_date_month' => 'required',
+            'expiration_date_year' => 'required',
+            'ccv_code' => 'required'
+        ];
 
         $payment = [
             'name_on_cart' => Request::get('name_on_cart'),
-            'number' => Request::get('cart_number'),
+            'cart_number' => Request::get('cart_number'),
             'cart_type' => Request::get('cart_type'),
             'expiration_date_month' => Request::get('expiration_date_month'),
             'expiration_date_year' => Request::get('expiration_date_year'),
