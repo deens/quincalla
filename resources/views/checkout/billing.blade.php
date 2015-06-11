@@ -2,7 +2,6 @@
 @section('content')
     <h1>Payment & Billing</h1>
     <hr>
-    {{ var_dump($checkout) }}
     <h3>Payment Information</h3>
     <div class="row">
 
@@ -153,4 +152,6 @@
         {!! Form::submit('Continue to confirm', ['class' => 'btn btn-lg btn-primary']) !!}
     </div>
     {!! Form::close() !!}
+
+    {{ var_dump($checkout) }}
 @stop

@@ -3,7 +3,7 @@
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class AuthCheckout {
+class CheckoutSession {
 
 	/**
 	 * The Guard implementation.

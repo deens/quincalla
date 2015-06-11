@@ -5,7 +5,6 @@
     {!! Form::open(['route' => 'checkout.shipping']) !!}
         <div class="row">
             <h3>Shipping Address</h3>
-            {{ var_dump($checkout) }}
 
             <div class="col-md-6">
                 <div class="form-group">
@@ -48,9 +47,7 @@
                     <label>Country</label>
                     <select name="country" class="form-control">
                         <option>USA</option>
-                        <option>Germany</option>
-                        <option>France</option>
-                        <option>Spain</option>
+                        <option>England</option>
                     </select>
                 </div>
             </div>
@@ -88,5 +85,6 @@
         </div>
     {!! Form::close() !!}
 
+    {{ var_dump($checkout) }}
 </div>
 @stop
