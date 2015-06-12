@@ -1,7 +1,8 @@
-<?php namespace Quincalla\Events;
+<?php
 
-abstract class Event {
+namespace Quincalla\Events;
 
-	//
-
+abstract class Event
+{
+    //
 }
