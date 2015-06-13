@@ -6,6 +6,7 @@ Route::get('collections/{slug}', ['as' => 'collections.show', 'uses' => 'Collect
 Route::get('products/{slug}', ['as' => 'products.show', 'uses' => 'ProductsController@show']);
 
 Route::get('cart/{id}/delete', ['as' => 'cart.destroy', 'uses' => 'CartController@destroy']);
+Route::get('cart/clean', ['as' => 'cart.clean', 'uses' => 'CartController@clean']);
 Route::put('cart/update', ['as' => 'cart.update', 'uses' => 'CartController@update']);
 Route::resource('cart', 'CartController', ['except' => ['create', 'update', 'edit', 'destroy']]);
 Route::get('search', ['as' => 'search.index', 'uses' => 'SearchController@index']);

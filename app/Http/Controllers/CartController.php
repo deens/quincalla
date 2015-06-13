@@ -40,4 +40,11 @@ class CartController extends Controller {
         return redirect()->route('cart.index')->with('success', 'Product has beeen deleted from your Shopping bag');
     }
 
+    public function clean()
+    {
+        \Cart::destroy();
+
+        return redirect()->route('cart.index')->with('success', 'Your shopping cart is empty');
+    }
+
 }

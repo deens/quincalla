@@ -43,7 +43,9 @@
                             </tr>
                         @endforeach
                     </table>
+
                     {!! Form::submit('Update Cart', ['class' => 'btn btn-default']) !!}
+                    <a class="btn btn-default" href="{{ route('cart.clean')}}">Empty Shopping Cart</a> 
                     {!! Form::close() !!}
 
                 </div>
