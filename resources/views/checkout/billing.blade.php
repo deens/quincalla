@@ -2,33 +2,43 @@
 @section('content')
     <h1>Payment & Billing</h1>
     <hr>
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <h3>Payment Information</h3>
+    {!! Form::open(['route' => 'checkout.billing']) !!}
     <div class="row">
 
-        {!! Form::open(['route' => 'checkout.billing']) !!}
         <div class="col-md-6">
             <div class="form-group">
                 <label>Name on card</label>
-                <input type="text" name="name_on_cart" class="form-control" placeholder="Enter Name">
+                <input type="text" name="name_on_card" value="{{ $checkout['payment']['name_on_card'] or Input::old('name_on_card') }}" class="form-control" placeholder="Enter Name">
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label>Credit card number</label>
-                <input type="text" name="cart_number" class="form-control" placeholder="Enter Name">
+                <input type="text" name="card_number" value="{{ $checkout['payment']['card_number'] or Input::old('card_number') }}" class="form-control" placeholder="Enter Name">
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="form-group">
                 <label>Card Type</label>
-                <select name="cart_type" class="form-control">
-                    <option>Select Cart Type</option>
-                    <option>American Express</option>
-                    <option>Discover</option>
-                    <option>MasterCard</option>
-                    <option>Visa</option>
+                <select name="card_type" class="form-control">
+                    <option value="0">Select Cart Type</option>
+                    <option value="1">American Express</option>
+                    <option value="2">Discover</option>
+                    <option value="3">MasterCard</option>
+                    <option value="4">Visa</option>
                 </select>
             </div>
         </div>
@@ -69,20 +79,20 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label>CCV Code</label>
-                <input type="text" name="ccv_code" class="form-control" placeholder="3 digits only">
+                <input type="text" name="ccv_code" value="{{ $checkout['payment']['ccv_code'] or Input::old('ccv_code') }}" class="form-control" placeholder="3 digits only">
             </div>
         </div>
 
-
     </div>
+
     <div class="checkbox">
         <label>
-            <input name="same_address" type="checkbox" value="true"> Use my shipping address as my billing address
+            <input name="same_address" type="checkbox" value="1"> Use my shipping address as my billing address
         </label>
         <hr>
     </div>
-    <h3>Billing Address</h3>
 
+    <h3>Billing Address</h3>
     <div class="row">
 
         <div class="col-md-6">
@@ -99,15 +109,39 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label>Address Line 1</label>
-            <input type="text" name="address" class="form-control" placeholder="Enter Name">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Address Line 1</label>
+                <input type="text" name="address" class="form-control" placeholder="Enter Name">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Address Line 2</label>
-            <input type="text" name="address1" class="form-control" placeholder="Enter Name">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Address Line 2</label>
+                <input type="text" name="address1" class="form-control" placeholder="Enter Name">
+            </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" name="city" value="{{ $checkout['billing']['city'] or Input::old('city') }}" class="form-control" placeholder="Enter city">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>State/Province/Region</label>
+                <select name="city" class="form-control">
+                    <option>Select State/Province/Region</option>
+                    <option>California</option>
+                    <option>Florida</option>
+                    <option>New York</option>
+                </select>
+            </div>
+        </div>
+
         <div class="col-md-6">
             <div class="form-group">
                 <label>Country</label>
@@ -121,13 +155,8 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>City / Town</label>
-                <select name="city" class="form-control">
-                    <option>Select city</option>
-                        <option>California</option>
-                        <option>Florida</option>
-                        <option>New York</option>
-                </select>
+                <label>Zip Code</label>
+                <input type="text" name="zipcode" class="form-control" placeholder="Enter Name">
             </div>
         </div>
 
@@ -138,20 +167,15 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Postal Code</label>
-                <input type="text" name="zipcode" class="form-control" placeholder="Enter Name">
-            </div>
-        </div>
-
     </div>
 
-
     <div class="form-group">
+        <a class="btn btn-lg btn-default" href="{{ route('checkout.shipping') }}">Back to shipping information</a>
         {!! Form::submit('Continue to confirm', ['class' => 'btn btn-lg btn-primary']) !!}
     </div>
     {!! Form::close() !!}
 
+    <?php echo '<pre>'; ?>
     {{ var_dump($checkout) }}
+    <?php echo '</pre>'; ?>
 @stop

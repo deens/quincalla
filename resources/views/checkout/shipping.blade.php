@@ -20,21 +20,22 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" name="first_name" class="form-control" placeholder="Enter first name">
+                    <input type="text" name="first_name" value="{{ $checkout['shipping']['first_name'] or Input::old('first_name') }}" class="form-control" placeholder="Enter first name">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Second Name</label>
-                    <input type="text" name="last_name" class="form-control" placeholder="Enter last name">
+                    <input type="text" name="last_name" value="{{ $checkout['shipping']['last_name'] or Input::old('last_name') }}" class="form-control" placeholder="Enter last name">
                 </div>
             </div>
+
             @if ($account_type !== 'existing')
             <div class="col-md-12">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" name="email" class="form-control" placeholder="Enter Email address">
+                    <input type="email" name="email" value="{{ $checkout['account_email'] or Input::old('email') }}" class="form-control" placeholder="Enter Email address">
                 </div>
             </div>
             @endif
@@ -60,14 +61,33 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Address Line 1</label>
-                    <input type="text" name="address" class="form-control" placeholder="Enter Address">
+                    <input type="text" name="address" value="{{ $checkout['shipping']['address'] or Input::old('address') }}" class="form-control" placeholder="Street address, P.O. box, etc.">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Address Line 2</label>
-                    <input type="text" name="address1" class="form-control" placeholder="Enter Apt.">
+                    <input type="text" name="address1" value="{{ $checkout['shipping']['address1'] or Input::old('address1') }}" class="form-control" placeholder="Apartment, suite, unit, building, floor, etc.">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" name="city" value="{{ $checkout['shipping']['city'] or Input::old('city') }}" class="form-control" placeholder="Enter city">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>State/Province/Region</label>
+                    <select name="state" class="form-control">
+                        <option value="0">Select state</option>
+                        <option value="1">California</option>
+                        <option value="2">Florida</option>
+                        <option value="3">New York</option>
+                    </select>
                 </div>
             </div>
 
@@ -75,35 +95,23 @@
                 <div class="form-group">
                     <label>Country</label>
                     <select name="country" class="form-control">
-                        <option>USA</option>
-                        <option>England</option>
+                        <option value="1">USA</option>
+                        <option value="2">England</option>
                     </select>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>City / Town</label>
-                    <select name="state" class="form-control">
-                        <option>Select city</option>
-                        <option>California</option>
-                        <option>Florida</option>
-                        <option>New York</option>
-                    </select>
+                    <label>Zip Code</label>
+                    <input type="text" name="zipcode" value="{{ $checkout['shipping']['zipcode'] or Input::old('zipcode') }}" class="form-control" placeholder="Enter zipcode">
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="text" name="phone"class="form-control" placeholder="Enter phone">
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Postal Code</label>
-                    <input type="text" name="zipcode" class="form-control" placeholder="Enter zipcode">
+                    <input type="text" name="phone" value="{{ $checkout['shipping']['phone'] or Input::old('phone') }}" class="form-control" placeholder="Enter phone">
                 </div>
             </div>
 

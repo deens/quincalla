@@ -96,30 +96,31 @@ class CheckoutController extends Controller {
         $checkout = session('checkout');
         $accountType = $checkout['account_type'];
 
-        $shippginRules = [
+        $shippingRules = [
             'first_name' => 'required',
             'last_name' => 'required',
             'address' => 'required',
-            'country' => 'required',
-            'state' => 'required',
+            'city' => 'required',
+            'state' => 'required|not_in:0',
+            'country' => 'required|not_in:0',
             'zipcode' => 'required',
-            'phone' => 'required',
+            'phone' => 'required'
         ];
 
         if ($accountType !== 'existing') {
             $checkout['account_email'] = Request::get('email');
-            $shippginRules['email'] = 'required';
+            $shippingRules['email'] = 'required';
         }
 
         if ($accountType === 'new') {
             $checkout['account_password'] = \Hash::make(Request::get('password'));
-            $shippginRules['password'] = 'required|confirmed';
+            $shippingRules['password'] = 'required|confirmed';
         }
 
-        $validator = \Validator::make(Request::all(), $shippginRules);
+        $validator = \Validator::make(Request::all(), $shippingRules);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $shippingAddress = [
@@ -128,8 +129,9 @@ class CheckoutController extends Controller {
             'full_name' => Request::get('first_name') . ' ' . Request::get('last_name'),
             'address' => Request::get('address'),
             'address1' => Request::get('address1'),
-            'country' => Request::get('country'),
             'state' => Request::get('state'),
+            'city' => Request::get('city'),
+            'country' => Request::get('country'),
             'phone' => Request::get('phone'),
             'zipcode' => Request::get('zipcode')
         ];
@@ -137,7 +139,6 @@ class CheckoutController extends Controller {
         $checkout['shipping'] = $shippingAddress;
 
         Session::put('checkout', $checkout);
-
 
         return redirect()->route('checkout.billing');
     }
@@ -157,13 +158,34 @@ class CheckoutController extends Controller {
     public function postBilling()
     {
         $checkout = session('checkout');
+
         $billingRules = [
-            'name_on_cart' => 'required',
-            'cart_number' => 'required',
+            'name_on_card' => 'required',
+            'card_number' => 'required',
             'expiration_date_month' => 'required',
             'expiration_date_year' => 'required',
-            'ccv_code' => 'required'
+            'ccv_code' => 'required',
+            'card_type' => 'required|not_in:0'
         ];
+
+        if (Request::get('same_address') !== 1) {
+            $billingRules += [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'address' => 'required',
+                'city' => 'required',
+                'state' => 'required|not_in:0',
+                'country' => 'required|not_in:0',
+                'zipcode' => 'required',
+                'phone' => 'required'
+            ];
+        }
+
+        $validator = \Validator::make(Request::all(), $billingRules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $payment = [
             'name_on_cart' => Request::get('name_on_cart'),
@@ -183,8 +205,9 @@ class CheckoutController extends Controller {
                 'full_name' => Request::get('first_name') . ' ' . Request::get('last_name'),
                 'address' => Request::get('address'),
                 'address1' => Request::get('address1'),
-                'country' => Request::get('country'),
                 'city' => Request::get('city'),
+                'state' => Request::get('state'),
+                'country' => Request::get('country'),
                 'phone' => Request::get('phone'),
                 'zipcode' => Request::get('zipcode')
             ];
