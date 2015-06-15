@@ -4,6 +4,7 @@ use Auth;
 use Cart;
 use Request;
 use Session;
+use Quincalla\Address;
 use Quincalla\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
@@ -88,7 +89,26 @@ class CheckoutController extends Controller {
         $checkout = session('checkout');
         $account_type = $checkout['account_type'];
 
-        return view('checkout.shipping', compact('checkout', 'account_type'));
+        $shippingFields = [
+            'first_name',
+            'last_name',
+            'email',
+            'address',
+            'address1',
+            'city',
+            'state',
+            'country',
+            'zipcode',
+            'phone'
+        ];
+        foreach($shippingFields as $key)
+        {
+            $checkout['shipping'][$key] = isset($checkout['shipping'][$key]) ? $checkout['shipping'][$key] : Request::old($key);
+        }
+
+        $checkout['shipping']['account_email'] = isset($checkout['account_email']) ? $checkout['account_email'] : Request::old('account_email');
+
+        return view('checkout.shipping', compact('checkout', 'account_type'))->with($checkout['shipping']);
     }
 
     public function postShipping()
@@ -108,8 +128,8 @@ class CheckoutController extends Controller {
         ];
 
         if ($accountType !== 'existing') {
-            $checkout['account_email'] = Request::get('email');
-            $shippingRules['email'] = 'required';
+            $checkout['account_email'] = Request::get('account_email');
+            $shippingRules['account_email'] = 'required';
         }
 
         if ($accountType === 'new') {
@@ -126,7 +146,6 @@ class CheckoutController extends Controller {
         $shippingAddress = [
             'first_name' => Request::get('first_name'),
             'last_name' => Request::get('last_name'),
-            'full_name' => Request::get('first_name') . ' ' . Request::get('last_name'),
             'address' => Request::get('address'),
             'address1' => Request::get('address1'),
             'state' => Request::get('state'),
@@ -168,7 +187,7 @@ class CheckoutController extends Controller {
             'card_type' => 'required|not_in:0'
         ];
 
-        if (Request::get('same_address') !== 1) {
+        if ( ! Request::get('same_address')) {
             $billingRules += [
                 'first_name' => 'required',
                 'last_name' => 'required',

@@ -19,23 +19,23 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" name="first_name" value="{{ $checkout['shipping']['first_name'] or Input::old('first_name') }}" class="form-control" placeholder="Enter first name">
+                    {!! Form::label('first_name', 'First Name') !!}
+                    {!! Form::text('first_name', $first_name, ['class' => 'form-control', 'placeholder' => 'Enter first name']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Second Name</label>
-                    <input type="text" name="last_name" value="{{ $checkout['shipping']['last_name'] or Input::old('last_name') }}" class="form-control" placeholder="Enter last name">
+                    {!! Form::label('last_name', 'Second Name') !!}
+                    {!! Form::text('last_name', $last_name, ['class' => 'form-control', 'placeholder' => 'Enter last name']) !!}
                 </div>
             </div>
 
             @if ($account_type !== 'existing')
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" value="{{ $checkout['account_email'] or Input::old('email') }}" class="form-control" placeholder="Enter Email address">
+                    {!! Form::label('account_email', 'Email Address') !!}
+                    {!! Form::text('account_email', $account_email, ['class' => 'form-control', 'placeholder' => 'Enter Email address']) !!}
                 </div>
             </div>
             @endif
@@ -60,22 +60,22 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Address Line 1</label>
-                    <input type="text" name="address" value="{{ $checkout['shipping']['address'] or Input::old('address') }}" class="form-control" placeholder="Street address, P.O. box, etc.">
+                    {!! Form::label('address', 'Address Line 1') !!}
+                    {!! Form::text('address', $address, ['class' => 'form-control', 'placeholder' => 'Street address, P.O. box, etc.']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Address Line 2</label>
-                    <input type="text" name="address1" value="{{ $checkout['shipping']['address1'] or Input::old('address1') }}" class="form-control" placeholder="Apartment, suite, unit, building, floor, etc.">
+                    {!! Form::label('address1', 'Address Line 2') !!}
+                    {!! Form::text('address1', $address1, ['class' => 'form-control', 'placeholder' => 'Apartment, suite, unit, building, floor, etc.']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>City</label>
-                    <input type="text" name="city" value="{{ $checkout['shipping']['city'] or Input::old('city') }}" class="form-control" placeholder="Enter city">
+                    {!! Form::label('city', 'City') !!}
+                    {!! Form::text('city', $city, ['class' => 'form-control', 'placeholder' => 'Enter city']) !!}
                 </div>
             </div>
 
@@ -103,15 +103,15 @@
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Zip Code</label>
-                    <input type="text" name="zipcode" value="{{ $checkout['shipping']['zipcode'] or Input::old('zipcode') }}" class="form-control" placeholder="Enter zipcode">
+                    {!! Form::label('zipcode', 'Zip Code') !!}
+                    {!! Form::text('zipcode', $zipcode, ['class' => 'form-control', 'placeholder' => 'Enter zipcode']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" name="phone" value="{{ $checkout['shipping']['phone'] or Input::old('phone') }}" class="form-control" placeholder="Enter phone">
+                    {!! Form::label('phone', 'Phone Number') !!}
+                    {!! Form::text('phone', $phone, ['class' => 'form-control', 'placeholder' => 'Enter phone']) !!}
                 </div>
             </div>
 
@@ -122,6 +122,8 @@
         </div>
     {!! Form::close() !!}
 
+    <?php echo '<pre>'; ?>
     {{ var_dump($checkout) }}
+    <?php echo '</pre>'; ?>
 </div>
 @stop

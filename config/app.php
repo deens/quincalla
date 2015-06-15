@@ -148,7 +148,7 @@ return [
         /**
          * Packages Service Providers...
          */
-        Illuminate\Html\HtmlServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
     ],
@@ -202,8 +202,8 @@ return [
         /**
          * Packages Aliases
          */
-        'Form' => Illuminate\Html\FormFacade::class,
-        'HTML' => Illuminate\Html\HtmlFacade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
     ],
 

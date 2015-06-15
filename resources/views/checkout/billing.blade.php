@@ -87,13 +87,13 @@
 
     <div class="checkbox">
         <label>
-            <input name="same_address" type="checkbox" value="1"> Use my shipping address as my billing address
+            <input id="same_address" name="same_address" type="checkbox" value="1"> Use my shipping address as my billing address
         </label>
         <hr>
     </div>
 
-    <h3>Billing Address</h3>
-    <div class="row">
+    <h3 class="billing-address">Billing Address</h3>
+    <div class="row billing-address">
 
         <div class="col-md-6">
             <div class="form-group">
