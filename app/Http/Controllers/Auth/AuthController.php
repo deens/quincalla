@@ -2,13 +2,18 @@
 
 namespace Quincalla\Http\Controllers\Auth;
 
+use Auth;
 use Quincalla\User;
 use Validator;
 use Quincalla\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
+
+    protected $redirectPath = 'account';
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -30,6 +35,31 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
+
+        $credentials = $this->getCredentials($request);
+
+        if (Auth::attempt($credentials + ['active' => true], $request->has('remember'))) {
+            return redirect()->intended($this->redirectPath());
+        }
+
+        return redirect($this->loginPath())
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors([
+                'email' => $this->getFailedLoginMessage(),
+            ]);
     }
 
     /**
@@ -59,6 +89,7 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'active' => true,
         ]);
     }
 }

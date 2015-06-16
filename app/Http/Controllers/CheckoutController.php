@@ -59,7 +59,8 @@ class CheckoutController extends Controller {
 
             $validUser = Auth::attempt([
                 'email' => Request::get('email'),
-                'password' => Request::get('password')
+                'password' => Request::get('password'),
+                'active' => true,
             ]);
 
             if (! $validUser) {
