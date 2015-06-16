@@ -19,3 +19,21 @@ $factory->define(Quincalla\User::class, function ($faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(Quincalla\Collection::class, function ($faker) {
+    return [
+        'name' => $faker->unique()->sentence(2),
+        'slug' => $faker->unique()->slug,
+    ];
+});
+
+$factory->define(Quincalla\Product::class, function ($faker) {
+    return [
+        'collection_id' => $faker->randomElement([1, 2, 3]),
+        'name' => $faker->unique()->sentence(3),
+        'slug' => $faker->unique()->slug,
+        'description' => $faker->text,
+        'picture' => $faker->unique()->md5() .'.png',
+        'price' => $faker->randomFloat(2, 10, 200),
+    ];
+});
