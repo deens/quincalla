@@ -112,7 +112,7 @@ class CheckoutController extends Controller {
 
         $checkout['shipping']['account_email'] = isset($checkout['account_email']) ? $checkout['account_email'] : Request::old('account_email');
 
-        return view('checkout.shipping', compact('checkout', 'account_type'))->with($checkout['shipping']);
+        return view('checkout.shipping', compact('account_type'))->with($checkout['shipping']);
     }
 
     public function postShipping()
@@ -196,7 +196,7 @@ class CheckoutController extends Controller {
             $checkout['billing'][$key] = isset($checkout['billing'][$key]) ? $checkout['billing'][$key] : Request::old($key);
         }
 
-        return view('checkout.billing', compact('checkout'))->with($checkout['billing']);
+        return view('checkout.billing')->with($checkout['billing']);
     }
 
     public function postBilling()
@@ -285,7 +285,7 @@ class CheckoutController extends Controller {
             return back()->with('error', 'Invalid payment');
         }
 
-        return view('checkout.confirm', compact('checkout'));
+        return view('checkout.confirm');
     }
 
 }
