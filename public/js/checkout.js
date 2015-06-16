@@ -4,16 +4,15 @@
         $sameAddress = $('#same_address');
 
     var toggleBillingAddress = function() {
-        if ($sameAddress.checked()) {
+        if ($sameAddress.is(":checked")) {
             $billingAddress.hide();
         } else {
-            $billingAddress.display();
+            $billingAddress.show();
         }
-
     };
 
     $sameAddress.click(toggleBillingAddress);
 
-    toggleBillingAddress();
+    toggleBillingAddress;
 
 })(jQuery);

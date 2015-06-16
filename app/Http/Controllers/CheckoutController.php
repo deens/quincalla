@@ -39,7 +39,7 @@ class CheckoutController extends Controller {
 
     public function postCustomer()
     {
-        $accountType = Request::get("account_type");
+        $accountType = Request::get('account_type');
 
         if ($accountType === 'existing') {
 
@@ -155,7 +155,7 @@ class CheckoutController extends Controller {
             'zipcode' => Request::get('zipcode')
         ];
 
-        $checkout['shipping'] = $shippingAddress;
+        $checkout['shipping'] = $checkout['billing'] = $shippingAddress;
 
         Session::put('checkout', $checkout);
 
@@ -171,7 +171,24 @@ class CheckoutController extends Controller {
                 ->with('error', 'Invalid shipping address');
         }
 
-        return view('checkout.billing', compact('checkout'));
+        $billingFields = [
+            'first_name',
+            'last_name',
+            'email',
+            'address',
+            'address1',
+            'city',
+            'state',
+            'country',
+            'zipcode',
+            'phone'
+        ];
+        foreach($billingFields as $key)
+        {
+            $checkout['billing'][$key] = isset($checkout['billing'][$key]) ? $checkout['billing'][$key] : Request::old($key);
+        }
+
+        return view('checkout.billing', compact('checkout'))->with($checkout['billing']);
     }
 
     public function postBilling()

@@ -97,47 +97,47 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>First Name</label>
-                <input type="text" name="first_name" class="form-control" placeholder="Enter Name">
+                {!! Form::label('first_name', 'First Name') !!}
+                {!! Form::text('first_name', $first_name, ['class' => 'form-control', 'placeholder' => 'Enter first name']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Second Name</label>
-                <input type="text" name="last_name" class="form-control" placeholder="Enter Name">
+                {!! Form::label('last_name', 'Second Name') !!}
+                {!! Form::text('last_name', $last_name, ['class' => 'form-control', 'placeholder' => 'Enter last name']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Address Line 1</label>
-                <input type="text" name="address" class="form-control" placeholder="Enter Name">
+                {!! Form::label('address', 'Address Line 1') !!}
+                {!! Form::text('address', $address, ['class' => 'form-control', 'placeholder' => 'Street address, P.O. box, etc.']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Address Line 2</label>
-                <input type="text" name="address1" class="form-control" placeholder="Enter Name">
+                {!! Form::label('address1', 'Address Line 2') !!}
+                {!! Form::text('address1', $address1, ['class' => 'form-control', 'placeholder' => 'Apartment, suite, unit, building, floor, etc.']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>City</label>
-                <input type="text" name="city" value="{{ $checkout['billing']['city'] or Input::old('city') }}" class="form-control" placeholder="Enter city">
+                {!! Form::label('city', 'City') !!}
+                {!! Form::text('city', $city, ['class' => 'form-control', 'placeholder' => 'Enter city']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 <label>State/Province/Region</label>
-                <select name="city" class="form-control">
-                    <option>Select State/Province/Region</option>
-                    <option>California</option>
-                    <option>Florida</option>
-                    <option>New York</option>
+                <select name="state" class="form-control">
+                    <option value="0">Select state</option>
+                    <option value="1">California</option>
+                    <option value="2">Florida</option>
+                    <option value="3">New York</option>
                 </select>
             </div>
         </div>
@@ -146,24 +146,23 @@
             <div class="form-group">
                 <label>Country</label>
                 <select name="country" class="form-control">
-                    <option>Select country</option>
-                    <option>USA</option>
-                    <option>England</option>
+                    <option value="1">USA</option>
+                    <option value="2">England</option>
                 </select>
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Zip Code</label>
-                <input type="text" name="zipcode" class="form-control" placeholder="Enter Name">
+                {!! Form::label('zipcode', 'Zip Code') !!}
+                {!! Form::text('zipcode', $zipcode, ['class' => 'form-control', 'placeholder' => 'Enter zipcode']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Phone Number</label>
-                <input type="text" name="phone" class="form-control" placeholder="Enter Name">
+                {!! Form::label('phone', 'Phone Number') !!}
+                {!! Form::text('phone', $phone, ['class' => 'form-control', 'placeholder' => 'Enter phone']) !!}
             </div>
         </div>
 
