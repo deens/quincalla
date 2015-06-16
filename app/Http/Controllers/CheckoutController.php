@@ -231,9 +231,9 @@ class CheckoutController extends Controller {
         }
 
         $payment = [
-            'name_on_cart' => Request::get('name_on_cart'),
-            'cart_number' => Request::get('cart_number'),
-            'cart_type' => Request::get('cart_type'),
+            'name_on_card' => Request::get('name_on_card'),
+            'card_number' => Request::get('card_number'),
+            'card_type' => Request::get('card_type'),
             'expiration_date_month' => Request::get('expiration_date_month'),
             'expiration_date_year' => Request::get('expiration_date_year'),
             'ccv_code' => Request::get('ccv_code')
