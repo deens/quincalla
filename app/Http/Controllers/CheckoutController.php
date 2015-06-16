@@ -6,6 +6,7 @@ use Request;
 use Session;
 use Quincalla\Address;
 use Quincalla\Product;
+use Quincalla\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
 
@@ -15,6 +16,9 @@ class CheckoutController extends Controller {
     {
         $this->middleware('checkout', [
             'except' => ['customer', 'postCustomer' ]
+        ]);
+        $this->middleware('auth', [
+            'only' => ['confirm']
         ]);
     }
 
@@ -261,6 +265,14 @@ class CheckoutController extends Controller {
         $checkout['billing']['same_address'] = (int)Request::get('same_address');
 
         Session::put('checkout', $checkout);
+
+        $user = User::create([
+            'name' => $checkout['account_name'],
+            'email' => $checkout['account_email']
+        ]);
+
+        Auth::login($user);
+
 
         return redirect()->route('checkout.confirm');
     }
