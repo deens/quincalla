@@ -268,13 +268,29 @@ class CheckoutController extends Controller {
         Session::put('checkout', $checkout);
 
         if ($checkout['account_type'] !== 'existing') {
+
+            if ($checkout['account_type'] === 'new') {
+                $role = 'customer';
+                $password = $checkout['account_password'];
+                $active = true;
+
+            } else {
+                $role = 'guest';
+                $password = '';
+                $active = false;
+            }
+
             $user = User::create([
+                'role' => $role,
                 'name' => $checkout['account_name'],
-                'email' => $checkout['account_email']
+                'email' => $checkout['account_email'],
+                'password' => $password,
+                'active' => $active,
             ]);
 
             Auth::login($user);
         }
+
 
 
         return redirect()->route('checkout.confirm');
