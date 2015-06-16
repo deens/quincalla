@@ -3,16 +3,23 @@
     var $billingAddress = $('.billing-address'),
         $sameAddress = $('#same_address');
 
-    var toggleBillingAddress = function() {
-        if ($sameAddress.is(":checked")) {
-            $billingAddress.hide();
-        } else {
-            $billingAddress.show();
+    var checkout = {
+        init: function() {
+            this.toggleBillingAddress();
+        },
+        toggleBillingAddress: function() {
+            if ($sameAddress.is(":checked")) {
+                $billingAddress.hide();
+            } else {
+                $billingAddress.show();
+            }
         }
     };
 
-    $sameAddress.click(toggleBillingAddress);
+    // on click
+    $sameAddress.click(checkout.toggleBillingAddress);
 
-    toggleBillingAddress;
+    // init
+    checkout.init();
 
 })(jQuery);

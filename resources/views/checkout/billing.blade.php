@@ -87,7 +87,7 @@
 
     <div class="checkbox">
         <label>
-            <input id="same_address" name="same_address" type="checkbox" value="1"> Use my shipping address as my billing address
+            <input id="same_address" name="same_address" type="checkbox" value="1" {{ $same_address ? 'checked' : '' }}> Use my shipping address as my billing address
         </label>
         <hr>
     </div>
@@ -132,7 +132,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>State/Province/Region</label>
+                {!! Form::label('state', 'State/Province/Region') !!}
                 <select name="state" class="form-control">
                     <option value="0">Select state</option>
                     <option value="1">California</option>
@@ -144,7 +144,7 @@
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Country</label>
+                {!! Form::label('country', 'Country') !!}
                 <select name="country" class="form-control">
                     <option value="1">USA</option>
                     <option value="2">England</option>

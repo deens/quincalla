@@ -155,7 +155,12 @@ class CheckoutController extends Controller {
             'zipcode' => Request::get('zipcode')
         ];
 
-        $checkout['shipping'] = $checkout['billing'] = $shippingAddress;
+        $checkout['shipping'] = $shippingAddress;
+
+        if ( ! isset($checkout['billing'])) {
+            $checkout['billing'] = $shippingAddress;
+            $checkout['billing']['same_address'] = 1;
+        }
 
         Session::put('checkout', $checkout);
 
@@ -181,7 +186,8 @@ class CheckoutController extends Controller {
             'state',
             'country',
             'zipcode',
-            'phone'
+            'phone',
+            'same_address'
         ];
         foreach($billingFields as $key)
         {
