@@ -267,12 +267,14 @@ class CheckoutController extends Controller {
 
         Session::put('checkout', $checkout);
 
-        $user = User::create([
-            'name' => $checkout['account_name'],
-            'email' => $checkout['account_email']
-        ]);
+        if ($checkout['account_type'] !== 'existing') {
+            $user = User::create([
+                'name' => $checkout['account_name'],
+                'email' => $checkout['account_email']
+            ]);
 
-        Auth::login($user);
+            Auth::login($user);
+        }
 
 
         return redirect()->route('checkout.confirm');
