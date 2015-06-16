@@ -245,7 +245,6 @@ class CheckoutController extends Controller {
             $billingAddress = [
                 'first_name' => Request::get('first_name'),
                 'last_name' => Request::get('last_name'),
-                'full_name' => Request::get('first_name') . ' ' . Request::get('last_name'),
                 'address' => Request::get('address'),
                 'address1' => Request::get('address1'),
                 'city' => Request::get('city'),
@@ -256,7 +255,7 @@ class CheckoutController extends Controller {
             ];
         }
 
-        $checkout['account_name'] = $billingAddress['full_name'];
+        $checkout['account_name'] = $billingAddress['first_name'] . ' ' . $billingAddress['last_name'];
         $checkout['payment'] = $payment;
         $checkout['billing'] = $billingAddress;
         $checkout['billing']['same_address'] = (int)Request::get('same_address');
