@@ -157,11 +157,6 @@ class CheckoutController extends Controller {
 
         $checkout['shipping'] = $shippingAddress;
 
-        if ( ! isset($checkout['billing'])) {
-            $checkout['billing'] = $shippingAddress;
-            $checkout['billing']['same_address'] = 1;
-        }
-
         Session::put('checkout', $checkout);
 
         return redirect()->route('checkout.billing');
@@ -176,6 +171,10 @@ class CheckoutController extends Controller {
                 ->with('error', 'Invalid shipping address');
         }
 
+        if ( ! isset($checkout['billing']['same_address'])) {
+            $checkout['billing']['same_address'] = 1;
+        }
+
         $billingFields = [
             'first_name',
             'last_name',
@@ -186,8 +185,7 @@ class CheckoutController extends Controller {
             'state',
             'country',
             'zipcode',
-            'phone',
-            'same_address'
+            'phone'
         ];
         foreach($billingFields as $key)
         {
@@ -226,6 +224,9 @@ class CheckoutController extends Controller {
         $validator = \Validator::make(Request::all(), $billingRules);
 
         if ($validator->fails()) {
+            $checkout['billing']['same_address'] = (int)Request::get('same_address');
+            Session::put('checkout', $checkout);
+
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -258,6 +259,7 @@ class CheckoutController extends Controller {
         $checkout['account_name'] = $billingAddress['full_name'];
         $checkout['payment'] = $payment;
         $checkout['billing'] = $billingAddress;
+        $checkout['billing']['same_address'] = (int)Request::get('same_address');
 
         Session::put('checkout', $checkout);
 
