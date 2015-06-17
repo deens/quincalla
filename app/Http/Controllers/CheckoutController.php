@@ -313,6 +313,8 @@ class CheckoutController extends Controller {
 
         // Cart::clean();
 
+        Session::put('checkout', $checkout);
+
         return redirect()->route('checkout.confirm');
     }
 
