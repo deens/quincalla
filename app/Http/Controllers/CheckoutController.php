@@ -2,9 +2,10 @@
 
 use Auth;
 use Cart;
+use DB;
 use Request;
 use Session;
-use Quincalla\Address;
+use Quincalla\Order;
 use Quincalla\Product;
 use Quincalla\User;
 use Quincalla\Http\Requests;
@@ -16,9 +17,6 @@ class CheckoutController extends Controller {
     {
         $this->middleware('checkout', [
             'except' => ['customer', 'postCustomer' ]
-        ]);
-        $this->middleware('auth', [
-            'only' => ['confirm']
         ]);
     }
 
@@ -265,8 +263,6 @@ class CheckoutController extends Controller {
         $checkout['billing'] = $billingAddress;
         $checkout['billing']['same_address'] = (int)Request::get('same_address');
 
-        Session::put('checkout', $checkout);
-
         if ($checkout['account_type'] !== 'existing') {
 
             if ($checkout['account_type'] === 'new') {
@@ -287,11 +283,35 @@ class CheckoutController extends Controller {
                 'password' => $password,
                 'active' => $active,
             ]);
-
-            Auth::login($user);
         }
 
+        // Create order
+        $order = Order::create([
+            'customer_email' => $checkout['account_email'],
+            'customer_name' => $checkout['account_name'],
+            'total_amount' => Cart::total(),
+            'status' => 'new',
+            'card_name' => $checkout['payment']['name_on_card'],
+            'card_type' => $checkout['payment']['card_type'],
+            'card_number' => $this->cardMasking($checkout['payment']['card_number']),
+            'shipping_address' => json_encode($checkout['shipping']),
+            'billing_address' => json_encode($checkout['billing']),
+        ]);
 
+        // Create order products
+        $cartContent = Cart::content();
+
+        foreach ($cartContent as $item) {
+            $order->items()->create([
+                'product_id' => $item->id,
+                'product_name' => $item->name,
+                'attributes' => json_encode($item->options),
+                'quantity' => $item->qty,
+                'price' => $item->price,
+            ]);
+        }
+
+        // Cart::clean();
 
         return redirect()->route('checkout.confirm');
     }
@@ -304,7 +324,14 @@ class CheckoutController extends Controller {
             return back()->with('error', 'Invalid payment');
         }
 
+        //Session::forget('checkout');
+
         return view('checkout.confirm');
+    }
+
+    private function cardMasking($number)
+    {
+        return str_repeat("*", strlen($number) - 4) . substr($number, -4);
     }
 
 }
