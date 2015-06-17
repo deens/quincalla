@@ -173,8 +173,4 @@
         {!! Form::submit('Continue to confirm', ['class' => 'btn btn-lg btn-primary']) !!}
     </div>
     {!! Form::close() !!}
-
-    <?php echo '<pre>'; ?>
-    {{ var_dump($checkout) }}
-    <?php echo '</pre>'; ?>
 @stop

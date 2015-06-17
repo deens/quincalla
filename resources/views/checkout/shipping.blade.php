@@ -121,9 +121,5 @@
             {!! Form::submit('Continue to payment', ['class' => 'btn btn-lg btn-primary']) !!}
         </div>
     {!! Form::close() !!}
-
-    <?php echo '<pre>'; ?>
-    {{ var_dump($checkout) }}
-    <?php echo '</pre>'; ?>
 </div>
 @stop
