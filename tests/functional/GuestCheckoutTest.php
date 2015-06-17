@@ -1,5 +1,10 @@
 <?php
 
+namespace Quincalla\Tests\Functional;
+
+use Quincalla\Tests\TestCase;
+use Quincalla\Tests\Functional\Helpers\CheckoutAuthTrait;
+use Quincalla\Tests\Functional\Helpers\CartTrait;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -7,33 +12,20 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class GuestCheckoutTest extends TestCase
 {
     use DatabaseTransactions;
+    use CheckoutAuthTrait;
+    use CartTrait;
 
     public function testGuestCheckout()
     {
-        $this->visit('/products/first-necklace-yellow-gold')
-            ->press('Add To Shopping Cart')
+        $this->addProductToCart();
 
-            ->seePageIs('/cart')
-            ->click('Continue to checkout')
+        $this->continueToCheckout();
 
-            ->seePageIs('/checkout/customer')
-            ->see('New Customer')
-            ->select('guest', 'account_type')
-            ->press('Continue')
+        $this->continueAsGuest();
 
-            ->seePageIs('/checkout/shipping')
-            ->type('Johnny', 'first_name')
-            ->type('Curley', 'last_name')
-            ->type('johnnyc@example.com', 'account_email')
-            ->type('1 First St.', 'address')
-            ->type('Apt. 234', 'address1')
-            ->type('San Francisco', 'city')
-            ->select('1', 'state')
-            ->type('94109', 'zipcode')
-            ->type('4152345678', 'phone')
-            ->press('Continue to payment')
+        $this->fillShippingAddress();
 
-            ->seePageIs('/checkout/billing')
+        $this->seePageIs('/checkout/billing')
             ->type('Johnny Curley', 'name_on_card')
             ->type('4242424242424242', 'card_number')
             ->select('1', 'card_type')
@@ -41,6 +33,20 @@ class GuestCheckoutTest extends TestCase
             ->press('Continue to confirm')
 
             ->seePageIs('/checkout/confirm');
+    }
+
+    private function addProductToCart()
+    {
+        return $this->visit('/products/first-necklace-yellow-gold')
+            ->press('Add To Shopping Cart');
+    }
+
+    private function selectContinueAsGuest()
+    {
+        return $this->seePageIs('/checkout/customer')
+            ->see('New Customer')
+            ->select('guest', 'account_type')
+            ->press('Continue');
     }
 }
 

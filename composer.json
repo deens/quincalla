@@ -20,14 +20,17 @@
         "barryvdh/laravel-debugbar": "~2.0@dev"
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "psr-4": {
             "Quincalla\\": "app/"
-        }
+        },
+        "classmap": [
+            "database"
+        ]
     },
     "autoload-dev": {
+        "psr-4": {
+            "Quincalla\\Tests\\": "tests/"
+        },
         "classmap": [
             "tests/TestCase.php"
         ]

@@ -12,7 +12,6 @@
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./tests/</directory>
-            <directory>./tests/functional/</directory>
         </testsuite>
     </testsuites>
     <filter>
