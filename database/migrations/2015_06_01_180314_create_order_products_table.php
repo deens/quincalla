@@ -20,7 +20,7 @@ class CreateOrderProductsTable extends Migration {
             $table->string('product_name');
             $table->text('attributes');
             $table->integer('quantity');
-            $table->string('price');
+            $table->float('price');
 			$table->timestamps();
 		});
 	}
