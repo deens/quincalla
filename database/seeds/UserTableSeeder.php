@@ -15,6 +15,8 @@ class UserTableSeeder extends Seeder {
                 'email' => 'john@example.com', 
                 'password' => Hash::make('password'),
                 'active' => true,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'role' => 'customer',
@@ -22,6 +24,8 @@ class UserTableSeeder extends Seeder {
                 'email' => 'jack@example.com', 
                 'password' => Hash::make('password'),
                 'active' => true,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'role' => 'customer',
@@ -29,6 +33,8 @@ class UserTableSeeder extends Seeder {
                 'email' => 'jim@example.com', 
                 'password' => Hash::make('password'),
                 'active' => false,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
             [
                 'role' => 'guest',
@@ -36,6 +42,8 @@ class UserTableSeeder extends Seeder {
                 'email' => 'ana@example.com', 
                 'password' => '',
                 'active' => false,
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
             ],
         ]);
     }
