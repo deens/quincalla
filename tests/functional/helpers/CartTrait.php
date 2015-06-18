@@ -10,5 +10,3 @@ trait CartTrait
             ->click('Continue to checkout');
     }
 }
-
-
