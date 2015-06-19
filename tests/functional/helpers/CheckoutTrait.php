@@ -20,24 +20,10 @@ trait CheckoutTrait
             ->press('Continue');
     }
 
-    public function fillShippingAddress($address = [])
-    {
-        $this->seePageIs('/checkout/shipping')
-            ->type($address['first_name'], 'first_name')
-            ->type($address['last_name'], 'last_name')
-            ->type($address['address'], 'address')
-            ->type($address['address1'], 'address1')
-            ->type($address['city'], 'city')
-            ->select($address['state'], 'state')
-            ->type($address['zipcode'], 'zipcode')
-            ->type($address['phone'], 'phone')
-            ->press('Continue to payment');
-    }
-
     public function fillShippingAddressWith(
-        $address = [], 
-        $email = null, 
-        $password = null, 
+        $address = [],
+        $email = null,
+        $password = null,
         $passwordConfirm = null)
     {
         $this->seePageIs('/checkout/shipping');
