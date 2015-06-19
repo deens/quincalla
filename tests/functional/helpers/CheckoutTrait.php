@@ -4,19 +4,34 @@ namespace Quincalla\Tests\Functional\Helpers;
 
 trait CheckoutTrait
 {
-    public function continueAsGuest()
+    public function continueAsCustomer($email, $password)
     {
         $this->seePageIs('/checkout/customer')
-            ->see('New Customer')
-            ->select('guest', 'account_type')
-            ->press('Continue');
+            ->type($email, 'email')
+            ->type($password, 'password')
+            ->press('Sign in');
+    }
+
+    public function continueAsGuest()
+    {
+        $this->continueCheckoutAuthAs('guest');
     }
 
     public function continueAsNewCustomer()
     {
+        $this->continueCheckoutAuthAs('new');
+    }
+
+    /**
+     * Continue as Guest or New Customer
+     *
+     * @param $role guest or new
+     */
+    public function continueCheckoutAuthAs($role = 'guest')
+    {
         $this->seePageIs('/checkout/customer')
             ->see('New Customer')
-            ->select('new', 'account_type')
+            ->select($role, 'account_type')
             ->press('Continue');
     }
 

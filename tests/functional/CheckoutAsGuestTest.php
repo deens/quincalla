@@ -10,18 +10,18 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class NewCustomerCheckoutTest extends TestCase
+class CheckoutAsGuest extends TestCase
 {
     use DatabaseTransactions;
     use ProductTrait;
     use CheckoutTrait;
     use CartTrait;
 
-    public function testCheckoutAsNewCustomerWithInvalidPassword()
+    public function testCheckoutAsNewGuest()
     {
         $this->addProductToCart('first-necklace-yellow-gold');
         $this->continueToCheckout();
-        $this->continueAsNewCustomer();
+        $this->continueAsGuest();
         $this->fillShippingAddressWith([
             'first_name' => 'Johnny',
             'last_name' => 'Curley',
@@ -31,8 +31,14 @@ class NewCustomerCheckoutTest extends TestCase
             'state' => '1',
             'zipcode' => '94109',
             'phone' => '4152345678'
-        ], 'johnnyc@example.com', 'password', 'not_matching_password');
+        ], 'johnnyc@example.com');
 
-        $this->see('The password confirmation does not match.');
+        $this->fillPaymentAndContinue([
+            'name_on_card' => 'Johnny',
+            'card_number' => '4242424242424242',
+            'card_type' => '1',
+            'ccv_code' => '123'
+        ]);
+        $this->seePageIs('/checkout/confirm');
     }
 }

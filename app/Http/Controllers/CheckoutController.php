@@ -67,19 +67,23 @@ class CheckoutController extends Controller {
             }
 
             $accountId = Auth::user()->id;
+            $accountEmail = Auth::user()->email;
         } else {
             $accountId = 0;
+            $accountEmail = '';
         }
 
         if ($accountType !== 'existing' && $accountId > 0) {
             $accountType = 'existing';
             $accountId = 0;
+            $accountEmail = '';
         }
 
         $checkout = [
             'account_type' => $accountType,
             'order_id' => null,
-            'account_id' => $accountId
+            'account_id' => $accountId,
+            'account_email' => $accountEmail,
         ];
 
         session(['checkout' => $checkout]);
