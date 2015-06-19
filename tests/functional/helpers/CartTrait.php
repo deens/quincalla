@@ -6,7 +6,7 @@ trait CartTrait
 {
     public function continueToCheckout()
     {
-        return $this->seePageIs('/cart')
+        $this->seePageIs('/cart')
             ->click('Continue to checkout');
     }
 }
