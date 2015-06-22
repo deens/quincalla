@@ -10,6 +10,7 @@ use Quincalla\Product;
 use Quincalla\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
+use Quincalla\Services\CheckoutCustomerLogin;
 
 class CheckoutController extends Controller {
 
@@ -27,7 +28,6 @@ class CheckoutController extends Controller {
 
     public function customer()
     {
-        // Check if cart is empty
         if ( ! Cart::content()->count()) {
             return redirect()
                 ->route('cart.index')
@@ -47,7 +47,7 @@ class CheckoutController extends Controller {
     public function shipping()
     {
         $checkout = session('checkout');
-        $account_type = $checkout['account_type'];
+        $account_type = $checkout['checkout']['type'];
 
         $shippingFields = [
             'first_name',
@@ -74,7 +74,7 @@ class CheckoutController extends Controller {
     public function postShipping()
     {
         $checkout = session('checkout');
-        $accountType = $checkout['account_type'];
+        $accountType = $checkout['checkout']['type'];
 
         $shippingRules = [
             'first_name' => 'required',
@@ -87,12 +87,12 @@ class CheckoutController extends Controller {
             'phone' => 'required'
         ];
 
-        if ($accountType !== 'existing') {
+        if ($accountType !== 'customer') {
             $checkout['account_email'] = Request::get('account_email');
             $shippingRules['account_email'] = 'required';
         }
 
-        if ($accountType === 'new') {
+        if ($accountType === 'new-customer') {
             $checkout['account_password'] = \Hash::make(Request::get('password'));
             $shippingRules['password'] = 'required|confirmed';
         }
@@ -220,9 +220,9 @@ class CheckoutController extends Controller {
         $checkout['billing'] = $billingAddress;
         $checkout['billing']['same_address'] = (int)Request::get('same_address');
 
-        if ($checkout['account_type'] !== 'existing') {
+        if ($checkout['checkout']['type'] !== 'customer') {
 
-            if ($checkout['account_type'] === 'new') {
+            if ($checkout['checkout']['type'] === 'new-customer') {
                 $role = 'customer';
                 $password = $checkout['account_password'];
                 $active = true;
@@ -235,8 +235,8 @@ class CheckoutController extends Controller {
 
             $user = User::create([
                 'role' => $role,
-                'name' => $checkout['account_name'],
-                'email' => $checkout['account_email'],
+                'name' => $checkout['account']['name'],
+                'email' => $checkout['account']['email'],
                 'password' => $password,
                 'active' => $active,
             ]);
@@ -244,8 +244,8 @@ class CheckoutController extends Controller {
 
         // Create order
         $order = Order::create([
-            'customer_email' => $checkout['account_email'],
-            'customer_name' => $checkout['account_name'],
+            'customer_email' => $checkout['account']['email'],
+            'customer_name' => $checkout['account']['name'],
             'total_amount' => Cart::total(),
             'status' => 'new',
             'card_name' => $checkout['payment']['name_on_card'],

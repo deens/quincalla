@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            @if ($account_type !== 'existing')
+            @if ($account_type !== 'customer')
             <div class="col-md-12">
                 <div class="form-group">
                     {!! Form::label('account_email', 'Email Address') !!}
@@ -40,7 +40,7 @@
             </div>
             @endif
 
-            @if ($account_type === 'new')
+            @if ($account_type === 'new-customer')
 
                 <div class="col-md-6">
                     <div class="form-group">

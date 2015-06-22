@@ -13,7 +13,7 @@
             {!! Form::open(['route' => 'checkout.customer']) !!}
 
                 <div class="radio">
-                    <label><input value="new" name="account_type" type="radio" checked="">Register Account</label>
+                    <label><input value="new-customer" name="account_type" type="radio" checked="">Register Account</label>
                 </div>
 
                 <div class="radio">
@@ -43,7 +43,7 @@
 
             {!! Form::open(['route' => 'checkout.customer']) !!}
 
-                {!! Form::hidden('account_type', 'existing') !!}
+                {!! Form::hidden('account_type', 'customer') !!}
 
                 <div class="form-group">
                     <label>Email Address</label>

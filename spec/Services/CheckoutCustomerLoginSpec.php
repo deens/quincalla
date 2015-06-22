@@ -20,11 +20,6 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
         $this->beConstructedWith($request, $auth, $validator);
     }
 
-    function it_should_return_an_exception_when_listener_missing()
-    {
-
-    }
-
     function it_should_redirect_back_with_message_when_account_type_empty(
         Listener $listener
     )

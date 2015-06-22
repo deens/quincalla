@@ -19,7 +19,7 @@ trait CheckoutTrait
 
     public function continueAsNewCustomer()
     {
-        $this->continueCheckoutAuthAs('new');
+        $this->continueCheckoutAuthAs('new-customer');
     }
 
     /**
