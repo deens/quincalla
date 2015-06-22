@@ -39,56 +39,9 @@ class CheckoutController extends Controller {
         return view('checkout.customer');
     }
 
-    public function postCustomer()
+    public function postCustomer(CheckoutCustomerLogin $customerLogin)
     {
-        $accountType = Request::get('account_type');
-
-        if ($accountType === 'existing') {
-
-            $existingAccountRules = [
-                'email' => 'required',
-                'password' => 'required'
-            ];
-
-            $validator = \Validator::make(Request::only(['email', 'password']), $existingAccountRules);
-            if ($validator->fails()) {
-                return back()->withErrors($validator->errors());
-            }
-
-            $validUser = Auth::attempt([
-                'email' => Request::get('email'),
-                'password' => Request::get('password'),
-                'active' => true,
-            ]);
-
-            if (! $validUser) {
-                return back()
-                    ->with('error', 'Invalid email address or password');
-            }
-
-            $accountId = Auth::user()->id;
-            $accountEmail = Auth::user()->email;
-        } else {
-            $accountId = 0;
-            $accountEmail = '';
-        }
-
-        if ($accountType !== 'existing' && $accountId > 0) {
-            $accountType = 'existing';
-            $accountId = 0;
-            $accountEmail = '';
-        }
-
-        $checkout = [
-            'account_type' => $accountType,
-            'order_id' => null,
-            'account_id' => $accountId,
-            'account_email' => $accountEmail,
-        ];
-
-        session(['checkout' => $checkout]);
-
-        return redirect()->route('checkout.shipping');
+        return $customerLogin->run($this);
     }
 
     public function shipping()
@@ -340,4 +293,23 @@ class CheckoutController extends Controller {
         return str_repeat("*", strlen($number) - 4) . substr($number, -4);
     }
 
+    public function redirectToShipping()
+    {
+        return redirect()->route('checkout.shipping');
+    }
+
+    public function redirectBackWithMessage($message)
+    {
+        return redirect()->back()->with('error', $message);
+    }
+
+    public function redirectBackWithValidationErrors($validator)
+    {
+        return redirect()->back()->withErrors($validator->errors())->withInput();
+    }
+
+    public function redirectBackWithInvalidCredentials()
+    {
+        return redirect()->back()->with('error', 'Invalid email or password');
+    }
 }
