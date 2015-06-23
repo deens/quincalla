@@ -49,16 +49,13 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
         Listener $listener
     )
     {
-        //Stub -> valor
         $request->get('account_type')->willReturn('guest');
 
         $request->session()->willReturn($session);
 
-        // Mock
         $session->put(Argument::type('string'), Argument::type('array'))
             ->shouldBeCalled();
 
-        // Mock
         $listener->redirectToShipping()
             ->shouldBeCalled()
             ->willReturn('redirect_to_shipping');

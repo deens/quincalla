@@ -4,28 +4,55 @@ namespace spec\Quincalla;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Illuminate\Http\Request;
+use Illuminate\Session\Store;
+use Illuminate\Session\SessionManager;
 
 class CheckoutSpec extends ObjectBehavior
 {
-
-    function it_is_initializable()
+    function let(Store $session)
     {
-        $this->shouldHaveType('Quincalla\Checkout');
+        $this->beConstructedWith($session);
     }
 
-    function it_should_return_eliurkis()
+    function it_should_assign_default_session_when_use_for_the_first_time(
+        Store $session
+    )
     {
-        $this->get('account.email')->shouldBe("eliurkis@gmail.com");
+        $session->has(Argument::type('string'))->willReturn(false);
+
+        $this->get('checkout.type')->shouldBeLike('customer');
     }
 
-    function it_should_overwrite_email()
+    function it_should_populate_checkout_with_existing_session(Store $session)
     {
-        $email = 'mojito@example.com';
+        $session->has(Argument::type('string'))->willReturn(true);
+        $session->get(Argument::exact('checkout'), Argument::type('array'))
+            ->shouldBeCalled()
+            ->willReturn(['property' => ['value' => 'working']]);
 
-        $this->get('account.email')->shouldBe("eliurkis@gmail.com");
+        $this->get('property.value')->shouldBeLike('working');
+    }
 
-        $this->set('account.email', $email);
+    function it_should_store_checkout_session_for_next_request(Store $session)
+    {
+        $sessionData = ['property' => ['value' => 'working']];
+        $sessionExpectedData = ['property' => ['value' => 'working', 'newvalue' => 'progress']];
 
-        $this->get('account.email')->shouldBe($email);
+
+        $session->has(Argument::type('string'))->willReturn(true);
+        $session->get(Argument::exact('checkout'), Argument::type('array'))
+            ->shouldBeCalled()
+            ->willReturn($sessionData);
+
+        $this->set('property.newvalue', 'progress');
+
+        $session->put(Argument::type('string'), $sessionExpectedData)
+            ->shouldBeCalled()
+            ->willReturn('updated_session_saved');
+
+        $this->all()->shouldBeLike($sessionExpectedData);
+
+        $this->store()->shouldBe('updated_session_saved');
     }
 }

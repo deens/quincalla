@@ -3,18 +3,48 @@
 namespace Quincalla;
 
 use Illuminate\Config\Repository;
+use Illuminate\Http\Request;
+use Illuminate\Session\SessionManager;
+use Illuminate\Session\Store;
 
 class Checkout extends Repository
 {
-    public function __construct()
-    {
-        $data = [
-            'account' => [
-                'id' => 1,
-                'email' => 'eliurkis@gmail.com'
-            ]
-        ];
+    protected $session;
+    protected $sessionKey = 'checkout';
+    protected $sessionItems;
 
-        parent::__construct($data);
+    protected $defaults = [
+        'checkout' => [
+            'type' => 'customer',
+        ],
+        'account' => [
+            'id' => 1,
+            'name' => '',
+            'email' => '',
+            'register' => false,
+        ],
+        'shipping' => [
+        ],
+        'billing' => [
+        ]
+    ];
+
+    public function __construct(Store $session)
+    {
+        $this->session = $session;
+
+        if ($this->session->has($this->sessionKey)) {
+            parent::__construct(
+                $this->session->get($this->sessionKey, $this->defaults)
+            );
+        } else {
+            parent::__construct($this->defaults);
+        }
+    }
+
+
+    public function store()
+    {
+        return $this->session->put($this->sessionKey, $this->all());
     }
 }
