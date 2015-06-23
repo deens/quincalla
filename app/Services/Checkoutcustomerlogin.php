@@ -29,6 +29,12 @@ class CheckoutCustomerLogin
 
     public function __construct(Request $request, Guard $auth, Validator $validator)
     {
+        $this->accountTypes = [
+            'customer',
+            'guest',
+            'new-customer'
+        ];
+
         $this->request = $request;
         $this->validator = $validator;
         $this->auth = $auth;
@@ -38,7 +44,7 @@ class CheckoutCustomerLogin
     {
         $this->listener = $listener;
 
-        if (! $this->request->get('account_type')) {
+        if (! $this->validAccountType($this->request->get('account_type'))) {
             return $this->listener->redirectBackWithMessage('Invalid Account Type Selected');
         }
 
@@ -48,19 +54,9 @@ class CheckoutCustomerLogin
             return $this->loginExistingCustomer();
         }
 
-        if (!$this->isNewCustomerAccount()) {
-            return $this->listener->redirectBackWithMessage('Invalid Account Type Selected');
-        }
-
         $this->request->session()->put('checkout', $this->checkout);
 
         return $this->listener->redirectToShipping();
-    }
-
-    public function isNewCustomerAccount()
-    {
-        return $this->checkout['checkout']['type'] === 'guest' 
-            || $this->checkout['checkout']['type'] === 'new-customer';
     }
 
     public function loginExistingCustomer()
@@ -93,5 +89,13 @@ class CheckoutCustomerLogin
         $this->request->session()->put('checkout', $this->checkout);
 
         return $this->listener->redirectToShipping();
+    }
+
+    private function validAccountType($type)
+    {
+        if (! in_array($type, $this->accountTypes)) {
+            return false;
+        }
+        return true;
     }
 }
