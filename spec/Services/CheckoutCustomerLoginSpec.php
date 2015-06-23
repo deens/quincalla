@@ -5,13 +5,13 @@ namespace spec\Quincalla\Services;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Factory as Validator;
-use Illuminate\Validation\Validator as ValidatorInstance;
 use Illuminate\Auth\Guard;
 use Quincalla\Http\Controllers\CheckoutController as Listener;
 use Quincalla\User;
 use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store as Session;
+use Illuminate\Validation\Factory as Validator;
+use Illuminate\Validation\Validator as ValidatorInstance;
 
 class CheckoutCustomerLoginSpec extends ObjectBehavior
 {
@@ -49,13 +49,16 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
         Listener $listener
     )
     {
+        //Stub -> valor
         $request->get('account_type')->willReturn('guest');
 
         $request->session()->willReturn($session);
 
+        // Mock
         $session->put(Argument::type('string'), Argument::type('array'))
             ->shouldBeCalled();
 
+        // Mock
         $listener->redirectToShipping()
             ->shouldBeCalled()
             ->willReturn('redirect_to_shipping');
