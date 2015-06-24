@@ -5,6 +5,7 @@ use Cart;
 use DB;
 use Request;
 use Session;
+use Quincalla\Checkout;
 use Quincalla\Order;
 use Quincalla\Product;
 use Quincalla\User;
@@ -14,11 +15,15 @@ use Quincalla\Services\CheckoutCustomerLogin;
 
 class CheckoutController extends Controller {
 
-    public function __construct()
+    protected $checkout;
+
+    public function __construct(Checkout $checkout)
     {
         $this->middleware('checkout', [
             'except' => ['customer', 'postCustomer' ]
         ]);
+
+        $this->checkout = $checkout;
     }
 
     public function index()
@@ -34,7 +39,7 @@ class CheckoutController extends Controller {
                 ->with('error', 'Please add products to your shopping cart');
         }
 
-        Session::forget('checkout');
+        $this->checkout->destroy();
 
         return view('checkout.customer');
     }
@@ -46,8 +51,7 @@ class CheckoutController extends Controller {
 
     public function shipping()
     {
-        $checkout = session('checkout');
-        $account_type = $checkout['checkout']['type'];
+        $account_type = $this->checkout->get('checkout.type');
 
         $shippingFields = [
             'first_name',
@@ -63,18 +67,18 @@ class CheckoutController extends Controller {
         ];
         foreach($shippingFields as $key)
         {
-            $checkout['shipping'][$key] = isset($checkout['shipping'][$key]) ? $checkout['shipping'][$key] : Request::old($key);
+            $this->checkout->set('shipping.' .$key, $this->checkout->get('shipping.'.$key, Request::old($key)));
         }
 
-        $checkout['shipping']['account_email'] = isset($checkout['account_email']) ? $checkout['account_email'] : Request::old('account_email');
+        $this->checkout->set('shipping.account_email', $this->checkout->get('account.email', Request::old('account_email')));
 
-        return view('checkout.shipping', compact('account_type'))->with($checkout['shipping']);
+        return view('checkout.shipping', compact('account_type'))
+            ->with($this->checkout->get('shipping'));
     }
 
     public function postShipping()
     {
-        $checkout = session('checkout');
-        $accountType = $checkout['checkout']['type'];
+        $accountType = $this->checkout->get('checkout.type');
 
         $shippingRules = [
             'first_name' => 'required',
@@ -88,12 +92,12 @@ class CheckoutController extends Controller {
         ];
 
         if ($accountType !== 'customer') {
-            $checkout['account_email'] = Request::get('account_email');
+            $this->checkout->set('account.email', Request::get('account_email'));
             $shippingRules['account_email'] = 'required';
         }
 
         if ($accountType === 'new-customer') {
-            $checkout['account_password'] = \Hash::make(Request::get('password'));
+            $this->checkout->set('account.password', \Hash::make(Request::get('password')));
             $shippingRules['password'] = 'required|confirmed';
         }
 
@@ -103,7 +107,7 @@ class CheckoutController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $shippingAddress = [
+        $this->checkout->set('shipping', [
             'first_name' => Request::get('first_name'),
             'last_name' => Request::get('last_name'),
             'address' => Request::get('address'),
@@ -113,26 +117,22 @@ class CheckoutController extends Controller {
             'country' => Request::get('country'),
             'phone' => Request::get('phone'),
             'zipcode' => Request::get('zipcode')
-        ];
+        ]);
 
-        $checkout['shipping'] = $shippingAddress;
-
-        Session::put('checkout', $checkout);
+        $this->checkout->store();
 
         return redirect()->route('checkout.billing');
     }
 
     public function billing()
     {
-        $checkout = session('checkout');
-
-        if (! isset($checkout['shipping']) || !count($checkout['shipping'])) {
+        if ( ! $this->checkout->has('shipping') || ! count($this->checkout->get('shipping'))) {
             return back()
                 ->with('error', 'Invalid shipping address');
         }
 
-        if ( ! isset($checkout['billing']['same_address'])) {
-            $checkout['billing']['same_address'] = 1;
+        if ( ! $this->checkout->has('billing.same_address')) {
+            $this->checkout->set('billing.same_address', 1);
         }
 
         $billingFields = [
@@ -147,18 +147,19 @@ class CheckoutController extends Controller {
             'zipcode',
             'phone'
         ];
+
         foreach($billingFields as $key)
         {
-            $checkout['billing'][$key] = isset($checkout['billing'][$key]) ? $checkout['billing'][$key] : Request::old($key);
+            $this->checkout->set('billing.'.$key, $this->checkout->get('billing.'.$key, Request::old($key)));
         }
 
-        return view('checkout.billing')->with($checkout['billing']);
+        $this->checkout->store();
+
+        return view('checkout.billing')->with($this->checkout->get('billing'));
     }
 
     public function postBilling()
     {
-        $checkout = session('checkout');
-
         $billingRules = [
             'name_on_card' => 'required',
             'card_number' => 'required',
@@ -184,8 +185,11 @@ class CheckoutController extends Controller {
         $validator = \Validator::make(Request::all(), $billingRules);
 
         if ($validator->fails()) {
-            $checkout['billing']['same_address'] = (int)Request::get('same_address');
-            Session::put('checkout', $checkout);
+            // $checkout['billing']['same_address'] = (int)Request::get('same_address');
+            $this->checkout->set('billing.same_address', Request::get('same_address'));
+
+            // TODO: Check if necesary
+            $this->checkout->store();
 
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -200,7 +204,7 @@ class CheckoutController extends Controller {
         ];
 
         if (Request::get('same_address')) {
-            $billingAddress = $checkout['shipping'];
+            $billingAddress = $this->checkout->get('shipping');
         } else {
             $billingAddress = [
                 'first_name' => Request::get('first_name'),
@@ -215,16 +219,16 @@ class CheckoutController extends Controller {
             ];
         }
 
-        $checkout['account_name'] = $billingAddress['first_name'] . ' ' . $billingAddress['last_name'];
-        $checkout['payment'] = $payment;
-        $checkout['billing'] = $billingAddress;
-        $checkout['billing']['same_address'] = (int)Request::get('same_address');
+        $this->checkout->set('account.name', $billingAddress['first_name'] . ' ' . $billingAddress['last_name']);
+        $this->checkout->set('payment', $payment);
+        $this->checkout->set('billing', $billingAddress);
+        $this->checkout->set('billing.same_address', (int)Request::get('same_address'));
 
-        if ($checkout['checkout']['type'] !== 'customer') {
+        if ($this->checkout->get('checkout.type') !== 'customer') {
 
-            if ($checkout['checkout']['type'] === 'new-customer') {
+            if ($this->checkout->get('checkout.type') === 'new-customer') {
                 $role = 'customer';
-                $password = $checkout['account_password'];
+                $password = $this->checkout->get('account.password');
                 $active = true;
 
             } else {
@@ -235,8 +239,8 @@ class CheckoutController extends Controller {
 
             $user = User::create([
                 'role' => $role,
-                'name' => $checkout['account']['name'],
-                'email' => $checkout['account']['email'],
+                'name' => $this->checkout->get('account.name'),
+                'email' => $this->checkout->get('account.email'),
                 'password' => $password,
                 'active' => $active,
             ]);
@@ -244,15 +248,15 @@ class CheckoutController extends Controller {
 
         // Create order
         $order = Order::create([
-            'customer_email' => $checkout['account']['email'],
-            'customer_name' => $checkout['account']['name'],
+            'customer_email' => $this->checkout->get('account.email'),
+            'customer_name' => $this->checkout->get('account.name'),
             'total_amount' => Cart::total(),
             'status' => 'new',
-            'card_name' => $checkout['payment']['name_on_card'],
-            'card_type' => $checkout['payment']['card_type'],
-            'card_number' => $this->cardMasking($checkout['payment']['card_number']),
-            'shipping_address' => json_encode($checkout['shipping']),
-            'billing_address' => json_encode($checkout['billing']),
+            'card_name' => $this->checkout->get('payment.name_on_card'),
+            'card_type' => $this->checkout->get('payment.card_type'),
+            'card_number' => $this->cardMasking($this->checkout->get('payment.card_number')),
+            'shipping_address' => json_encode($this->checkout->get('shipping')),
+            'billing_address' => json_encode($this->checkout->get('billing')),
         ]);
 
         // Create order products
@@ -270,20 +274,20 @@ class CheckoutController extends Controller {
 
         // Cart::clean();
 
-        Session::put('checkout', $checkout);
+        $this->checkout->store();
+
+        // Session::put('checkout', $checkout);
 
         return redirect()->route('checkout.confirm');
     }
 
     public function confirm()
     {
-        $checkout = session('checkout');
-
-        if (! isset($checkout['payment']) || ! count($checkout['payment'])) {
+        if (! $this->checkout->has('payment') || ! count($this->checkout->get('payment'))) {
             return back()->with('error', 'Invalid payment');
         }
 
-        //Session::forget('checkout');
+        // $this->checkout->destroy();
 
         return view('checkout.confirm');
     }

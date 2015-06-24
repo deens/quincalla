@@ -54,6 +54,7 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
 
         $checkout->set(Argument::type('string'), Argument::type('string'))->shouldBeCalled();
         $checkout->get(Argument::type('string'))->shouldBeCalled();
+        $checkout->store()->shouldBeCalled();
 
         $listener->redirectToShipping()
             ->shouldBeCalled()
@@ -137,6 +138,7 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
 
         $checkout->set(Argument::type('string'), Argument::type('string'))->shouldBeCalled();
         $checkout->get(Argument::type('string'))->willReturn('customer');
+        $checkout->store()->shouldBeCalled();
 
         $validatorInstance->fails()->shouldBeCalled()->willReturn(false);
         $validator->make(Argument::type('array'), Argument::type('array'))

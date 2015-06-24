@@ -18,6 +18,7 @@ class CheckoutAsCustomerTest extends TestCase
         $this->addProductToCart('first-necklace-yellow-gold');
         $this->continueToCheckout();
         $this->continueAsCustomer('john@example.com', 'password');
+
         $this->fillShippingAddressWith([
             'first_name' => 'John',
             'last_name' => 'Doe',
@@ -28,6 +29,7 @@ class CheckoutAsCustomerTest extends TestCase
             'zipcode' => '94109',
             'phone' => '4152345678'
         ]);
+
         $this->fillPaymentAndContinue([
             'name_on_card' => 'Johnny',
             'card_number' => '4242424242424242',

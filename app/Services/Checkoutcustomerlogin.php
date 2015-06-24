@@ -44,6 +44,8 @@ class CheckoutCustomerLogin
             return $this->loginCustomer();
         }
 
+        $this->checkout->store();
+
         return $this->listener->redirectToShipping();
     }
 
@@ -73,6 +75,8 @@ class CheckoutCustomerLogin
 
         $this->checkout->set('account.id', $this->auth->user()->id);
         $this->checkout->set('account.email', $this->auth->user()->email) ;
+
+        $this->checkout->store();
 
         return $this->listener->redirectToShipping();
     }
