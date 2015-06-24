@@ -48,10 +48,4 @@ class CheckoutSession {
 
 		return $next($request);
 	}
-
-    public function terminate($request, $response)
-    {
-        $this->checkout->store();
-    }
-
 }
