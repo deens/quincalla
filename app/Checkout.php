@@ -46,4 +46,9 @@ class Checkout extends Repository
     {
         return $this->session->put($this->sessionKey, $this->all());
     }
+
+    public function destroy()
+    {
+        return $this->session->forget($this->sessionKey);
+    }
 }

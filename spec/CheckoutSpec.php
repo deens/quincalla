@@ -55,4 +55,15 @@ class CheckoutSpec extends ObjectBehavior
 
         $this->store()->shouldBe('updated_session_saved');
     }
+
+    function it_should_destroy_session(Store $session)
+    {
+        $session->has(Argument::type('string'))->shouldBeCalled();
+        $session->forget(Argument::type('string'))
+            ->shouldBeCalled()
+            ->willReturn('checkout_destroyed');
+
+        $this->destroy()->shouldBe('checkout_destroyed');
+    }
+
 }
