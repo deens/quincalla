@@ -15,7 +15,7 @@ class CheckoutSpec extends ObjectBehavior
         $this->beConstructedWith($session);
     }
 
-    function it_should_assign_default_session_when_use_for_the_first_time(
+    function it_should_assign_default_session_when_checkout_start(
         Store $session
     )
     {
@@ -27,7 +27,7 @@ class CheckoutSpec extends ObjectBehavior
     function it_should_populate_checkout_with_existing_session(Store $session)
     {
         $session->has(Argument::type('string'))->willReturn(true);
-        $session->get(Argument::exact('checkout'), Argument::type('array'))
+        $session->get(Argument::exact('checkout'))
             ->shouldBeCalled()
             ->willReturn(['property' => ['value' => 'working']]);
 
@@ -41,7 +41,7 @@ class CheckoutSpec extends ObjectBehavior
 
 
         $session->has(Argument::type('string'))->willReturn(true);
-        $session->get(Argument::exact('checkout'), Argument::type('array'))
+        $session->get(Argument::exact('checkout'))
             ->shouldBeCalled()
             ->willReturn($sessionData);
 

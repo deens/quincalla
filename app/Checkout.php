@@ -35,13 +35,12 @@ class Checkout extends Repository
 
         if ($this->session->has($this->sessionKey)) {
             parent::__construct(
-                $this->session->get($this->sessionKey, $this->defaults)
+                $this->session->get($this->sessionKey)
             );
         } else {
             parent::__construct($this->defaults);
         }
     }
-
 
     public function store()
     {
