@@ -5,6 +5,7 @@ namespace Quincalla\Services;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Guard;
 use Illuminate\Validation\Factory as Validator;
+use Quincalla\Checkout;
 
 class CheckoutCustomerLogin
 {
@@ -13,31 +14,20 @@ class CheckoutCustomerLogin
     protected $validator;
     protected $auth;
     protected $listener;
-    protected $checkout = [
-        'checkout' => [
-            'type' => 'customer',
-        ],
-        'account' => [
-            'id' => 0,
-            'email' => '',
-            'name' => '',
-            'register' => false
-        ]
-    ];
-
+    protected $checkout;
     protected $credentials = [];
-
-    public function __construct(Request $request, Guard $auth, Validator $validator)
-    {
-        $this->accountTypes = [
+    protected $accountTypes = [
             'customer',
             'guest',
             'new-customer'
-        ];
+    ];
 
+    public function __construct(Checkout $checkout, Request $request, Guard $auth, Validator $validator)
+    {
         $this->request = $request;
         $this->validator = $validator;
         $this->auth = $auth;
+        $this->checkout = $checkout;
     }
 
     public function run($listener)
@@ -48,18 +38,16 @@ class CheckoutCustomerLogin
             return $this->listener->redirectBackWithMessage('Invalid Account Type Selected');
         }
 
-        $this->checkout['checkout']['type'] = $this->request->get('account_type');
+        $this->checkout->set('checkout.type', $this->request->get('account_type'));
 
-        if ($this->checkout['checkout']['type'] === 'customer') {
-            return $this->loginExistingCustomer();
+        if ($this->checkout->get('checkout.type') === 'customer') {
+            return $this->loginCustomer();
         }
-
-        $this->request->session()->put('checkout', $this->checkout);
 
         return $this->listener->redirectToShipping();
     }
 
-    public function loginExistingCustomer()
+    public function loginCustomer()
     {
         $rules = [
             'email' => 'required|email',
@@ -83,10 +71,8 @@ class CheckoutCustomerLogin
             return $this->listener->redirectBackWithInvalidCredentials();
         }
 
-        $this->checkout['account']['id'] = $this->auth->user()->id;
-        $this->checkout['account']['email'] = $this->auth->user()->email;
-
-        $this->request->session()->put('checkout', $this->checkout);
+        $this->checkout->set('account.id', $this->auth->user()->id);
+        $this->checkout->set('account.email', $this->auth->user()->email) ;
 
         return $this->listener->redirectToShipping();
     }

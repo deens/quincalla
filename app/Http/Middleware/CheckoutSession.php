@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Quincalla\Checkout;
 
 class CheckoutSession {
 
@@ -18,9 +19,10 @@ class CheckoutSession {
 	 * @param  Guard  $auth
 	 * @return void
 	 */
-	public function __construct(Guard $auth)
+	public function __construct(Guard $auth, Checkout $checkout)
 	{
 		$this->auth = $auth;
+        $this->checkout = $checkout;
 	}
 
 	/**
@@ -46,5 +48,10 @@ class CheckoutSession {
 
 		return $next($request);
 	}
+
+    public function terminate($request, $response)
+    {
+        $this->checkout->store();
+    }
 
 }

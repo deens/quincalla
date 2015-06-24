@@ -8,16 +8,17 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Guard;
 use Quincalla\Http\Controllers\CheckoutController as Listener;
 use Quincalla\User;
-use Illuminate\Session\SessionManager;
-use Illuminate\Session\Store as Session;
+// use Illuminate\Session\SessionManager;
+// use Illuminate\Session\Store as Session;
 use Illuminate\Validation\Factory as Validator;
 use Illuminate\Validation\Validator as ValidatorInstance;
+use Quincalla\Checkout;
 
 class CheckoutCustomerLoginSpec extends ObjectBehavior
 {
-    function let(Request $request, Guard $auth, Validator $validator)
+    function let(Checkout $checkout, Request $request, Guard $auth, Validator $validator)
     {
-        $this->beConstructedWith($request, $auth, $validator);
+        $this->beConstructedWith($checkout, $request, $auth, $validator);
     }
 
     function it_should_redirect_back_with_message_when_account_type_empty(
@@ -45,16 +46,14 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
 
     function it_should_redirect_to_shipping_when_account_type_is_guest(
         Request $request,
-        Session $session,
+        Checkout $checkout,
         Listener $listener
     )
     {
         $request->get('account_type')->willReturn('guest');
 
-        $request->session()->willReturn($session);
-
-        $session->put(Argument::type('string'), Argument::type('array'))
-            ->shouldBeCalled();
+        $checkout->set(Argument::type('string'), Argument::type('string'))->shouldBeCalled();
+        $checkout->get(Argument::type('string'))->shouldBeCalled();
 
         $listener->redirectToShipping()
             ->shouldBeCalled()
@@ -65,6 +64,7 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
 
     function it_should_redirect_back_with_validation_errors(
         Request $request,
+        Checkout $checkout,
         Validator $validator,
         ValidatorInstance $validatorInstance,
         Listener $listener
@@ -73,6 +73,9 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
         $request->get('account_type')->willReturn('customer');
         $request->get('email')->shouldBeCalled();
         $request->get('password')->shouldBeCalled();
+
+        $checkout->set(Argument::type('string'), Argument::type('string'))->shouldBeCalled();
+        $checkout->get(Argument::type('string'))->willReturn('customer');
 
         $validatorInstance->fails()->shouldBeCalled()->willReturn(true);
         $validator->make(Argument::type('array'), Argument::type('array'))
@@ -87,6 +90,7 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
 
     function it_should_redirect_back_with_invalid_credentials(
         Request $request,
+        Checkout $checkout,
         Validator $validator,
         ValidatorInstance $validatorInstance,
         Guard $auth,
@@ -96,6 +100,10 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
         $request->get('account_type')->willReturn('customer');
         $request->get('email')->shouldBeCalled();
         $request->get('password')->shouldBeCalled();
+
+
+        $checkout->set(Argument::type('string'), Argument::type('string'))->shouldBeCalled();
+        $checkout->get(Argument::type('string'))->willReturn('customer');
 
         $validatorInstance->fails()->shouldBeCalled()->willReturn(false);
         $validator->make(Argument::type('array'), Argument::type('array'))
@@ -115,17 +123,20 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
 
     function it_should_login_in_customer_with_valid_credentials_and_redirect_to_shipping(
         Request $request,
+        Checkout $checkout,
         Validator $validator,
         ValidatorInstance $validatorInstance,
         Guard $auth,
         User $user,
-        Session $session,
         Listener $listener
     )
     {
         $request->get('account_type')->willReturn('customer');
         $request->get('email')->shouldBeCalled();
         $request->get('password')->shouldBeCalled();
+
+        $checkout->set(Argument::type('string'), Argument::type('string'))->shouldBeCalled();
+        $checkout->get(Argument::type('string'))->willReturn('customer');
 
         $validatorInstance->fails()->shouldBeCalled()->willReturn(false);
         $validator->make(Argument::type('array'), Argument::type('array'))
@@ -137,14 +148,11 @@ class CheckoutCustomerLoginSpec extends ObjectBehavior
             ->willReturn(true);
         $auth->user()->willReturn($user);
 
-        $user->getAttribute('id')->willReturn(Argument::type('integer'));
-        $user->getAttribute('email')->willReturn(Argument::type('string'));
+        $user->getAttribute('id')->willReturn(1);
+        $user->getAttribute('email')->willReturn('user@example.com');
 
-        $request->session()->shouldBeCalled()
-            ->willReturn($session);
-
-        $session->put(Argument::type('string'), Argument::type('array'))
-            ->shouldBeCalled();
+        $checkout->set('account.id', Argument::type('integer'))->shouldBeCalled();
+        $checkout->set('account.email', Argument::type('string'))->shouldBeCalled();
 
         $listener->redirectToShipping()
             ->shouldBeCalled()
