@@ -22,7 +22,7 @@
                             <tr>
                                 <td><img src="http://placehold.it/50x50" alt=""></td>
                                 <td>
-                                    <p><a href="">{{ $product->name }}</a></p>
+                                    <p><a href="{{ route('products.show', [$product->product->slug])}}">{{ $product->name }}</a></p>
                                 </td>
                                 <td>
                                     <p>${{ $product->price }}</p>
