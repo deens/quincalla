@@ -12,6 +12,7 @@ use Quincalla\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
 use Quincalla\Services\CheckoutCustomerLogin;
+use Quincalla\Services\CheckoutStoreShipping;
 
 class CheckoutController extends Controller {
 
@@ -76,52 +77,9 @@ class CheckoutController extends Controller {
             ->with($this->checkout->get('shipping'));
     }
 
-    public function postShipping()
+    public function postShipping(CheckoutStoreShipping $storeShipping)
     {
-        $accountType = $this->checkout->get('checkout.type');
-
-        $shippingRules = [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'state' => 'required|not_in:0',
-            'country' => 'required|not_in:0',
-            'zipcode' => 'required',
-            'phone' => 'required'
-        ];
-
-        if ($accountType !== 'customer') {
-            $this->checkout->set('account.email', Request::get('account_email'));
-            $shippingRules['account_email'] = 'required';
-        }
-
-        if ($accountType === 'new-customer') {
-            $this->checkout->set('account.password', \Hash::make(Request::get('password')));
-            $shippingRules['password'] = 'required|confirmed';
-        }
-
-        $validator = \Validator::make(Request::all(), $shippingRules);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $this->checkout->set('shipping', [
-            'first_name' => Request::get('first_name'),
-            'last_name' => Request::get('last_name'),
-            'address' => Request::get('address'),
-            'address1' => Request::get('address1'),
-            'state' => Request::get('state'),
-            'city' => Request::get('city'),
-            'country' => Request::get('country'),
-            'phone' => Request::get('phone'),
-            'zipcode' => Request::get('zipcode')
-        ]);
-
-        $this->checkout->store();
-
-        return redirect()->route('checkout.billing');
+        return $storeShipping->run($this);
     }
 
     public function billing()
@@ -300,6 +258,11 @@ class CheckoutController extends Controller {
     public function redirectToShipping()
     {
         return redirect()->route('checkout.shipping');
+    }
+
+    public function redirectToBilling()
+    {
+        return redirect()->route('checkout.billing');
     }
 
     public function redirectBackWithMessage($message)

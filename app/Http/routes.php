@@ -23,7 +23,6 @@ Route::controllers([
 
 // Checkout
 
-
 Route::group(['prefix' => 'checkout'], function() {
     Route::get('/', ['as' => 'checkout.index', 'uses' => 'CheckoutController@index']);
     Route::get('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@customer']);
