@@ -17,7 +17,7 @@ class CheckoutStoreShippingSpec extends ObjectBehavior
         $this->beConstructedWith($request, $checkout, $validator);
     }
 
-    function it_should_validate_guest(
+    function it_should_redirect_back_with_validation_errors(
         Request $request,
         Checkout $checkout,
         Listener $listener,
