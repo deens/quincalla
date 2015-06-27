@@ -24,4 +24,9 @@ class Product extends Model {
     {
         return $this->belongsTo('Quincalla\Collection');
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany('Quincalla\Tag');
+    }
 }
