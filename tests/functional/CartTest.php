@@ -24,16 +24,4 @@ class CartTest extends TestCase
             ->seePageIs('/products/first-necklace-yellow-gold');
     }
 
-    public function testRemoveProduct()
-    {
-
-    }
-
-    public function testUpdateProductQuantity()
-    {
-    }
-
-    public function testDestroyCartProducts()
-    {
-    }
 }
