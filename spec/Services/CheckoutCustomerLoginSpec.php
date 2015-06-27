@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Guard;
 use Quincalla\Http\Controllers\CheckoutController as Listener;
 use Quincalla\User;
-// use Illuminate\Session\SessionManager;
-// use Illuminate\Session\Store as Session;
 use Illuminate\Validation\Factory as Validator;
 use Illuminate\Validation\Validator as ValidatorInstance;
 use Quincalla\Checkout;
