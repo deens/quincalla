@@ -60,11 +60,11 @@
                             </tr>
                             <tr>
                                 <td>Shipping</td>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                             <tr>
                                 <td>Tax</td>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                             <tr>
                                 <td><h4>Total</h4></td>
