@@ -27,36 +27,37 @@ class CartController extends Controller {
             $product->price
         );
 
-        return redirect()->route('cart.index')
-            ->with('success', 'Product has been added to your shopping bag');
+        return $this->redirectBackWithMessage('Product has been added to your shopping bag');
     }
 
     public function update()
     {
         $quantities = \Request::get('quantities');
 
-        foreach ($quantities as $rowid => $quantity) {
-            Cart::update($rowid, $quantity);
+        foreach ($quantities as $rowId => $quantity) {
+            Cart::update($rowId, $quantity);
         }
 
-        return redirect()->route('cart.index')
-            ->with('success', 'Product quantity updated');
+        return $this->redirectBackWithMessage('Product quantity updated');
     }
 
-    public function destroy($id)
+    public function remove($id)
     {
         Cart::remove($id);
 
-        return redirect()->route('cart.index')
-            ->with('success', 'Product has beeen deleted from your Shopping bag');
+        return $this->redirectBackWithMessage('Product has been deleted from your Shopping bag');
     }
 
-    public function clean()
+    public function destroy()
     {
         Cart::destroy();
 
-        return redirect()->route('cart.index')
-            ->with('success', 'Your shopping cart is empty');
+        return $this->redirectBackWithMessage('Your shopping cart is empty');
+    }
+
+    public function redirectBackWithMessage($message)
+    {
+        return redirect()->back()->with('success', $message);
     }
 
 }

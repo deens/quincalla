@@ -37,7 +37,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <a class="" title="Delete" href="{{ route('cart.destroy', [$product->rowid]) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                        <a class="" title="Delete" href="{{ route('cart.remove', [$product->rowid]) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                     </div>
                                 </td>
                             </tr>
@@ -45,7 +45,7 @@
                     </table>
 
                     {!! Form::submit('Update Cart', ['class' => 'btn btn-default']) !!}
-                    <a class="btn btn-default" href="{{ route('cart.clean')}}">Empty Shopping Cart</a> 
+                    <a class="btn btn-default" href="{{ route('cart.destroy') }}">Empty Shopping Cart</a>
                     {!! Form::close() !!}
 
                 </div>
@@ -60,11 +60,11 @@
                             </tr>
                             <tr>
                                 <td>Shipping</td>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                             <tr>
                                 <td>Tax</td>
-                                <td>$00.00</td>
+                                <td>$0.00</td>
                             </tr>
                             <tr>
                                 <td><h4>Total</h4></td>

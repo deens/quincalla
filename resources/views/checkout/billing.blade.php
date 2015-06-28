@@ -1,7 +1,9 @@
 @extends('checkout')
 @section('content')
-    <h1>Payment & Billing</h1>
+    <h1>Checkout <small>Payment & Billing</small></h1>
     <hr>
+    <h3>Payment Information</h3>
+    <br>
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -12,27 +14,27 @@
             </ul>
         </div>
     @endif
-    <h3>Payment Information</h3>
+
     {!! Form::open(['route' => 'checkout.billing']) !!}
     <div class="row">
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Name on card</label>
+                {!! Form::label('name_on_card', 'Name On Card') !!}
                 <input type="text" name="name_on_card" value="{{ $checkout['payment']['name_on_card'] or Input::old('name_on_card') }}" class="form-control" placeholder="Enter Name">
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
-                <label>Credit card number</label>
+                {!! Form::label('card_number', 'Credit Card Number') !!}
                 <input type="text" name="card_number" value="{{ $checkout['payment']['card_number'] or Input::old('card_number') }}" class="form-control" placeholder="Enter Name">
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="form-group">
-                <label>Card Type</label>
+                {!! Form::label('card_type', 'Card Type') !!}
                 <select name="card_type" class="form-control">
                     <option value="0">Select Cart Type</option>
                     <option value="1">American Express</option>
@@ -45,34 +47,34 @@
 
         <div class="col-md-4">
             <div class="form-group">
-            <label>Expiration date</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <select name="expiration_date_month" class="form-control">
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>09</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                    </select>
+                {!! Form::label('expiration_date_month', 'Expiration Date') !!}
+                <div class="row">
+                    <div class="col-md-6">
+                        <select name="expiration_date_month" class="form-control">
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select name="expiration_date_year" class="form-control">
+                            <option>2015</option>
+                            <option>2016</option>
+                            <option>2017</option>
+                            <option>2018</option>
+                            <option>2019</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <select name="expiration_date_year" class="form-control">
-                        <option>2015</option>
-                        <option>2016</option>
-                        <option>2017</option>
-                        <option>2018</option>
-                        <option>2019</option>
-                    </select>
-                </div>
-            </div>
             </div>
         </div>
 
@@ -133,22 +135,14 @@
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('state', 'State/Province/Region') !!}
-                <select name="state" class="form-control">
-                    <option value="0">Select state</option>
-                    <option value="1">California</option>
-                    <option value="2">Florida</option>
-                    <option value="3">New York</option>
-                </select>
+                {!! Form::select('state', $states, $state, ['class' => 'form-control']) !!}
             </div>
         </div>
 
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('country', 'Country') !!}
-                <select name="country" class="form-control">
-                    <option value="1">USA</option>
-                    <option value="2">England</option>
-                </select>
+                {!! Form::select('country', $countries, $country, ['class' => 'form-control']) !!}
             </div>
         </div>
 
