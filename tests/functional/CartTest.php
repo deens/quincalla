@@ -10,7 +10,6 @@ use Quincalla\Tests\Functional\Helpers\ProductTrait;
 
 class CartTest extends TestCase
 {
-
     use ProductTrait;
 
     public function testAddProductToCart()
@@ -18,7 +17,7 @@ class CartTest extends TestCase
         $productName = 'First Necklace Yellow Gold';
 
         $this->addProductToCart('first-necklace-yellow-gold');
-        $this->seePageIs('/cart')
+        $this->visit('/cart')
             ->see($productName)
             ->click($productName)
             ->seePageIs('/products/first-necklace-yellow-gold');
