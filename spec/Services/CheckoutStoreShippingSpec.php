@@ -26,6 +26,12 @@ class CheckoutStoreShippingSpec extends ObjectBehavior
         ValidatorInstance $validatorInstance
    )
     {
+        $request->merge(Argument::type('array'))
+            ->shouldBeCalled();
+
+        $request->except('password', 'password_confirmation')
+            ->shouldBeCalled()
+            ->willReturn([]);
         $checkout->get('checkout.type')->willReturn('guest');
 
         $request->all()->shouldBeCalled()->willReturn([]);
@@ -54,6 +60,13 @@ class CheckoutStoreShippingSpec extends ObjectBehavior
         Listener $listener
     )
     {
+        $request->merge(Argument::type('array'))
+            ->shouldBeCalled();
+
+        $request->except('password', 'password_confirmation')
+            ->shouldBeCalled()
+            ->willReturn([]);
+
         $checkout->get('checkout.type')->willReturn('new-customer');
 
         $request->all()->shouldBeCalled()->willReturn([]);

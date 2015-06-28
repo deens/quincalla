@@ -8,8 +8,8 @@ use Session;
 use Quincalla\Checkout;
 use Quincalla\Order;
 use Quincalla\Product;
-use Quincalla\Country;
-use Quincalla\State;
+use Quincalla\Entity\Country;
+use Quincalla\Entity\State;
 use Quincalla\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
@@ -76,8 +76,8 @@ class CheckoutController extends Controller {
 
         $this->checkout->set('shipping.account_email', $this->checkout->get('account.email', Request::old('account_email')));
 
-        $countries = array_pluck(Country::all(), 'name', 'id');
-        $states = array_pluck(State::all(), 'name', 'id');
+        $countries = Country::orderBy('name')->lists('name', 'id');
+        $states = State::orderBy('name')->lists('name', 'id');
 
         return view('checkout.shipping', compact('account_type', 'countries', 'states'))
             ->with($this->checkout->get('shipping'));
@@ -119,7 +119,11 @@ class CheckoutController extends Controller {
 
         $this->checkout->store();
 
-        return view('checkout.billing')->with($this->checkout->get('billing'));
+        $countries = Country::orderBy('name')->lists('name', 'id');
+        $states = State::orderBy('name')->lists('name', 'id');
+
+        return view('checkout.billing', compact('account_type', 'countries', 'states'))
+            ->with($this->checkout->get('billing'));
     }
 
     public function postBilling()
