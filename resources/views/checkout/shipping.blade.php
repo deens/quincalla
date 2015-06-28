@@ -46,14 +46,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('password', 'Password') !!}
-                    {!! Form::password('password', null, ['class' => 'form-control', 'placeholder' => 'Enter password']) !!}
+                    {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Enter password']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label('password_confirmation', 'Confirm Password') !!}
-                    {!! Form::password('password_confirmation', null, ['class' => 'form-control', 'placeholder' => 'Enter confirm password']) !!}
+                    {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Enter confirm password']) !!}
                 </div>
             </div>
 
