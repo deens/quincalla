@@ -119,7 +119,11 @@ class CheckoutController extends Controller {
 
         $this->checkout->store();
 
-        return view('checkout.billing')->with($this->checkout->get('billing'));
+        $countries = array_pluck(Country::all(), 'name', 'id');
+        $states = array_pluck(State::all(), 'name', 'id');
+
+        return view('checkout.billing', compact('account_type', 'countries', 'states'))
+            ->with($this->checkout->get('billing'));
     }
 
     public function postBilling()
