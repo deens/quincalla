@@ -24,8 +24,13 @@ class CheckoutStoreShipping
     {
         $this->listener = $listener;
 
+        // Trim values except password & password_confirmation
+        $this->request->merge(array_map('trim', $this->request->except('password', 'password_confirmation')));
+
+        // Get account type
         $accountType = $this->checkout->get('checkout.type');
 
+        // Define shipping rules
         $shippingRules = [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -37,7 +42,7 @@ class CheckoutStoreShipping
             'phone' => 'required'
         ];
 
-        if ($accountType !== 'customer') {
+        if ($accountType === 'new-customer' || $accountType === 'guest') {
             $shippingRules['account_email'] = 'required';
         }
 
@@ -51,21 +56,18 @@ class CheckoutStoreShipping
             return $this->listener->redirectBackWithValidationErrors($validator);
         }
 
+        // Save account information
         $this->checkout->set('account.email', $this->request->get('account_email', ''));
         $this->checkout->set('account.password', \Hash::make($this->request->get('password', '')));
 
-        $this->checkout->set('shipping', [
-            'first_name' => $this->request->get('first_name'),
-            'last_name' => $this->request->get('last_name'),
-            'address' => $this->request->get('address'),
-            'address1' => $this->request->get('address1'),
-            'state' => $this->request->get('state'),
-            'city' => $this->request->get('city'),
-            'country' => $this->request->get('country'),
-            'phone' => $this->request->get('phone'),
-            'zipcode' => $this->request->get('zipcode')
-        ]);
-
+        // Save shipping information
+        $shippingData = [
+            'address1' => $this->request->get('address1')
+        ];
+        foreach($shippingRules as $field => $rule) {
+            $shippingData[$field] = $this->request->get($field);
+        }
+        $this->checkout->set('shipping', $shippingData);
         $this->checkout->store();
 
         return $this->listener->redirectToBilling();
