@@ -5,6 +5,7 @@ namespace Quincalla\Services;
 use Illuminate\Http\Request;
 use Quincalla\Checkout;
 use Illuminate\Validation\Factory;
+use Illuminate\Contracts\Hashing\Hasher;
 
 class CheckoutStoreShipping
 {
@@ -13,11 +14,12 @@ class CheckoutStoreShipping
     protected $validator;
     protected $listener;
 
-    public function __construct(Request $request, Checkout $checkout, Factory $validator)
+    public function __construct(Request $request, Checkout $checkout, Factory $validator, Hasher $hash)
     {
         $this->request = $request;
         $this->checkout = $checkout;
         $this->validator = $validator;
+        $this->hash = $hash;
     }
 
     public function run($listener)
@@ -37,7 +39,7 @@ class CheckoutStoreShipping
             'phone' => 'required'
         ];
 
-        if ($accountType !== 'customer') {
+        if ($accountType === 'new-customer' || $accountType === 'guest') {
             $shippingRules['account_email'] = 'required';
         }
 
@@ -51,8 +53,13 @@ class CheckoutStoreShipping
             return $this->listener->redirectBackWithValidationErrors($validator);
         }
 
-        $this->checkout->set('account.email', $this->request->get('account_email', ''));
-        $this->checkout->set('account.password', \Hash::make($this->request->get('password', '')));
+        if ($accountType === 'new-customer' || $accountType === 'guest') {
+            $this->checkout->set('account.email', $this->request->get('account_email', ''));
+        }
+
+        if ($accountType === 'new-customer') {
+            $this->checkout->set('account.password', $this->hash->make($this->request->get('password', '')));
+        }
 
         $this->checkout->set('shipping', [
             'first_name' => $this->request->get('first_name'),
