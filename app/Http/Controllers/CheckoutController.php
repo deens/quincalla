@@ -8,11 +8,14 @@ use Session;
 use Quincalla\Checkout;
 use Quincalla\Order;
 use Quincalla\Product;
+use Quincalla\Country;
+use Quincalla\State;
 use Quincalla\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
 use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
+use Webpatser\Countries\Countries;
 
 class CheckoutController extends Controller {
 
@@ -73,7 +76,10 @@ class CheckoutController extends Controller {
 
         $this->checkout->set('shipping.account_email', $this->checkout->get('account.email', Request::old('account_email')));
 
-        return view('checkout.shipping', compact('account_type'))
+        $countries = array_pluck(Country::all(), 'name', 'id');
+        $states = array_pluck(State::all(), 'name', 'id');
+
+        return view('checkout.shipping', compact('account_type', 'countries', 'states'))
             ->with($this->checkout->get('shipping'));
     }
 

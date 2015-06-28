@@ -82,22 +82,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>State/Province/Region</label>
-                    <select name="state" class="form-control">
-                        <option value="0">Select state</option>
-                        <option value="1">California</option>
-                        <option value="2">Florida</option>
-                        <option value="3">New York</option>
-                    </select>
+                    {!! Form::select('state', $states, $state, ['class' => 'form-control']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Country</label>
-                    <select name="country" class="form-control">
-                        <option value="1">USA</option>
-                        <option value="2">England</option>
-                    </select>
+                    {!! Form::select('country', $countries, $country, ['class' => 'form-control']) !!}
                 </div>
             </div>
 
