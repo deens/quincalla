@@ -1,6 +1,6 @@
 <?php
 
-namespace Quincalla;
+namespace Quincalla\Entities;
 
 use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
@@ -12,7 +12,6 @@ class Checkout extends Repository
     protected $session;
     protected $sessionKey = 'checkout';
     protected $sessionItems;
-
     protected $defaults = [
         'checkout' => [
             'type' => 'customer',

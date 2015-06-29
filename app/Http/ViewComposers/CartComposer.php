@@ -3,7 +3,7 @@
 namespace Quincalla\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
-use Quincalla\Collection;
+use Quincalla\Entities\Collection;
 
 class CartComposer
 {

@@ -1,8 +1,8 @@
 <?php
 namespace Quincalla\Http\Controllers;
 
-use Quincalla\Collection;
-use Quincalla\Product;
+use Quincalla\Entities\Collection;
+use Quincalla\Entities\Product;
 
 class HomeController extends Controller {
 

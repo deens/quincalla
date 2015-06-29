@@ -3,7 +3,7 @@
 namespace Quincalla\Services;
 
 use Illuminate\Http\Request;
-use Quincalla\Checkout;
+use Quincalla\Entities\Checkout;
 use Illuminate\Validation\Factory;
 use Illuminate\Contracts\Hashing\Hasher;
 

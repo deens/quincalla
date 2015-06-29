@@ -2,7 +2,7 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
-use Quincalla\Checkout;
+use Quincalla\Entities\Checkout;
 
 class CheckoutSession {
 

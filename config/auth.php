@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'model' => Quincalla\User::class,
+    'model' => Quincalla\Entities\User::class,
 
     /*
     |--------------------------------------------------------------------------

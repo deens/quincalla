@@ -1,6 +1,6 @@
 <?php
 
-namespace Quincalla;
+namespace Quincalla\Entities;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;

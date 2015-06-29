@@ -5,7 +5,7 @@ namespace Quincalla\Services;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Guard;
 use Illuminate\Validation\Factory as Validator;
-use Quincalla\Checkout;
+use Quincalla\Entities\Checkout;
 
 class CheckoutCustomerLogin
 {

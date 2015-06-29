@@ -1,11 +1,12 @@
-<?php namespace Quincalla;
+<?php
+
+namespace Quincalla\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderProduct extends Model {
-
+class OrderProduct extends Model 
+{
     protected $table = 'order_products';
-
     protected $fillable =  [
         'product_id',
         'product_name',
@@ -16,7 +17,6 @@ class OrderProduct extends Model {
 
     public function order()
     {
-        return $this->belongsTo('Quincalla\Order');
+        return $this->belongsTo('Quincalla\Entities\Order');
     }
-
 }
