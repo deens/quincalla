@@ -1,6 +1,6 @@
 <?php namespace Quincalla\Http\Controllers;
 
-use Quincalla\Product;
+use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\SearchQueryRequest;
 use Quincalla\Http\Controllers\Controller;

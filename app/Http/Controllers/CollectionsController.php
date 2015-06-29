@@ -1,7 +1,7 @@
 <?php 
 namespace Quincalla\Http\Controllers;
 
-use Quincalla\Collection;
+use Quincalla\Entities\Collection;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;

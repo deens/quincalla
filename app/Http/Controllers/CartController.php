@@ -2,7 +2,7 @@
 
 use Cart;
 use Request;
-use Quincalla\Product;
+use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
 
@@ -20,7 +20,7 @@ class CartController extends Controller {
     {
         $product = Product::whereSlug(\Request::get('product'))->first();
 
-        Cart::associate('Product', 'Quincalla')->add(
+        Cart::associate('Product', 'Quincalla\Entities')->add(
             $product->id, 
             $product->name, 
             \Request::get('qty', 1), 

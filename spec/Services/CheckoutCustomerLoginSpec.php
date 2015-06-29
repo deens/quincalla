@@ -7,10 +7,10 @@ use Prophecy\Argument;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Guard;
 use Quincalla\Http\Controllers\CheckoutController as Listener;
-use Quincalla\User;
+use Quincalla\Entities\User;
 use Illuminate\Validation\Factory as Validator;
 use Illuminate\Validation\Validator as ValidatorInstance;
-use Quincalla\Checkout;
+use Quincalla\Entities\Checkout;
 
 class CheckoutCustomerLoginSpec extends ObjectBehavior
 {

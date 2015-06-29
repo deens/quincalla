@@ -3,7 +3,7 @@
 namespace Quincalla\Http\Controllers\Auth;
 
 use Auth;
-use Quincalla\User;
+use Quincalla\Entities\User;
 use Validator;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;

@@ -3,7 +3,7 @@ namespace spec\Quincalla\Services;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Quincalla\Checkout;
+use Quincalla\Entities\Checkout;
 use Quincalla\Http\Requests\Request;
 use Illuminate\Validation\Factory as Validator;
 use Illuminate\Validation\Validator as ValidatorInstance;

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Quincalla;
+namespace spec\Quincalla\Entities;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
