@@ -1,11 +1,12 @@
-<?php namespace Quincalla;
+<?php
+
+namespace Quincalla\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model {
-
+class Order extends Model
+{
     protected $table = 'orders';
-
     protected $fillable = [
         'customer_email',
         'customer_name',
@@ -23,6 +24,6 @@ class Order extends Model {
 
     public function items()
     {
-        return $this->hasMany('Quincalla\OrderProduct');
+        return $this->hasMany('Quincalla\Entities\OrderProduct');
     }
 }
