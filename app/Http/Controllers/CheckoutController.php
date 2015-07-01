@@ -1,4 +1,6 @@
-<?php namespace Quincalla\Http\Controllers;
+<?php
+
+namespace Quincalla\Http\Controllers;
 
 use Auth;
 use Cart;
@@ -17,17 +19,21 @@ use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
 use Webpatser\Countries\Countries;
 
-class CheckoutController extends Controller {
-
+class CheckoutController extends Controller
+{
     protected $checkout;
+    protected $countries;
+    protected $states;
 
-    public function __construct(Checkout $checkout)
+    public function __construct(Checkout $checkout, Country $countries, State $states)
     {
         $this->middleware('checkout', [
             'except' => ['customer', 'postCustomer' ]
         ]);
 
         $this->checkout = $checkout;
+        $this->countries = $countries;
+        $this->states = $states;
     }
 
     public function index()
@@ -48,14 +54,14 @@ class CheckoutController extends Controller {
         return view('checkout.customer');
     }
 
-    public function postCustomer(CheckoutCustomerLogin $customerLogin)
+    public function postCustomer(CheckoutCustomerLogin $checkoutCustomerLogin)
     {
-        return $customerLogin->run($this);
+        return $checkoutCustomerLogin->run($this);
     }
 
     public function shipping()
     {
-        $account_type = $this->checkout->get('checkout.type');
+        $accountType = $this->checkout->get('checkout.type');
 
         $shippingFields = [
             'first_name',
@@ -71,15 +77,28 @@ class CheckoutController extends Controller {
         ];
         foreach($shippingFields as $key)
         {
-            $this->checkout->set('shipping.' .$key, $this->checkout->get('shipping.'.$key, Request::old($key)));
+            $shippingKey = 'shipping.' . $key;
+            $this->checkout->set(
+                $shippingKey,
+                $this->checkout->get($shippingKey, Request::old($key))
+            );
         }
 
-        $this->checkout->set('shipping.account_email', $this->checkout->get('account.email', Request::old('account_email')));
+        $this->checkout->set(
+            'shipping.account_email',
+            $this->checkout->get(
+                'account.email',
+                Request::old('account_email')
+            )
+        );
 
-        $countries = Country::orderBy('name')->lists('name', 'id');
-        $states = State::orderBy('name')->lists('name', 'id');
+        $countries = $this->countries->orderBy('name')
+            ->lists('name', 'id');
+        $states = $this->states->orderBy('name')
+            ->lists('name', 'id');
 
-        return view('checkout.shipping', compact('account_type', 'countries', 'states'))
+        return view('checkout.shipping', compact('countries', 'states'))
+            ->with('account_type', $accountType)
             ->with($this->checkout->get('shipping'));
     }
 
@@ -91,8 +110,7 @@ class CheckoutController extends Controller {
     public function billing()
     {
         if ( ! $this->checkout->has('shipping') || ! count($this->checkout->get('shipping'))) {
-            return back()
-                ->with('error', 'Invalid shipping address');
+            return back()->with('error', 'Invalid shipping address');
         }
 
         if ( ! $this->checkout->has('billing.same_address')) {
@@ -114,15 +132,21 @@ class CheckoutController extends Controller {
 
         foreach($billingFields as $key)
         {
-            $this->checkout->set('billing.'.$key, $this->checkout->get('billing.'.$key, Request::old($key)));
+            $billingKey = 'billing.' . $key;
+            $this->checkout->set(
+                $billingKey, 
+                $this->checkout->get($billingKey, Request::old($key))
+            );
         }
 
         $this->checkout->store();
 
-        $countries = Country::orderBy('name')->lists('name', 'id');
-        $states = State::orderBy('name')->lists('name', 'id');
+        $countries = $this->countries->orderBy('name')
+            ->lists('name', 'id');
+        $states = $this->states->orderBy('name')
+            ->lists('name', 'id');
 
-        return view('checkout.billing', compact('account_type', 'countries', 'states'))
+        return view('checkout.billing', compact('countries', 'states'))
             ->with($this->checkout->get('billing'));
     }
 
@@ -153,10 +177,8 @@ class CheckoutController extends Controller {
         $validator = \Validator::make(Request::all(), $billingRules);
 
         if ($validator->fails()) {
-            // $checkout['billing']['same_address'] = (int)Request::get('same_address');
             $this->checkout->set('billing.same_address', Request::get('same_address'));
 
-            // TODO: Check if necesary
             $this->checkout->store();
 
             return redirect()->back()->withErrors($validator)->withInput();
@@ -244,8 +266,6 @@ class CheckoutController extends Controller {
 
         $this->checkout->store();
 
-        // Session::put('checkout', $checkout);
-
         return redirect()->route('checkout.confirm');
     }
 
@@ -260,10 +280,21 @@ class CheckoutController extends Controller {
         return view('checkout.confirm');
     }
 
+    /**
+     * Mask credit card number
+     *
+     * @param string $number
+     *
+     * @return string
+     */
     private function cardMasking($number)
     {
         return str_repeat("*", strlen($number) - 4) . substr($number, -4);
     }
+
+    /**
+     * Listener Responders
+     */
 
     public function redirectToShipping()
     {
@@ -277,16 +308,19 @@ class CheckoutController extends Controller {
 
     public function redirectBackWithMessage($message)
     {
-        return redirect()->back()->with('error', $message);
+        return redirect()->back()
+            ->with('error', $message);
     }
 
     public function redirectBackWithValidationErrors($validator)
     {
-        return redirect()->back()->withErrors($validator->errors())->withInput();
+        return redirect()->back()
+            ->withErrors($validator->errors())->withInput();
     }
 
     public function redirectBackWithInvalidCredentials()
     {
-        return redirect()->back()->with('error', 'Invalid email or password');
+        return redirect()->back()
+            ->with('error', 'Invalid email or password');
     }
 }

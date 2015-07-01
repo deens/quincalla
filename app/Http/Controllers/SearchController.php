@@ -1,4 +1,6 @@
-<?php namespace Quincalla\Http\Controllers;
+<?php
+
+namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
@@ -6,14 +8,22 @@ use Quincalla\Http\Requests\SearchQueryRequest;
 use Quincalla\Http\Controllers\Controller;
 use Quincalla\Request;
 
-class SearchController extends Controller {
+class SearchController extends Controller
+{
+    protected $products;
+
+    public function __construct(Product $products)
+    {
+        $this->products = $products;
+    }
 
     public function index(SearchQueryRequest $request)
     {
-        $query = \Request::get('query');
-        $results = Product::search($query)->simplePaginate(6);
+        $query = $request->get('query');
+
+        $results = $this->products->search($query)
+            ->simplePaginate(6);
 
         return view('search', compact('query', 'results'));
     }
-
 }
