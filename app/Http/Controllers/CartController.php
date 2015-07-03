@@ -52,7 +52,7 @@ class CartController extends Controller
         $quantities = \Request::get('quantities');
 
         foreach ($quantities as $rowId => $quantity) {
-            $this->caty->update($rowId, $quantity);
+            $this->cart->update($rowId, $quantity);
         }
 
         return $this->redirectBackWithMessage(
