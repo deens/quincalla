@@ -1,11 +1,10 @@
 <?php
-
 namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Collection;
 use Quincalla\Entities\Product;
 
-class HomeController extends Controller 
+class HomeController extends Controller
 {
     protected $products;
 
@@ -23,5 +22,4 @@ class HomeController extends Controller
 
         return view('home', compact('products'));
     }
-
 }

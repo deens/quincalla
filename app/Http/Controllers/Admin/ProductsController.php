@@ -1,9 +1,9 @@
-<?php namespace Quincalla\Http\Controllers\Admin;
+<?php
+namespace Quincalla\Http\Controllers\Admin;
 
 use Quincalla\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller {

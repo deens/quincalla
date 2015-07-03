@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Product;

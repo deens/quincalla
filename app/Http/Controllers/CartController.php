@@ -2,7 +2,7 @@
 
 namespace Quincalla\Http\Controllers;
 
-use Request;
+use Illuminate\Http\Request;
 use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
@@ -47,9 +47,9 @@ class CartController extends Controller
         );
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        $quantities = \Request::get('quantities');
+        $quantities = $request->get('quantities');
 
         foreach ($quantities as $rowId => $quantity) {
             $this->cart->update($rowId, $quantity);

@@ -19,8 +19,11 @@ class CheckoutController extends Controller
     protected $countries;
     protected $states;
 
-    public function __construct(Checkout $checkout, Country $countries, State $states)
-    {
+    public function __construct(
+        Checkout $checkout,
+        Country $countries,
+        State $states
+    ) {
         $this->middleware('checkout', [
             'except' => ['customer', 'postCustomer' ]
         ]);
@@ -105,7 +108,7 @@ class CheckoutController extends Controller
     public function billing(Request $request)
     {
         if (
-            !$this->checkout->has('shipping') 
+            !$this->checkout->has('shipping')
             || !count($this->checkout->get('shipping'))
         ) {
             return back()->with('error', 'Invalid shipping address');
@@ -132,7 +135,7 @@ class CheckoutController extends Controller
         {
             $billingKey = 'billing.' . $key;
             $this->checkout->set(
-                $billingKey, 
+                $billingKey,
                 $this->checkout->get($billingKey, $request->old($key))
             );
         }
@@ -155,7 +158,10 @@ class CheckoutController extends Controller
 
     public function confirm()
     {
-        if (! $this->checkout->has('payment') || ! count($this->checkout->get('payment'))) {
+        if (
+            ! $this->checkout->has('payment')
+            || ! count($this->checkout->get('payment'))
+        ) {
             return back()->with('error', 'Invalid payment');
         }
 

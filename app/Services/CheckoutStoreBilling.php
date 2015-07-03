@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Services;
 
 use Quincalla\Entities\Checkout;
@@ -35,8 +34,14 @@ class CheckoutStoreBilling
         'phone' => 'required'
     ];
 
-    public function __construct(Request $request, Checkout $checkout, Validator $validator, Order $orders, User $users, Cart $cart = null)
-    {
+    public function __construct(
+        Request $request,
+        Checkout $checkout,
+        Validator $validator,
+        Order $orders,
+        User $users,
+        Cart $cart = null
+    ) {
         $this->request = $request;
         $this->validator = $validator;
         $this->checkout = $checkout;
@@ -45,7 +50,7 @@ class CheckoutStoreBilling
 
         if ( ! $cart) {
             $cart = app(\Gloudemans\Shoppingcart\Cart::class, [
-                app('session'), 
+                app('session'),
                 app('events')
             ]);
         }
@@ -57,29 +62,11 @@ class CheckoutStoreBilling
     {
         $this->listener = $listener;
 
-        $billingRules = [
-            'name_on_card' => 'required',
-            'card_number' => 'required',
-            'expiration_date_month' => 'required',
-            'expiration_date_year' => 'required',
-            'ccv_code' => 'required',
-            'card_type' => 'required|not_in:0'
-        ];
-
         if ( ! $this->request->get('same_address')) {
-            $billingRules += [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'address' => 'required',
-                'city' => 'required',
-                'state' => 'required|not_in:0',
-                'country' => 'required|not_in:0',
-                'zipcode' => 'required',
-                'phone' => 'required'
-            ];
+            $this->paymentRules + $this->billingRules;
         }
 
-        $validator = $this->validator->make($this->request->all(), $billingRules);
+        $validator = $this->validator->make($this->request->all(), $this->paymentRules);
 
         if ($validator->fails()) {
             $this->checkout->set('billing.same_address', $this->request->get('same_address'));
@@ -114,10 +101,16 @@ class CheckoutStoreBilling
             ];
         }
 
-        $this->checkout->set('account.name', $billingAddress['first_name'] . ' ' . $billingAddress['last_name']);
+        $this->checkout->set(
+            'account.name',
+            $billingAddress['first_name'] . ' ' . $billingAddress['last_name']
+        );
         $this->checkout->set('payment', $payment);
         $this->checkout->set('billing', $billingAddress);
-        $this->checkout->set('billing.same_address', (bool) $this->request->get('same_address'));
+        $this->checkout->set(
+            'billing.same_address',
+            (bool) $this->request->get('same_address')
+        );
 
         if ($this->checkout->get('checkout.type') !== 'customer') {
 
@@ -171,7 +164,6 @@ class CheckoutStoreBilling
 
         $this->checkout->store();
 
-        // return redirect()->route('checkout.confirm');
         return $this->listener->redirectToConfirmation();
     }
 
