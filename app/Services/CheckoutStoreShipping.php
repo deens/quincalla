@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Services;
 
 use Illuminate\Http\Request;
@@ -14,8 +13,12 @@ class CheckoutStoreShipping
     protected $validator;
     protected $listener;
 
-    public function __construct(Request $request, Checkout $checkout, Factory $validator, Hasher $hash)
-    {
+    public function __construct(
+        Request $request,
+        Checkout $checkout,
+        Factory $validator,
+        Hasher $hash
+    ) {
         $this->request = $request;
         $this->checkout = $checkout;
         $this->validator = $validator;

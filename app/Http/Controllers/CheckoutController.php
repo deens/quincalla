@@ -1,8 +1,8 @@
 <?php
 namespace Quincalla\Http\Controllers;
 
-use Cart;
 use Illuminate\Http\Request;
+use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Country;
 use Quincalla\Entities\State;
@@ -12,6 +12,7 @@ use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
 use Webpatser\Countries\Countries;
+
 
 class CheckoutController extends Controller
 {
@@ -38,9 +39,9 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.shipping');
     }
 
-    public function customer()
+    public function customer(Cart $cart)
     {
-        if ( ! Cart::content()->count()) {
+        if ( ! $cart->content()->count()) {
             return redirect()
                 ->route('cart.index')
                 ->with('error', 'Please add products to your shopping cart');
