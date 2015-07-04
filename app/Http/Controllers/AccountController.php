@@ -1,4 +1,5 @@
-<?php namespace Quincalla\Http\Controllers;
+<?php
+namespace Quincalla\Http\Controllers;
 
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;

@@ -1,63 +1,80 @@
-<?php namespace Quincalla\Http\Controllers;
+<?php
 
-use Cart;
-use Request;
+namespace Quincalla\Http\Controllers;
+
+use Illuminate\Http\Request;
 use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
+use Illuminate\Http\Response;
+use Quincalla\Entities\Cart;
 
-class CartController extends Controller {
+class CartController extends Controller
+{
+    public function __construct(Cart $cart)
+    {
+        $this->cart = $cart;
+    }
 
     public function index()
     {
-        $products = Cart::content();
-        $cartTotal = Cart::total();
+        $products = $this->cart->content();
+        $cartTotal = $this->cart->total();
 
         return view('cart', compact('products', 'cartTotal'));
     }
 
-    public function store(StoreCartRequest $request)
+    public function store(Product $products, StoreCartRequest $request)
     {
-        $product = Product::whereSlug(\Request::get('product'))->first();
+        $product = $products->whereSlug($request->get('product'))
+            ->first();
 
-        Cart::associate('Product', 'Quincalla\Entities')->add(
-            $product->id, 
-            $product->name, 
-            \Request::get('qty', 1), 
+        $this->cart->associate('Product', 'Quincalla\Entities')->add(
+            $product->id,
+            $product->name,
+            $request->get('qty', 1),
             $product->price
         );
 
-        return $this->redirectBackWithMessage('Product has been added to your shopping bag');
+        return $this->redirectBackWithMessage(
+            'Product has been added to your shopping cart'
+        );
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        $quantities = \Request::get('quantities');
+        $quantities = $request->get('quantities');
 
         foreach ($quantities as $rowId => $quantity) {
-            Cart::update($rowId, $quantity);
+            $this->cart->update($rowId, $quantity);
         }
 
-        return $this->redirectBackWithMessage('Product quantity updated');
+        return $this->redirectBackWithMessage(
+            'Product quantity updated'
+        );
     }
 
     public function remove($id)
     {
-        Cart::remove($id);
+        $this->cart->remove($id);
 
-        return $this->redirectBackWithMessage('Product has been deleted from your Shopping bag');
+        return $this->redirectBackWithMessage(
+            'Product has been deleted from your shopping cart'
+        );
     }
 
     public function destroy()
     {
-        Cart::destroy();
+        $this->cart->destroy();
 
-        return $this->redirectBackWithMessage('Your shopping cart is empty');
+        return $this->redirectBackWithMessage(
+            'Your shopping cart is empty'
+        );
     }
 
     public function redirectBackWithMessage($message)
     {
-        return redirect()->back()->with('success', $message);
+        return redirect()->back()
+            ->with('success', $message);
     }
-
 }

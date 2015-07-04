@@ -3,3 +3,10 @@ suites:
         namespace: Quincalla
         psr4_prefix: Quincalla
         src_path: app
+extensions:
+    - PhpSpec\Laravel\Extension\LaravelExtension
+
+laravel_extension:
+    testing_environment: 'testing'
+
+formatter.name: pretty

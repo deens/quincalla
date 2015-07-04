@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Services;
 
 use Illuminate\Http\Request;
@@ -22,12 +21,16 @@ class CheckoutCustomerLogin
             'new-customer'
     ];
 
-    public function __construct(Checkout $checkout, Request $request, Guard $auth, Validator $validator)
+    public function __construct(
+        Checkout $checkout,
+        Request $request,
+        Guard $auth,
+        Validator $validator)
     {
-        $this->request = $request;
-        $this->validator = $validator;
-        $this->auth = $auth;
         $this->checkout = $checkout;
+        $this->request = $request;
+        $this->auth = $auth;
+        $this->validator = $validator;
     }
 
     public function run($listener)
@@ -35,10 +38,15 @@ class CheckoutCustomerLogin
         $this->listener = $listener;
 
         if (! $this->validAccountType($this->request->get('account_type'))) {
-            return $this->listener->redirectBackWithMessage('Invalid Account Type Selected');
+            return $this->listener->redirectBackWithMessage(
+                'Invalid Account Type Selected'
+            );
         }
 
-        $this->checkout->set('checkout.type', $this->request->get('account_type'));
+        $this->checkout->set(
+            'checkout.type',
+            $this->request->get('account_type')
+        );
 
         if ($this->checkout->get('checkout.type') === 'customer') {
             return $this->loginCustomer();
@@ -67,7 +75,8 @@ class CheckoutCustomerLogin
             return $this->listener->redirectBackWithValidationErrors($validator);
         }
 
-        $loggedIn = $this->auth->attempt($this->credentials + ['active' => true]);
+        $this->credentials['active'] = true;
+        $loggedIn = $this->auth->attempt($this->credentials);
 
         if (!$loggedIn) {
             return $this->listener->redirectBackWithInvalidCredentials();
