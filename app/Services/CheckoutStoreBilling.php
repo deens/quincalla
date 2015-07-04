@@ -40,7 +40,7 @@ class CheckoutStoreBilling
         Validator $validator,
         Order $orders,
         User $users,
-        Cart $cart = null
+        Cart $cart
     ) {
         $this->request = $request;
         $this->validator = $validator;
