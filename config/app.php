@@ -149,7 +149,6 @@ return [
          * Packages Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Webpatser\Countries\CountriesServiceProvider::class,
 
@@ -206,7 +205,6 @@ return [
          */
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
     ],
