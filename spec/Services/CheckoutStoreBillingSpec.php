@@ -10,7 +10,7 @@ use Quincalla\Http\Controllers\CheckoutController as Listener;
 use Quincalla\Http\Requests\Request;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Gloudemans\Shoppingcart\Cart;
+use Quincalla\Entities\Cart;
 
 
 class CheckoutStoreBillingSpec extends ObjectBehavior

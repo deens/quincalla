@@ -7,18 +7,12 @@ use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Requests\StoreCartRequest;
 use Illuminate\Http\Response;
+use Quincalla\Entities\Cart;
 
 class CartController extends Controller
 {
-    public function __construct($cart = null)
+    public function __construct(Cart $cart)
     {
-        if ( ! $cart) {
-            $cart = app('Gloudemans\Shoppingcart\Cart', [
-                app('session'), 
-                app('events')
-            ]);
-        }
-
         $this->cart = $cart;
     }
 

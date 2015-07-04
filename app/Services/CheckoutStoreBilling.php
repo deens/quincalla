@@ -6,7 +6,7 @@ use Quincalla\Entities\Order;
 use Quincalla\Entities\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as Validator;
-use Gloudemans\Shoppingcart\Cart;
+use Quincalla\Entities\Cart;
 
 class CheckoutStoreBilling
 {
@@ -47,14 +47,6 @@ class CheckoutStoreBilling
         $this->checkout = $checkout;
         $this->orders = $orders;
         $this->users = $users;
-
-        if ( ! $cart) {
-            $cart = app(\Gloudemans\Shoppingcart\Cart::class, [
-                app('session'),
-                app('events')
-            ]);
-        }
-
         $this->cart = $cart;
     }
 
