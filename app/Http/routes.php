@@ -36,7 +36,8 @@ Route::group(['prefix' => 'checkout'], function() {
 
 // Admin
 Route::get('admin/login', ['as' => 'admin.login', 'uses' => 'Admin\AuthController@login']);
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
+Route::post('admin/login', ['as' => 'admin.login', 'uses' => 'Admin\AuthController@postLogin']);
+Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin', 'namespace' => 'Admin'], function() {
     Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@index']);
     Route::resource('products', 'ProductsController');
     Route::resource('collections', 'CollectionsController');
