@@ -1,6 +1,14 @@
 @extends('admin.layout')
 @section('content')
-    <h1>Products</h1>
+    <div class="row">
+        <div class="col-md-5">
+            <h1>Products</h1>
+        </div>
+        <div class="col-md-7 text-right">
+            <a href="{{ route('admin.products.create') }}" class="btn btn-primary">Add a product</a>
+        </div>
+    </div>
+    <hr>
     <table class="table">
         <tr>
             <td></td>
