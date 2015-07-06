@@ -25,7 +25,7 @@ class AuthController extends Controller {
             return redirect()->back()->with('error', 'Invalid email or password');
         }
 
-        return redirect('/admin/products');
+        return redirect()->route('admin.dashboard');
     }
 }
 
