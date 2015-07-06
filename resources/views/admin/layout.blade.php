@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Quincalla</title>
 
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/admin.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -18,7 +18,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -65,16 +65,23 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
-                <h2>Store</h2>
-                <ul class="nav nav-stacked">
+            <div class="col-md-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><h5>My Store</h5></li>
                     <li>{!! link_to_route('admin.dashboard', 'Dashboard') !!}</li>
                     <li>{!! link_to_route('admin.orders.index', 'Orders') !!}</li>
                     <li>{!! link_to_route('admin.products.index', 'Products') !!}</li>
                     <li>{!! link_to_route('admin.collections.index', 'Collections') !!}</li>
+                    <li>{!! link_to('', 'Customers') !!}</li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li><h5>My Settings</h5></li>
+                    <li>{!! link_to('', 'Payment') !!}</li>
+                    <li>{!! link_to('', 'Taxes') !!}</li>
+                    <li>{!! link_to('', 'Inventory') !!}</li>
                 </ul>
             </div>
-            <div class="col-md-10">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 @yield('content')
             </div>
         </div>
