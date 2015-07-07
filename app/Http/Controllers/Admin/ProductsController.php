@@ -43,9 +43,9 @@ class ProductsController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
+        dd($request->all());
 	}
 
 	/**
@@ -56,7 +56,9 @@ class ProductsController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
+        $product = $this->products->findOrFail($id);
+
+        return view('admin.products.edit', compact('product'));
 	}
 
 	/**
