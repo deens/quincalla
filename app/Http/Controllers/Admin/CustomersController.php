@@ -1,11 +1,19 @@
 <?php
 namespace Quincalla\Http\Controllers\Admin;
 
+use Quincalla\Entities\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CustomersController extends Controller {
+class CustomersController extends Controller 
+{
+    protected $customers;
+
+    public function __construct(User $customers)
+    {
+        $this->customers = $customers;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -14,7 +22,9 @@ class CustomersController extends Controller {
 	 */
 	public function index()
 	{
-        return view('admin.customers.index');
+        $customers = $this->customers->paginate(15);
+
+        return view('admin.customers.index', compact('customers'));
 	}
 
 	/**

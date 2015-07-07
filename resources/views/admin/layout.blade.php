@@ -72,13 +72,15 @@
                     <li>{!! link_to_route('admin.orders.index', 'Orders') !!}</li>
                     <li>{!! link_to_route('admin.products.index', 'Products') !!}</li>
                     <li>{!! link_to_route('admin.collections.index', 'Collections') !!}</li>
-                    <li>{!! link_to('', 'Customers') !!}</li>
+                    <li>{!! link_to_route('admin.customers.index', 'Customers') !!}</li>
                 </ul>
                 <ul class="nav nav-sidebar">
                     <li><h5>My Settings</h5></li>
-                    <li>{!! link_to('', 'Payment') !!}</li>
-                    <li>{!! link_to('', 'Taxes') !!}</li>
-                    <li>{!! link_to('', 'Inventory') !!}</li>
+                    <li>{!! link_to_route('admin.settings.general', 'General') !!}</li>
+                    <li>{!! link_to_route('admin.settings.payments', 'Payments') !!}</li>
+                    <li>{!! link_to_route('admin.dashboard', 'Shipping') !!}</li>
+                    <li>{!! link_to_route('admin.dashboard', 'Taxes') !!}</li>
+                    <li>{!! link_to_route('admin.dashboard', 'Account') !!}</li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -86,17 +88,6 @@
             </div>
         </div>
 
-    </div>
-    <!-- Footer -->
-    <hr>
-    <div class="container">
-        <footer>
-            <div class="row text-center">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Quincalla 2015</p>
-                </div>
-            </div>
-        </footer>
     </div>
     <!-- Scripts -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

@@ -6,12 +6,16 @@ use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller {
+class ProductsController extends Controller 
+{
+    protected $products;
 
-    public function __construct()
+    public function __construct(Product $products)
     {
         $this->middleware('auth.admin');
+        $this->products = $products;
     }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -19,7 +23,7 @@ class ProductsController extends Controller {
 	 */
 	public function index()
 	{
-        $products = Product::paginate(15);
+        $products = $this->products->paginate(15);
 
         return view('admin.products.index', compact('products'));
 	}
@@ -40,17 +44,6 @@ class ProductsController extends Controller {
 	 * @return Response
 	 */
 	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
 	{
 		//
 	}

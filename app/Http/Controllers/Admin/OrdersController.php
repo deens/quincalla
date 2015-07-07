@@ -1,12 +1,19 @@
 <?php
 namespace Quincalla\Http\Controllers\Admin;
 
+use Quincalla\Entities\Order;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
-class OrdersController extends Controller {
+class OrdersController extends Controller 
+{
+    protected $orders;
+
+    public function __construct(Order $orders)
+    {
+        $this->orders = $orders;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -15,7 +22,8 @@ class OrdersController extends Controller {
 	 */
 	public function index()
 	{
-        return view('admin.orders.index');
+        $orders = $this->orders->paginate(15);
+        return view('admin.orders.index', compact('orders'));
 	}
 
 	/**
