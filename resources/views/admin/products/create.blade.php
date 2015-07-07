@@ -78,7 +78,48 @@
                 ], old('inventory_policy'), ['class' => 'form-control']) !!}
             </div>
 
+            <div class="form-group">
+                {!! Form::label('quantity', 'Quantity') !!}
+                {!! Form::text('quantity', old('quantity'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label class="control-label">
+                        <input type="checkbox" name="inventory_policy" value="{{ old('inventory_policy') }}">
+                        Allow customers to purchase this product when it's out of stock
+                    </label>
+                </div>
+            </div>
+
+
+            <h4>Shipping</h4>
+            <div class="form-group">
+                {!! Form::label('weight', 'Weight') !!}
+                {!! Form::text('weight', old('weight'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('weight_unit', 'Weight Unit') !!}
+                {!! Form::select('weight_unit', [
+                    1 => 'lb',
+                    2 => 'oz',
+                    3 => 'kg',
+                    4 => 'g',
+                ], old('weight_unit'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label class="control-label">
+                        <input type="checkbox" name="inventory_policy" value="{{ old('inventory_policy') }}">
+                        This product require shipping
+                    </label>
+                </div>
+            </div>
+
         </div>
+
         <div class="col-md-4">
 
             <h4>Visibility</h4>
@@ -86,9 +127,17 @@
                 <div class="checkbox">
                     <label class="control-label">
                         <input type="checkbox" name="visibility" value="{{ old('visibility') }}">
-                        online store
+                        Online store
                     </label>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="type" class="control-label">Date</label>
+                <input type="text" class="form-control" name="publish_date" value="{{ old('publish_date') }}">
+            </div>
+            <div class="form-group">
+                <label for="type" class="control-label">Time</label>
+                <input type="text" class="form-control" name="publish_time" value="{{ old('publish_time') }}">
             </div>
 
             <h4>Organization</h4>
