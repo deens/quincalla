@@ -27,5 +27,11 @@ class AuthController extends Controller {
 
         return redirect()->route('admin.dashboard');
     }
+
+    public function getLogout()
+    {
+        \Auth::logout();
+        return redirect()->route('admin.login');
+    }
 }
 
