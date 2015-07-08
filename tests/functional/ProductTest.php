@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
@@ -16,4 +15,3 @@ class ProductTest extends TestCase
             ->see('First Necklace Yellow Gold');
     }
 }
-

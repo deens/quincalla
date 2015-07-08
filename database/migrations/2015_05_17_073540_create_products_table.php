@@ -21,6 +21,9 @@ class CreateProductsTable extends Migration {
             $table->text('description');
             $table->string('picture');
             $table->float('price');
+            $table->float('compare_price');
+            $table->string('vendor')->nullable();
+            $table->string('type')->nullable();
 			$table->timestamps();
 		});
 	}

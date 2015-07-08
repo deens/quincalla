@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
