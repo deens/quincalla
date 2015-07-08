@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
@@ -20,8 +19,6 @@ class CollectionTest extends TestCase
     {
         $this->visit('/collections/necklaces')
             ->see('First Necklace Yellow Gold')
-            ->see('Second Necklace Yellow Gold')
-            ->see('Third Necklace Yellow Gold')
             ->click('First Necklace Yellow Gold')
             ->seePageIs('/products/first-necklace-yellow-gold')
             ->see('First Necklace Yellow Gold');
