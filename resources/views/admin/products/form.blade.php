@@ -19,6 +19,11 @@
         </div>
 
         <div class="form-group">
+            {!! Form::label('slug', 'Url identifier (/product/{url-identifier})') !!}
+            {!! Form::text('slug', old('slug'), ['class' => 'form-control', 'placeholder' => 'product-url-identifier']) !!}
+        </div>
+
+        <div class="form-group">
             {!! Form::label('description', 'Description') !!}
             {!! Form::textarea('description', old('description'), ['class' => 'form-control']) !!}
         </div>
@@ -34,8 +39,8 @@
             {!! Form::label('price', 'Price') !!}
             {!! Form::text('price', old('price'), ['class' => 'form-control']) !!}
 
-            <!-- {!! Form::label('compare_price', 'Compare at Price') !!} -->
-            <!-- {!! Form::text('compare_price', old('compare_price'), ['class' => 'form&#45;control']) !!} -->
+            {!! Form::label('compare_price', 'Compare at Price') !!}
+            {!! Form::text('compare_price', old('compare_price'), ['class' => 'form-control']) !!}
 
             <div class="checkbox">
                 <label class="control-label">
@@ -127,22 +132,22 @@
         <h4>Organization</h4>
         <div class="form-group">
             <label for="type" class="control-label">Product Type</label>
-            <input type="text" class="form-control" name="type" value="{{ old('type') }}">
+            {!! Form::text('type', old('type'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            <label for="type" class="control-label">Vendor</label>
-            <input type="text" class="form-control" name="vendor" value="{{ old('vendor') }}">
+            <label for="vendor" class="control-label">Vendor</label>
+            {!! Form::text('vendor', old('vendor'), ['class' => 'form-control']) !!}
         </div>
 
         <hr>
 
         <div class="form-group">
             <label for="type" class="control-label">Collections</label>
-            <input type="text" class="form-control" name="collections" value="{{ old('collections') }}">
+            {!! Form::select('collection_id', ['Select Manual Collection'] + $collections, $product->collection_id ?: '', ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             <label for="type" class="control-label">Tags</label>
-            <input type="text" class="form-control" name="tags" value="{{ old('tags') }}">
+            {!! Form::select('tags[]', $tags, $product->tags->lists('id')->toArray() ?: '', ['class' => 'form-control', 'multiple'] ) !!}
         </div>
     </div>
 </div>

@@ -1,7 +1,6 @@
 @extends('admin.layout')
 @section('content')
-{!! Form::model($product, ['route' => ['admin.products.update', $product->id]]) !!}
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+{!! Form::model($product, ['route' => ['admin.products.update', $product->id], 'method' => 'PATCH']) !!}
     <div class="row">
         <div class="col-md-5">
             <h1 class="page-header">Products \ <small> Add a product</small></h1>
@@ -21,7 +20,6 @@
             {!! Form::submit('Update product', ['class' => 'btn btn-primary']) !!}
         </div>
     </div>
-</form>
 {!! Form::close() !!}
 @stop
 
