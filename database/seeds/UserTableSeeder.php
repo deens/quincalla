@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Quincalla\User;
+use Quincalla\Entities\User;
 
 class UserTableSeeder extends Seeder {
 

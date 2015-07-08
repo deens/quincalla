@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Quincalla\Collection;
+use Quincalla\Entities\Collection;
 
 class CollectionTableSeeder extends Seeder {
 
