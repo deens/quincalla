@@ -8,37 +8,13 @@ class CollectionTableSeeder extends Seeder {
     public function run()
     {
         DB::table('collections')->delete();
-        Collection::insert([
-            [
-                'name' => 'Necklaces', 
-                'slug' => 'necklaces', 
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ],
-            [
-                'name' => 'Pendants', 
-                'slug' => 'pendants', 
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ],
-            [
-                'name' => 'Rings', 
-                'slug' => 'rings', 
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ],
-            [
-                'name' => 'Bracelets', 
-                'slug' => 'bracelets', 
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ],
-            [
-                'name' => 'Earrings', 
-                'slug' => 'earrings', 
-                'created_at' => new DateTime(),
-                'updated_at' => new DateTime(),
-            ]
+        Collection::create([
+            'name' => 'Frontpage',
+            'slug' => 'frontpage',
+            'type' => 'manual',
+            'published' => false,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime()
         ]);
     }
 
