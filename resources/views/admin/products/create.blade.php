@@ -1,10 +1,9 @@
 @extends('admin.layout')
 @section('content')
-<form role="form" method="POST" action="{{ route('admin.products.store') }}">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+{!! Form::open(['route' => 'admin.products.store', 'role' => 'form']) !!}
     <div class="row">
         <div class="col-md-5">
-            <h1>Products \ <small> Add a product</small></h1>
+            <h1 class="page-header">Products \ <small> Add a product</small></h1>
         </div>
         <div class="col-md-7 text-right">
             <a href="{{ route('admin.products.index') }}" class="btn btn-default">Cancel</a>
@@ -13,7 +12,6 @@
     </div>
 
     <hr>
-
     <div class="row">
 
         <div class="col-md-8">
@@ -30,8 +28,13 @@
             @endif
 
             <div class="form-group">
-                {!! Form::label('name', 'Title') !!}
+                {!! Form::label('name', 'Name') !!}
                 {!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('slug', 'Url identifier (/product/{url-identifier})') !!}
+                {!! Form::text('slug', old('slug'), ['class' => 'form-control', 'placeholder' => 'product-url-identifier']) !!}
             </div>
 
             <div class="form-group">
@@ -73,12 +76,53 @@
             <div class="form-group">
                 {!! Form::label('inventory_policy', 'Inventory Policy') !!}
                 {!! Form::select('inventory_policy',[
-                    1 => 'Don\'t track inventory',
-                    2 => 'Track this product Inventory'
+                1 => 'Don\'t track inventory',
+                2 => 'Track this product Inventory'
                 ], old('inventory_policy'), ['class' => 'form-control']) !!}
             </div>
 
+            <div class="form-group">
+                {!! Form::label('quantity', 'Quantity') !!}
+                {!! Form::text('quantity', old('quantity'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label class="control-label">
+                        <input type="checkbox" name="inventory_policy" value="{{ old('inventory_policy') }}">
+                        Allow customers to purchase this product when it's out of stock
+                    </label>
+                </div>
+            </div>
+
+
+            <h4>Shipping</h4>
+            <div class="form-group">
+                {!! Form::label('weight', 'Weight') !!}
+                {!! Form::text('weight', old('weight'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('weight_unit', 'Weight Unit') !!}
+                {!! Form::select('weight_unit', [
+                1 => 'lb',
+                2 => 'oz',
+                3 => 'kg',
+                4 => 'g',
+                ], old('weight_unit'), ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label class="control-label">
+                        <input type="checkbox" name="inventory_policy" value="{{ old('inventory_policy') }}">
+                        This product require shipping
+                    </label>
+                </div>
+            </div>
+
         </div>
+
         <div class="col-md-4">
 
             <h4>Visibility</h4>
@@ -86,35 +130,43 @@
                 <div class="checkbox">
                     <label class="control-label">
                         <input type="checkbox" name="visibility" value="{{ old('visibility') }}">
-                        online store
+                        Online store
                     </label>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="type" class="control-label">Date</label>
+                <input type="text" class="form-control" name="publish_date" value="{{ old('publish_date') }}">
+            </div>
+            <div class="form-group">
+                <label for="type" class="control-label">Time</label>
+                <input type="text" class="form-control" name="publish_time" value="{{ old('publish_time') }}">
             </div>
 
             <h4>Organization</h4>
             <div class="form-group">
                 <label for="type" class="control-label">Product Type</label>
-                <input type="text" class="form-control" name="type" value="{{ old('type') }}">
+                {!! Form::text('type', old('type'), ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-                <label for="type" class="control-label">Vendor</label>
-                <input type="text" class="form-control" name="vendor" value="{{ old('vendor') }}">
+                <label for="vendor" class="control-label">Vendor</label>
+                {!! Form::text('vendor', old('vendor'), ['class' => 'form-control']) !!}
             </div>
 
             <hr>
 
             <div class="form-group">
                 <label for="type" class="control-label">Collections</label>
-                <input type="text" class="form-control" name="collections" value="{{ old('collections') }}">
+                {!! Form::select('collection_id',['Select Manual Collection'] + $collections, old('collection_id'), ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
                 <label for="type" class="control-label">Tags</label>
-                <input type="text" class="form-control" name="tags" value="{{ old('tags') }}">
+                {!! Form::select('tags[]', $tags, old('tags[]'), ['class' => 'form-control', 'multiple'] ) !!}
             </div>
         </div>
     </div>
-
     <hr>
+
     <div class="row">
         <div class="col-md-12 text-right">
             <a href="{{ route('admin.products.index') }}" class="btn btn-default">Cancel</a>
@@ -122,6 +174,7 @@
         </div>
     </div>
 </form>
+{!! Form::close() !!}
 @stop
 
 

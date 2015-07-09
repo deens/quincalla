@@ -2,16 +2,26 @@
 namespace Quincalla\Http\Controllers\Admin;
 
 use Quincalla\Entities\Product;
+use Quincalla\Entities\Collection;
+use Quincalla\Entities\Tag;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller {
+class ProductsController extends Controller
+{
+    protected $products;
+    protected $collections;
+    protected $tags;
 
-    public function __construct()
+    public function __construct(Product $products, Collection $collections, Tag $tags)
     {
         $this->middleware('auth.admin');
+        $this->products = $products;
+        $this->collections = $collections;
+        $this->tags = $tags;
     }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -19,7 +29,7 @@ class ProductsController extends Controller {
 	 */
 	public function index()
 	{
-        $products = Product::paginate(15);
+        $products = $this->products->paginate(15);
 
         return view('admin.products.index', compact('products'));
 	}
@@ -31,7 +41,10 @@ class ProductsController extends Controller {
 	 */
 	public function create()
 	{
-        return view('admin.products.create');
+        $collections = $this->collections->lists('name', 'id')->toArray();
+        $tags = $this->tags->lists('name', 'id');
+
+        return view('admin.products.create', compact('collections', 'tags'));
 	}
 
 	/**
@@ -39,20 +52,14 @@ class ProductsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
-	}
+        $product = $this->products->create($request->all());
+        $product->tags()->attach($request->input('tags'));
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Product has been created');
 	}
 
 	/**
@@ -63,7 +70,11 @@ class ProductsController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+        $product = $this->products->findOrFail($id);
+        $collections = $this->collections->lists('name', 'id')->toArray();
+        $tags = $this->tags->lists('name', 'id');
+
+        return view('admin.products.edit', compact('product', 'collections', 'tags'));
 	}
 
 	/**
@@ -72,9 +83,15 @@ class ProductsController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
-		//
+		$product = $this->products->findOrFail($id);
+        $product->update($request->all());
+        $product->tags()->sync($request->input('tags'));
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Product has been updated');
 	}
 
 	/**

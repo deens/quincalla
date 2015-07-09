@@ -1,18 +1,18 @@
 <?php
 namespace Quincalla\Http\Controllers\Admin;
 
-use Quincalla\Entities\Order;
+use Quincalla\Entities\User;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class OrdersController extends Controller 
+class CustomersController extends Controller 
 {
-    protected $orders;
+    protected $customers;
 
-    public function __construct(Order $orders)
+    public function __construct(User $customers)
     {
-        $this->orders = $orders;
+        $this->customers = $customers;
     }
 
 	/**
@@ -22,8 +22,9 @@ class OrdersController extends Controller
 	 */
 	public function index()
 	{
-        $orders = $this->orders->paginate(15);
-        return view('admin.orders.index', compact('orders'));
+        $customers = $this->customers->paginate(15);
+
+        return view('admin.customers.index', compact('customers'));
 	}
 
 	/**
@@ -91,3 +92,4 @@ class OrdersController extends Controller
 	}
 
 }
+

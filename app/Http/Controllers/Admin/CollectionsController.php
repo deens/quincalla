@@ -1,11 +1,19 @@
 <?php
 namespace Quincalla\Http\Controllers\Admin;
 
+use Quincalla\Entities\Collection;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CollectionsController extends Controller {
+class CollectionsController extends Controller 
+{
+    protected $collections;
+
+    public function __construct(Collection $collections)
+    {
+        $this->collections = $collections;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -14,7 +22,9 @@ class CollectionsController extends Controller {
 	 */
 	public function index()
 	{
-        return view('admin.collections.index');
+        $collections = $this->collections->paginate(15);
+
+        return view('admin.collections.index', compact('collections'));
 	}
 
 	/**

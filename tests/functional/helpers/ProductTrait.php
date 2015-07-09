@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 namespace Quincalla\Tests\Functional\Helpers;
 
 trait ProductTrait

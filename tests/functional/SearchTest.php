@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
@@ -28,16 +27,16 @@ class SearchTest extends TestCase
 
     public function testSearchResultPagination()
     {
+        $query = 'a';
         $this->visit('/')
-            ->type('gold', 'query')
+            ->type($query, 'query')
             ->press('Search')
-            ->see('Search results for `gold`')
+            ->see('Search results for `' . $query . '`')
             ->see('&laquo')
             ->see('&raquo')
             ->click('»')
-            ->seePageIs('/search?page=2&query=gold')
+            ->seePageIs('/search?page=2&query=' . $query)
             ->click('«')
-            ->seePageIs('/search?page=1&query=gold');
+            ->seePageIs('/search?page=1&query=' . $query);
     }
 }
-

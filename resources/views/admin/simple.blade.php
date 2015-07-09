@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Quincalla</title>
 
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/admin.css') }}" rel="stylesheet">
 
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -18,21 +18,6 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <img class="navbar-brand" src="{{ asset('images/logo.png')}}" alt="Quincalla">
-                <a class="navbar-brand" href="{{ url('/admin') }}">Admin</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container">
         @if(Session::has('success'))
             <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -43,9 +28,14 @@
         @endif
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <div class="brand text-center">
+                    <img class="" src="{{ asset('images/logo.png')}}" alt="Quincalla">
+                    <p class="lead">Quincalla<p>
+                </div>
+
                 @yield('content')
             </div>
         </div>

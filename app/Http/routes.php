@@ -37,9 +37,16 @@ Route::group(['prefix' => 'checkout'], function() {
 // Admin
 Route::get('admin/login', ['as' => 'admin.login', 'uses' => 'Admin\AuthController@login']);
 Route::post('admin/login', ['as' => 'admin.login', 'uses' => 'Admin\AuthController@postLogin']);
+Route::get('admin/logout', ['as' => 'admin.logout', 'uses' => 'Admin\AuthController@getLogout']);
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin', 'namespace' => 'Admin'], function() {
     Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@index']);
-    Route::resource('products', 'ProductsController');
+    Route::resource('products', 'ProductsController', ['except' => ['show']]);
     Route::resource('collections', 'CollectionsController');
     Route::resource('orders', 'OrdersController');
+    Route::resource('customers', 'CustomersController');
+
+    Route::get('admin/settings/general', ['as' => 'admin.settings.general', 'uses' => 'SettingsController@general']);
+    Route::post('admin/settings/general', ['as' => 'admin.settings.general', 'uses' => 'SettingsController@postGeneral']);
+    Route::get('admin/settings/payment', ['as' => 'admin.settings.payments', 'uses' => 'SettingsController@payment']);
+    Route::post('admin/settings/payment', ['as' => 'admin.settings.payments', 'uses' => 'SettingsController@postPayment']);
 });

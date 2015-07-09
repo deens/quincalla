@@ -11,29 +11,34 @@
 |
 */
 
-$factory->define(Quincalla\User::class, function ($faker) {
+$factory->define(Quincalla\Entities\User::class, function ($faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => str_random(10),
+        'role'           => $faker->randomElement(['admin', 'customer', 'guest']),
+        'name'           => $faker->name,
+        'email'          => $faker->email,
+        'password'       => str_random(10),
         'remember_token' => str_random(10),
+        'active'         => $faker->randomElement([true, false]),
     ];
 });
 
-$factory->define(Quincalla\Collection::class, function ($faker) {
+$factory->define(Quincalla\Entities\Collection::class, function ($faker) {
     return [
         'name' => $faker->unique()->sentence(2),
         'slug' => $faker->unique()->slug,
     ];
 });
 
-$factory->define(Quincalla\Product::class, function ($faker) {
+$factory->define(Quincalla\Entities\Product::class, function ($faker) {
     return [
-        'collection_id' => $faker->randomElement([1, 2, 3]),
-        'name' => $faker->unique()->sentence(3),
-        'slug' => $faker->unique()->slug,
-        'description' => $faker->text,
-        'picture' => $faker->unique()->md5() .'.png',
-        'price' => $faker->randomFloat(2, 10, 200),
+        'collection_id' => $faker->randomElement([1, 2, 3, 4, 5]),
+        'name'          => $faker->unique()->sentence(3),
+        'slug'          => $faker->unique()->slug,
+        'description'   => $faker->text,
+        'picture'       => $faker->unique()->md5() .'.png',
+        'price'         => $faker->randomFloat(2, 100, 199),
+        'compare_price' => $faker->randomFloat(2, 10, 99),
+        'vendor'        => $faker->randomElement(['Apple', 'Nike', 'Levis']),
+        'type'          => $faker->randomElement(['Cell Phone', 'Pants', 'Shoes']),
     ];
 });

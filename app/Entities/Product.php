@@ -12,7 +12,17 @@ class Product extends Model
     use PresentableTrait;
 
     protected $table = 'products';
-    protected $fillable = [];
+    protected $fillable = [
+        'collection_id',
+        'name',
+        'slug',
+        'description',
+        'picture',
+        'price',
+        'compare_price',
+        'vendor',
+        'type',
+    ];
     protected $presenter = 'Quincalla\Http\Presenters\ProductPresenter';
     protected $searchable = [
         'columns' => [
