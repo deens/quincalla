@@ -17,15 +17,15 @@ class CollectionsController extends Controller
 
 	public function show($slug)
 	{
-        $collection = $this->collections->whereSlug($slug)
-            ->first();
-
-        $products = $collection->products()
-            ->simplePaginate(6);
-
-        return view('collection', compact(
-            'collection',
-            'products'
-        ));
+        // $collection = $this->collections->whereSlug($slug)
+        //     ->first();
+        //
+        // $products = $collection->products()
+        //     ->simplePaginate(6);
+        //
+        // return view('collection', compact(
+        //     'collection',
+        //     'products'
+        // ));
 	}
 }
