@@ -11,6 +11,6 @@ class Collection extends Model
 
     public function products()
     {
-        return $this->hasMany('Quincalla\Entities\Product');
+        return $this->belongsToMany('Quincalla\Entities\Product');
     }
 }

@@ -34,7 +34,7 @@ class CollectionsController extends Controller
 	 */
 	public function create()
 	{
-		//
+        return view('admin.collections.create');
 	}
 
 	/**
@@ -42,9 +42,9 @@ class CollectionsController extends Controller
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
+        dd($request->all());
 	}
 
 	/**
@@ -55,7 +55,7 @@ class CollectionsController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+        return view('admin.collections.show');
 	}
 
 	/**
@@ -66,7 +66,9 @@ class CollectionsController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
+        $collection = $this->collections->findOrFail($id);
+
+        return view('admin.collections.edit', compact('collection'));
 	}
 
 	/**
@@ -75,9 +77,9 @@ class CollectionsController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
-		//
+        dd($request->all());
 	}
 
 	/**

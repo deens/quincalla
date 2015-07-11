@@ -22,16 +22,8 @@ $factory->define(Quincalla\Entities\User::class, function ($faker) {
     ];
 });
 
-$factory->define(Quincalla\Entities\Collection::class, function ($faker) {
-    return [
-        'name' => $faker->unique()->sentence(2),
-        'slug' => $faker->unique()->slug,
-    ];
-});
-
 $factory->define(Quincalla\Entities\Product::class, function ($faker) {
     return [
-        'collection_id' => $faker->randomElement([1, 2, 3, 4, 5]),
         'name'          => $faker->unique()->sentence(3),
         'slug'          => $faker->unique()->slug,
         'description'   => $faker->text,
@@ -40,5 +32,12 @@ $factory->define(Quincalla\Entities\Product::class, function ($faker) {
         'compare_price' => $faker->randomFloat(2, 10, 99),
         'vendor'        => $faker->randomElement(['Apple', 'Nike', 'Levis']),
         'type'          => $faker->randomElement(['Cell Phone', 'Pants', 'Shoes']),
+        'published'     => $faker->randomElement([true, false]),
+    ];
+});
+
+$factory->define(Quincalla\Entities\Tag::class, function ($faker) {
+    return [
+        'name' => $faker->unique()->word()
     ];
 });

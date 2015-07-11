@@ -16,16 +16,7 @@
 
         <div class="col-md-8">
 
-            @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+            @include('admin.validation_errors')
 
             <div class="form-group">
                 {!! Form::label('name', 'Name') !!}
@@ -129,7 +120,7 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label class="control-label">
-                        <input type="checkbox" name="visibility" value="{{ old('visibility') }}">
+                        {!! Form::checkbox('published', true, old('published') ?: true) !!}
                         Online store
                     </label>
                 </div>
@@ -176,5 +167,3 @@
 </form>
 {!! Form::close() !!}
 @stop
-
-

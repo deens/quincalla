@@ -17,6 +17,13 @@ class CreateCollectionTable extends Migration {
 			$table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
+            $table->text('description');
+            $table->string('image');
+            $table->enum('type', ['manual', 'condional'])->default('manual');
+            $table->enum('condition', ['any', 'all'])->default('all');
+            $table->string('sort_order');
+            $table->text('rules');
+            $table->boolean('published')->default(true);
 			$table->timestamps();
 		});
 	}

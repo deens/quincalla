@@ -33,7 +33,8 @@ class Product extends Model
 
     public function collection()
     {
-        return $this->belongsTo('Quincalla\Entities\Collection');
+        return $this->belongsToMany('Quincalla\Entities\Collection')
+            ->withTimestamps();
     }
 
     public function tags()

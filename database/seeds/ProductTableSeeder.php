@@ -16,7 +16,6 @@ class ProductTableSeeder extends Seeder {
     {
         return [
             [
-                'collection_id' => 1,
                 'name' => 'First Necklace Yellow Gold',
                 'slug' => 'first-necklace-yellow-gold',
                 'description' => 'Awesome Yellow Gold Necklace Description',
@@ -26,7 +25,8 @@ class ProductTableSeeder extends Seeder {
                 'type' => 'Necklace',
                 'vendor' => 'Start Jeweley',
                 'created_at' => new DateTime(),
-                'updated_at' => new DateTime()
+                'updated_at' => new DateTime(),
+                'published' => true
             ]
         ];
     }
