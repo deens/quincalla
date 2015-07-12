@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Collection extends Model
 {
     protected $table = 'collections';
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'image',
+        'type', 
+        'condition',
+        'sort_order',
+        'rules',
+        'published'
+    ];
 
     public function products()
     {
