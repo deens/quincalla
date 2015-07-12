@@ -44,7 +44,18 @@ class CollectionsController extends Controller
 	 */
 	public function store(Request $request)
 	{
-        dd($request->all());
+        if ($request->get('type') === 'condition') {
+            $rules = [
+                'fields' => $request->get('rules_fields'), 
+                'conditions' => $request->get('rules_conditions'),
+                'values' => $request->get('rules_values')
+            ];
+            $request->merge(['rules' => json_encode($rules)]);
+        }
+
+        $collection = $this->collections->create($request->all());
+
+        return redirect()->route('admin.collections.show', [$collection->id]);
 	}
 
 	/**
@@ -55,7 +66,9 @@ class CollectionsController extends Controller
 	 */
 	public function show($id)
 	{
-        return view('admin.collections.show');
+        $collection = $this->collections->findOrFail($id);
+
+        return view('admin.collections.show', compact('collection'));
 	}
 
 	/**
