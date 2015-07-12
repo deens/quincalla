@@ -19,7 +19,7 @@ class ProductTableSeeder extends Seeder {
                 'name' => 'First Necklace Yellow Gold',
                 'slug' => 'first-necklace-yellow-gold',
                 'description' => 'Awesome Yellow Gold Necklace Description',
-                'picture' => 'first-nacklace-yellow-gold.png',
+                'image' => 'first-nacklace-yellow-gold.png',
                 'price' => '99,99',
                 'compare_price' => '69.99',
                 'type' => 'Necklace',
