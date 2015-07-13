@@ -2,6 +2,7 @@
 namespace Quincalla\Http\Controllers\Admin;
 
 use Quincalla\Entities\Collection;
+use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,9 +11,10 @@ class CollectionsController extends Controller
 {
     protected $collections;
 
-    public function __construct(Collection $collections)
+    public function __construct(Collection $collections, Product $products)
     {
         $this->collections = $collections;
+        $this->products = $products;
     }
 
 	/**
@@ -34,7 +36,10 @@ class CollectionsController extends Controller
 	 */
 	public function create()
 	{
-        return view('admin.collections.create');
+        $rulesColumns = $this->products->getRulesColumns();
+        $rulesRelations = $this->products->getRulesRelations();
+
+        return view('admin.collections.create', compact('rulesColumns', 'rulesRelations'));
 	}
 
 	/**
@@ -64,8 +69,11 @@ class CollectionsController extends Controller
 	public function show($id)
 	{
         $collection = $this->collections->findOrFail($id);
+        $products = $collection->products;
 
-        return view('admin.collections.show', compact('collection'));
+        return view('admin.collections.show', 
+            compact('collection', 'products')
+        );
 	}
 
 	/**
@@ -77,8 +85,12 @@ class CollectionsController extends Controller
 	public function edit($id)
 	{
         $collection = $this->collections->findOrFail($id);
+        $rulesColumns = $this->products->getRulesColumns();
+        $rulesRelations = $this->products->getRulesRelations();
 
-        return view('admin.collections.edit', compact('collection'));
+        return view('admin.collections.edit', 
+            compact('collection', 'rulesColumns', 'rulesRelations')
+        );
 	}
 
 	/**
