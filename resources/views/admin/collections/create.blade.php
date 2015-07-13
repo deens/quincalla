@@ -61,7 +61,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
-                        {!! Form::select('rules_fields[]', [
+                        {!! Form::select('rules[][column]', [
                             'product_title'     => 'Product Title',
                             'product_type'      => 'Product Type',
                             'product_vendor'    => 'Product Vendor',
@@ -73,7 +73,7 @@
                         ], null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-md-4">
-                        {!! Form::select('rules_conditions[]', [
+                        {!! Form::select('rules[][relation]', [
                             'is_equal_to'       => 'is equal to',
                             'is_not_equal_to'   => 'is not equal to',
                             'is_greater_than'   => 'is greater than',
@@ -85,7 +85,7 @@
                         ], null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-md-4">
-                        {!! Form::text('rules_values[]', '', ['class' => 'form-control']) !!}
+                        {!! Form::text('rules[][condition]', '', ['class' => 'form-control']) !!}
                     </div>
                 </div>
             </div>
@@ -93,31 +93,31 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-4">
-                        {!! Form::select('rules_fields[]', [
-                            'Product Title',
-                            'Product Type',
-                            'Product Vendor',
-                            'Product Price',
-                            'Product Tag',
-                            'Compare price at',
-                            'Weitgh',
-                            'Inventory Stock',
+                        {!! Form::select('rules[][column]', [
+                            'product_title'     => 'Product Title',
+                            'product_type'      => 'Product Type',
+                            'product_vendor'    => 'Product Vendor',
+                            'product_price'     => 'Product Price',
+                            'product_tag'       => 'Product Tag',
+                            'compare_price'     => 'Compare price at',
+                            'weitgh'            => 'Weitgh',
+                            'inventory_stock'   => 'Inventory Stock',
                         ], null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-md-4">
-                        {!! Form::select('rules_relation[]', [
-                            'is equal to',
-                            'is not equal to',
-                            'is greater than',
-                            'is less than',
-                            'start with',
-                            'ends with',
-                            'contains',
-                            'does not contain',
+                        {!! Form::select('rules[][relation]', [
+                            'is_equal_to'       => 'is equal to',
+                            'is_not_equal_to'   => 'is not equal to',
+                            'is_greater_than'   => 'is greater than',
+                            'is_less_than'      => 'is less than',
+                            'start_with'        => 'start with',
+                            'ends_with'         => 'ends with',
+                            'contains'          => 'contains',
+                            'does_not_contain'  => 'does not contain',
                         ], null, ['class' => 'form-control']) !!}
                     </div>
                     <div class="col-md-4">
-                        {!! Form::text('rules_condition[]', '', ['class' => 'form-control']) !!}
+                        {!! Form::text('rules[][condition]', '', ['class' => 'form-control']) !!}
                     </div>
                 </div>
             </div>

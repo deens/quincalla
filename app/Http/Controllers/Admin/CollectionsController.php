@@ -6,7 +6,7 @@ use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CollectionsController extends Controller 
+class CollectionsController extends Controller
 {
     protected $collections;
 
@@ -39,17 +39,14 @@ class CollectionsController extends Controller
 
 	/**
 	 * Store a newly created resource in storage.
-	 *
+     *
+	 * @param Illuminate\Http\Request
 	 * @return Response
 	 */
 	public function store(Request $request)
 	{
         if ($request->get('type') === 'condition') {
-            $rules = [
-                'fields' => $request->get('rules_fields'), 
-                'conditions' => $request->get('rules_conditions'),
-                'values' => $request->get('rules_values')
-            ];
+            $rules = $this->splitRules($request->get('rules'));
             $request->merge(['rules' => json_encode($rules)]);
         }
 
@@ -106,6 +103,17 @@ class CollectionsController extends Controller
 		//
 	}
 
+    /**
+     * Split multiple rules in to individual
+     *
+     * @param array $rules
+     * @return array
+     */
+    private function splitRules($rules)
+    {
+        if (count($rules) > 3) {
+            return (array_chunk($rules, 3));
+        }
+        return $rules;
+    }
 }
-
-
