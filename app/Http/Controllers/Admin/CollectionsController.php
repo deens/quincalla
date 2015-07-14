@@ -87,9 +87,15 @@ class CollectionsController extends Controller
         $collection = $this->collections->findOrFail($id);
         $rulesColumns = $this->products->getRulesColumns();
         $rulesRelations = $this->products->getRulesRelations();
+        if ($collection->type === 'manual') {
+            $products = $collection->products;
+        } else {
+            $products = $this->products->getByRules($collection->codition, $collection->rules);
+        }
+
 
         return view('admin.collections.edit', 
-            compact('collection', 'rulesColumns', 'rulesRelations')
+            compact('collection', 'rulesColumns', 'rulesRelations', 'products')
         );
 	}
 
