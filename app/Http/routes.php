@@ -50,18 +50,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin', 'namespace' => 
     Route::get('admin/settings/payment', ['as' => 'admin.settings.payments', 'uses' => 'SettingsController@payment']);
     Route::post('admin/settings/payment', ['as' => 'admin.settings.payments', 'uses' => 'SettingsController@postPayment']);
 });
-
-Route::get('collection/{id}', function($id)
-{
-    $collection = Quincalla\Entities\Collection::find($id);
-    $products = new Quincalla\Entities\Product();
-
-    $match = $collection->condition;
-    $rules = $collection->rules;
-
-    $result = $products->getByRules($match, $rules);
-    foreach($result as $product)
-    {
-        var_dump($product->toArray());
-    }
-});
