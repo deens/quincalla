@@ -22,7 +22,6 @@ Route::controllers([
 ]);
 
 // Checkout
-
 Route::group(['prefix' => 'checkout'], function() {
     Route::get('/', ['as' => 'checkout.index', 'uses' => 'CheckoutController@index']);
     Route::get('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@customer']);
@@ -41,7 +40,7 @@ Route::get('admin/logout', ['as' => 'admin.logout', 'uses' => 'Admin\AuthControl
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin', 'namespace' => 'Admin'], function() {
     Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@index']);
     Route::resource('products', 'ProductsController', ['except' => ['show']]);
-    Route::resource('collections', 'CollectionsController');
+    Route::resource('collections', 'CollectionsController', ['except' => ['show']]);
     Route::resource('orders', 'OrdersController');
     Route::resource('customers', 'CustomersController');
 
