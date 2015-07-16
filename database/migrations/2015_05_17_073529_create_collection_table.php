@@ -21,7 +21,7 @@ class CreateCollectionTable extends Migration {
             $table->string('image');
             $table->enum('type', ['manual', 'condition'])->default('manual');
             $table->enum('match', ['any', 'all'])->default('all');
-            $table->string('sort_order');
+            $table->string('sort_order')->default('manually');
             $table->text('rules');
             $table->boolean('published')->default(true);
 			$table->timestamps();

@@ -1,4 +1,4 @@
-<h3>Products</h3>
+<h4>Products</h4>
 
 @if ($collection->type === 'manual')
     <div class="col-md-8">
@@ -7,16 +7,13 @@
     </div>
     <div class="col-md-4">
         {!! Form::label('sort_order', 'Sort By') !!}
-        {!! Form::select('sort_order', [
-            'best_match' => 'Best Match',
-            'name_asc' => 'Name Asc', 
-            'name_desc' => 'Name Desc', 
-            'price_asc' => 'Price Asc', 
-            'price_desc' => 'Price Desc'
-        ], null, ['class' => 'form-control']) !!}
+        {!! Form::select('sort_order', $sortOptions, null, ['class' => 'form-control']) !!}
     </div>
 @else
-
+    <div class="form-group">
+        {!! Form::label('sort_order', 'Sort By') !!}
+        {!! Form::select('sort_order', $sortOptions, null, ['class' => 'form-control']) !!}
+    </div>
 @endif
 
 <table class="table">

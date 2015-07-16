@@ -14,6 +14,11 @@ trait SmartRulesTrait
         'does_not_contain'  => 'does not contain',
     ];
 
+    protected $rulesSortDefaults = [
+        'manually' => 'Manually',
+        'best-match' => 'Best Match'
+    ];
+
     /**
      * Returns an array with rules columns
      *
@@ -35,20 +40,58 @@ trait SmartRulesTrait
     }
 
     /**
-     * Returns a sorted collection of items base on match type and rules.
-     * 
-     * @param string $match
-     * @param array $rules
-     * @param string $sort_order
-     * @return Collection
+     * Returns an array with sort option
+     *
+     * @return array
      */
-    public static function getByRules($match, $rules = [])
+    public function getRulesSortOptions()
     {
-        $rules = json_decode($rules);
+        $sortOptions = [];
+        if (count($this->rulesSortOptions)) {
+            foreach($this->rulesSortOptions as $field => $direction)
+            {
+                $keys = array_keys($direction);
+                $sortOptions[$field .'-'. $keys[0]] = $direction[$keys[0]];
+                $sortOptions[$field .'-'. $keys[1]] = $direction[$keys[1]];
+            }
+        }
+        return array_merge($this->rulesSortDefaults, $sortOptions);
+    }
+
+    /**
+     * Returns a sorted collection of items base on match type and rules.
+     *
+     * @param string $match Type of match all or any
+     * @param array $rules List of rules to apply
+     * @param string $sortOrder  Sort by field and direction
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public static function getByRules($match, $rules = [], $sortOrder = 'manually')
+    {
         $query = self::where('published', true);
 
+        self::applyRules($query, $match, $rules);
+
+        if ($sortOrder !== 'manually' && $sortOrder !== 'best-match') {
+            $sort = explode('-', $sortOrder);
+            self::sortOrderByField($query, $sort[0], $sort[1]);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Apply rules
+     *
+     * @param object @query Illuminate\Database\Eloquent\Builder
+     * @param string @match
+     * @param array @rules Array of rules.
+     */
+    public static function applyRules($query, $match, $rules)
+    {
         foreach ($rules as $key => $rule) {
             $method = camel_case($match .'_'. $rule[1]->relation);
+
             if (method_exists(get_called_class(), $method)) {
                 call_user_func_array(array(get_called_class(), $method), [
                     $query,
@@ -57,8 +100,6 @@ trait SmartRulesTrait
                 ]);
             }
         }
-
-        return $query->get();
     }
 
     public static function allIsEqualTo($query, $field, $condition)
@@ -139,5 +180,10 @@ trait SmartRulesTrait
     public static function anyDoesNotContains($query, $field, $condition)
     {
         return $query->orWhere($field, 'NOT LIKE', '%'.$condition.'%');
+    }
+
+    public static function sortOrderByField($query, $field, $sortOrder = 'asc')
+    {
+        return $query->orderBy($field, $sortOrder);
     }
 }
