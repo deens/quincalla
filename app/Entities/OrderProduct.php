@@ -1,5 +1,4 @@
 <?php
-
 namespace Quincalla\Entities;
 
 use Illuminate\Database\Eloquent\Model;
