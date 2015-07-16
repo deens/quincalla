@@ -20,7 +20,7 @@ class CreateCollectionTable extends Migration {
             $table->text('description');
             $table->string('image');
             $table->enum('type', ['manual', 'condition'])->default('manual');
-            $table->enum('condition', ['any', 'all'])->default('all');
+            $table->enum('match', ['any', 'all'])->default('all');
             $table->string('sort_order');
             $table->text('rules');
             $table->boolean('published')->default(true);

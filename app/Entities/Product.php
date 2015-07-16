@@ -5,11 +5,13 @@ namespace Quincalla\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Laracasts\Presenter\PresentableTrait;
+use Quincalla\Entities\SmartRulesTrait;
 
 class Product extends Model
 {
     use SearchableTrait;
     use PresentableTrait;
+    use SmartRulesTrait;
 
     protected $table = 'products';
     protected $fillable = [
@@ -30,6 +32,16 @@ class Product extends Model
             'description' => 5,
         ]
     ];
+    protected $rulesColumns = [
+        'name'              => 'Name',
+        'type'              => 'Type',
+        'vendor'            => 'Vendor',
+        'price'             => 'Price',
+        'tag'               => 'Tag',
+        'price'             => 'Compare price at',
+        'weitgh'            => 'Weitgh',
+        'inventory_stock'   => 'Inventory Stock',
+    ];
 
     public function collection()
     {
@@ -40,5 +52,10 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany('Quincalla\Entities\Tag');
+    }
+
+    public function getConditionalProducts($collection)
+    {
+        return false;
     }
 }

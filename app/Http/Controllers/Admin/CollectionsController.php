@@ -2,17 +2,26 @@
 namespace Quincalla\Http\Controllers\Admin;
 
 use Quincalla\Entities\Collection;
+use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CollectionsController extends Controller 
+class CollectionsController extends Controller
 {
+    /**
+     * @var Quincalla\Entities\Collection
+     */
     protected $collections;
+    /**
+     * @var Quincalla\Entities\Product
+     */
+    protected $products;
 
-    public function __construct(Collection $collections)
+    public function __construct(Collection $collections, Product $products)
     {
         $this->collections = $collections;
+        $this->products = $products;
     }
 
 	/**
@@ -34,22 +43,22 @@ class CollectionsController extends Controller
 	 */
 	public function create()
 	{
-        return view('admin.collections.create');
+        $rulesColumns = $this->products->getRulesColumns();
+        $rulesRelations = $this->products->getRulesRelations();
+
+        return view('admin.collections.create', compact('rulesColumns', 'rulesRelations'));
 	}
 
 	/**
 	 * Store a newly created resource in storage.
-	 *
+     *
+	 * @param Illuminate\Http\Request
 	 * @return Response
 	 */
 	public function store(Request $request)
 	{
         if ($request->get('type') === 'condition') {
-            $rules = [
-                'fields' => $request->get('rules_fields'), 
-                'conditions' => $request->get('rules_conditions'),
-                'values' => $request->get('rules_values')
-            ];
+            $rules = $this->splitRules($request->get('rules'));
             $request->merge(['rules' => json_encode($rules)]);
         }
 
@@ -67,8 +76,11 @@ class CollectionsController extends Controller
 	public function show($id)
 	{
         $collection = $this->collections->findOrFail($id);
+        $products = $collection->products;
 
-        return view('admin.collections.show', compact('collection'));
+        return view('admin.collections.show', 
+            compact('collection', 'products')
+        );
 	}
 
 	/**
@@ -81,7 +93,21 @@ class CollectionsController extends Controller
 	{
         $collection = $this->collections->findOrFail($id);
 
-        return view('admin.collections.edit', compact('collection'));
+        $rulesColumns = $this->products->getRulesColumns();
+        $rulesRelations = $this->products->getRulesRelations();
+
+        if ($collection->type === 'manual') {
+            $products = $collection->products;
+        } else {
+        	$products = $this->products->getByRules(
+        		$collection->match, 
+        		$collection->rules
+        		);
+        }
+
+        return view('admin.collections.edit', 
+            compact('collection', 'rulesColumns', 'rulesRelations', 'products')
+        );
 	}
 
 	/**
@@ -106,6 +132,17 @@ class CollectionsController extends Controller
 		//
 	}
 
+    /**
+     * Split multiple rules in to individual
+     *
+     * @param array $rules
+     * @return array
+     */
+    private function splitRules($rules)
+    {
+        if (count($rules) > 3) {
+            return (array_chunk($rules, 3));
+        }
+        return $rules;
+    }
 }
-
-
