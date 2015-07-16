@@ -9,7 +9,14 @@ use Illuminate\Http\Request;
 
 class CollectionsController extends Controller
 {
+    /**
+     * @var Quincalla\Entities\Collection
+     */
     protected $collections;
+    /**
+     * @var Quincalla\Entities\Product
+     */
+    protected $products;
 
     public function __construct(Collection $collections, Product $products)
     {
@@ -85,14 +92,18 @@ class CollectionsController extends Controller
 	public function edit($id)
 	{
         $collection = $this->collections->findOrFail($id);
+
         $rulesColumns = $this->products->getRulesColumns();
         $rulesRelations = $this->products->getRulesRelations();
+
         if ($collection->type === 'manual') {
             $products = $collection->products;
         } else {
-            $products = $this->products->getByRules($collection->codition, $collection->rules);
+        	$products = $this->products->getByRules(
+        		$collection->match, 
+        		$collection->rules
+        		);
         }
-
 
         return view('admin.collections.edit', 
             compact('collection', 'rulesColumns', 'rulesRelations', 'products')

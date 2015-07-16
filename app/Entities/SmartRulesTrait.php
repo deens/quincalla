@@ -14,23 +14,41 @@ trait SmartRulesTrait
         'does_not_contain'  => 'does not contain',
     ];
 
+    /**
+     * Returns an array with rules columns
+     *
+     * @return array
+     */
     public function getRulesColumns()
     {
         return $this->rulesColumns;
     }
 
+    /**
+     * Returns a array with rules relations
+     *
+     * @return array
+     */
     public function getRulesRelations()
     {
         return $this->rulesRelations;
     }
 
+    /**
+     * Returns a sorted collection of items base on match type and rules.
+     * 
+     * @param string $match
+     * @param array $rules
+     * @param string $sort_order
+     * @return Collection
+     */
     public static function getByRules($match, $rules = [])
     {
         $rules = json_decode($rules);
         $query = self::where('published', true);
 
         foreach ($rules as $key => $rule) {
-            $method = camel_case($match .'_'.$rule[1]->relation);
+            $method = camel_case($match .'_'. $rule[1]->relation);
             if (method_exists(get_called_class(), $method)) {
                 call_user_func_array(array(get_called_class(), $method), [
                     $query,

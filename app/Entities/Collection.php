@@ -13,7 +13,7 @@ class Collection extends Model
         'description',
         'image',
         'type', 
-        'condition',
+        'match',
         'sort_order',
         'rules',
         'published'
