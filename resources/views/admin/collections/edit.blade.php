@@ -60,6 +60,7 @@
             </div>
 
             @include('admin.collections.rules')
+            @include('admin.collections.products')
 
         </div>
 
