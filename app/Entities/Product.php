@@ -67,4 +67,14 @@ class Product extends Model
         return $this->belongsToMany('Quincalla\Entities\Tag');
     }
 
+    /**
+     * Define published scope
+     *
+     * @param object $query
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
 }

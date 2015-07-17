@@ -56,4 +56,9 @@ class Collection extends Model
     {
         $this->attributes['rules'] = json_encode($value);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
 }
