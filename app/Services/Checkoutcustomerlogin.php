@@ -33,11 +33,11 @@ class CheckoutCustomerLogin
         $this->validator = $validator;
     }
 
-    public function run($listener, Request $request)
+    public function run($listener)
     {
         $this->listener = $listener;
 
-        if (! $this->validAccountType($request->get('account_type'))) {
+        if (! $this->validAccountType($this->request->get('account_type'))) {
             return $this->listener->redirectBackWithMessage(
                 'Invalid Account Type Selected'
             );
