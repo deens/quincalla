@@ -2,6 +2,7 @@
 namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Collection;
+use Quincalla\Entities\Product;
 use Quincalla\Http\Requests;
 use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,17 +16,26 @@ class CollectionsController extends Controller
         $this->collections = $collections;
     }
 
-	public function show($slug)
+	public function show($slug, Product $products)
 	{
-        // $collection = $this->collections->whereSlug($slug)
-        //     ->first();
-        //
-        // $products = $collection->products()
-        //     ->simplePaginate(6);
-        //
-        // return view('collection', compact(
-        //     'collection',
-        //     'products'
-        // ));
+        $collection = $this->collections->whereSlug($slug)
+            ->first();
+
+        if ($collection->type === 'condition') {
+        	$products = $products->paginateByRules(
+        		$collection->match,
+        		$collection->rules,
+                $collection->sort_order,
+                6
+        		);
+        } else {
+            $products = $collection->products()
+                ->simplePaginate(6);
+        }
+
+        return view('collection', compact(
+            'collection',
+            'products'
+        ));
 	}
 }

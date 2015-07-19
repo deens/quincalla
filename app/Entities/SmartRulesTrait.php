@@ -81,6 +81,29 @@ trait SmartRulesTrait
     }
 
     /**
+     * Returns a paginated collection of items base on match type and rules.
+     *
+     * @param string $match Type of match all or any
+     * @param array $rules List of rules to apply
+     * @param string $sortOrder  Sort by field and direction
+     * @param integer $limit Limit of items to paginate
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function paginateByRules($match, $rules = [], $sortOrder = 'manually', $limit = 6)
+    {
+        $query = self::where('published', true);
+
+        self::applyRules($query, $match, $rules);
+
+        if ($sortOrder !== 'manually' && $sortOrder !== 'best-match') {
+            $sort = explode('-', $sortOrder);
+            self::sortOrderByField($query, $sort[0], $sort[1]);
+        }
+
+        return $query->paginate($limit);
+    }
+
+    /**
      * Apply rules
      *
      * @param object @query Illuminate\Database\Eloquent\Builder
@@ -99,6 +122,20 @@ trait SmartRulesTrait
                     $rule[2]->condition
                 ]);
             }
+        }
+    }
+
+    /**
+     * Sort items base on sort order
+     *
+     * @param object $query Illuminate\Database\Eloquent\Builder
+     * @param string $sortOrder 
+     */
+    public static function sortOrderRule($query, $sortOrder)
+    {
+        if ($sortOrder !== 'manually' && $sortOrder !== 'best-match') {
+            $sort = explode('-', $sortOrder);
+            self::sortOrderByField($query, $sort[0], $sort[1]);
         }
     }
 
