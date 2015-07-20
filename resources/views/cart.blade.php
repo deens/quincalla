@@ -37,7 +37,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <a class="" title="Delete" href="{{ route('cart.remove', [$product->rowid]) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                        <a class="btn btn-danger btn-sm" title="Delete" href="{{ route('cart.remove', [$product->rowid]) }}">remove</a>
                                     </div>
                                 </td>
                             </tr>
@@ -88,7 +88,7 @@
 
     <div class="well">
         <h2 class="text-center">
-            Your shopping bag is empty.
+            Your shopping cart is empty.
         </h2>
         <div class="text-center">
             <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>

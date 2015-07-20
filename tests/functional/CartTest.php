@@ -22,4 +22,15 @@ class CartTest extends TestCase
             ->seePageIs('/products/first-necklace-yellow-gold');
     }
 
+    public function testRemoveProductFromCart()
+    {
+        $productName = 'First Necklace Yellow Gold';
+
+        $this->addProductToCart('first-necklace-yellow-gold');
+        $this->visit('/cart')
+            ->see($productName)
+            ->click('remove')
+            ->see('Your shopping cart is empty.');
+    }
+
 }
