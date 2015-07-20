@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Services;
 
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class CheckoutStoreShipping
             'state' => 'required|not_in:0',
             'country' => 'required|not_in:0',
             'zipcode' => 'required',
-            'phone' => 'required'
+            'phone' => 'required',
         ];
 
         if ($accountType === 'new-customer' || $accountType === 'guest') {
@@ -67,11 +68,13 @@ class CheckoutStoreShipping
 
         // Save shipping information
         $shippingData = [
-            'address1' => $this->request->get('address1')
+            'address1' => $this->request->get('address1'),
         ];
-        foreach($shippingRules as $field => $rule) {
+
+        foreach ($shippingRules as $field => $rule) {
             $shippingData[$field] = $this->request->get($field);
         }
+
         $this->checkout->set('shipping', $shippingData);
         $this->checkout->store();
 

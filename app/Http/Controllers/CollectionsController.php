@@ -1,11 +1,10 @@
 <?php
+
 namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Collection;
 use Quincalla\Entities\Product;
-use Quincalla\Http\Requests;
-use Quincalla\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
 
 class CollectionsController extends Controller
 {
@@ -16,18 +15,18 @@ class CollectionsController extends Controller
         $this->collections = $collections;
     }
 
-	public function show($slug, Product $products)
-	{
+    public function show($slug, Product $products)
+    {
         $collection = $this->collections->whereSlug($slug)
             ->first();
 
         if ($collection->type === 'condition') {
-        	$products = $products->paginateByRules(
-        		$collection->match,
-        		$collection->rules,
+            $products = $products->paginateByRules(
+                $collection->match,
+                $collection->rules,
                 $collection->sort_order,
                 6
-        		);
+                );
         } else {
             $products = $collection->products()
                 ->simplePaginate(6);
@@ -37,5 +36,5 @@ class CollectionsController extends Controller
             'collection',
             'products'
         ));
-	}
+    }
 }

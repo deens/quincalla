@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Entities;
 
 use Illuminate\Database\Eloquent\Model;
@@ -6,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Collection extends Model
 {
     /**
-     * @var string $table Entity table name
+     * @var string Entity table name
      */
     protected $table = 'collections';
 
     /**
-     * @var array $fillable Definition of mass assignable fields
+     * @var array Definition of mass assignable fields
      */
     protected $fillable = [
         'name',
@@ -22,11 +23,11 @@ class Collection extends Model
         'match',
         'sort_order',
         'rules',
-        'published'
+        'published',
     ];
 
     /**
-     * Get all the products that belongs to a collection
+     * Get all the products that belongs to a collection.
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
@@ -36,9 +37,10 @@ class Collection extends Model
     }
 
     /**
-     * Get collection rules
+     * Get collection rules.
      *
      * @param array $value
+     *
      * @return object
      */
     public function getRulesAttribute($value)
@@ -47,9 +49,10 @@ class Collection extends Model
     }
 
     /**
-     * Set collection rules
+     * Set collection rules.
      *
      * @param array $value
+     *
      * @return string
      */
     public function setRulesAttribute($value)

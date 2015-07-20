@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -6,13 +7,10 @@ use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Country;
 use Quincalla\Entities\State;
-use Quincalla\Http\Requests;
-use Quincalla\Http\Requests\StoreCartRequest;
 use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
 use Webpatser\Countries\Countries;
-
 
 class CheckoutController extends Controller
 {
@@ -26,7 +24,7 @@ class CheckoutController extends Controller
         State $states
     ) {
         $this->middleware('checkout', [
-            'except' => ['customer', 'postCustomer' ]
+            'except' => ['customer', 'postCustomer'],
         ]);
 
         $this->checkout = $checkout;
@@ -41,7 +39,7 @@ class CheckoutController extends Controller
 
     public function customer(Cart $cart)
     {
-        if ( ! $cart->content()->count()) {
+        if (!$cart->content()->count()) {
             return redirect()
                 ->route('cart.index')
                 ->with('error', 'Please add products to your shopping cart');
@@ -71,12 +69,11 @@ class CheckoutController extends Controller
             'state',
             'country',
             'zipcode',
-            'phone'
+            'phone',
         ];
 
-        foreach($shippingFields as $key)
-        {
-            $shippingKey = 'shipping.' . $key;
+        foreach ($shippingFields as $key) {
+            $shippingKey = 'shipping.'.$key;
             $this->checkout->set(
                 $shippingKey,
                 $this->checkout->get($shippingKey, $request->old($key))
@@ -115,7 +112,7 @@ class CheckoutController extends Controller
             return back()->with('error', 'Invalid shipping address');
         }
 
-        if ( ! $this->checkout->has('billing.same_address')) {
+        if (!$this->checkout->has('billing.same_address')) {
             $this->checkout->set('billing.same_address', 1);
         }
 
@@ -129,12 +126,11 @@ class CheckoutController extends Controller
             'state',
             'country',
             'zipcode',
-            'phone'
+            'phone',
         ];
 
-        foreach($billingFields as $key)
-        {
-            $billingKey = 'billing.' . $key;
+        foreach ($billingFields as $key) {
+            $billingKey = 'billing.'.$key;
             $this->checkout->set(
                 $billingKey,
                 $this->checkout->get($billingKey, $request->old($key))
@@ -160,8 +156,8 @@ class CheckoutController extends Controller
     public function confirm()
     {
         if (
-            ! $this->checkout->has('payment')
-            || ! count($this->checkout->get('payment'))
+            !$this->checkout->has('payment')
+            || !count($this->checkout->get('payment'))
         ) {
             return back()->with('error', 'Invalid payment');
         }
@@ -170,7 +166,7 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Listener Responders
+     * Listener Responders.
      */
     public function redirectToShipping()
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Services;
 
 use Illuminate\Http\Request;
@@ -6,9 +7,8 @@ use Illuminate\Auth\Guard;
 use Illuminate\Validation\Factory as Validator;
 use Quincalla\Entities\Checkout;
 
-class CheckoutCustomerLogin
+class Checkoutcustomerlogin
 {
-
     protected $request;
     protected $validator;
     protected $auth;
@@ -18,15 +18,15 @@ class CheckoutCustomerLogin
     protected $accountTypes = [
             'customer',
             'guest',
-            'new-customer'
+            'new-customer',
     ];
 
     public function __construct(
         Checkout $checkout,
         Request $request,
         Guard $auth,
-        Validator $validator)
-    {
+        Validator $validator
+    ) {
         $this->checkout = $checkout;
         $this->request = $request;
         $this->auth = $auth;
@@ -37,7 +37,7 @@ class CheckoutCustomerLogin
     {
         $this->listener = $listener;
 
-        if (! $this->validAccountType($this->request->get('account_type'))) {
+        if (!$this->validAccountType($this->request->get('account_type'))) {
             return $this->listener->redirectBackWithMessage(
                 'Invalid Account Type Selected'
             );
@@ -61,7 +61,7 @@ class CheckoutCustomerLogin
     {
         $credentials = [
             'email' => $this->request->get('email'),
-            'password' => $this->request->get('password')
+            'password' => $this->request->get('password'),
         ];
 
         $validator = $this->customerLoginValidator($credentials);
@@ -79,7 +79,7 @@ class CheckoutCustomerLogin
         }
 
         $this->checkout->set('account.id', $this->auth->user()->id);
-        $this->checkout->set('account.email', $this->auth->user()->email) ;
+        $this->checkout->set('account.email', $this->auth->user()->email);
 
         $this->checkout->store();
 
@@ -90,16 +90,17 @@ class CheckoutCustomerLogin
     {
         $rules = [
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ];
 
         return $this->validator->make($credentials, $rules);
     }
 
     /**
-     * Verify if checkout account type is valid
+     * Verify if checkout account type is valid.
      *
      * @param string $type account type
+     *
      * @return boolen
      */
     private function validAccountType($type)

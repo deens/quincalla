@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Services;
 
 use Quincalla\Entities\Checkout;
@@ -21,7 +22,7 @@ class CheckoutStoreBilling
         'expiration_date_month' => 'required',
         'expiration_date_year' => 'required',
         'ccv_code' => 'required',
-        'card_type' => 'required|not_in:0'
+        'card_type' => 'required|not_in:0',
     ];
     protected $billingRules = [
         'first_name' => 'required',
@@ -31,7 +32,7 @@ class CheckoutStoreBilling
         'state' => 'required|not_in:0',
         'country' => 'required|not_in:0',
         'zipcode' => 'required',
-        'phone' => 'required'
+        'phone' => 'required',
     ];
 
     public function __construct(
@@ -54,7 +55,7 @@ class CheckoutStoreBilling
     {
         $this->listener = $listener;
 
-        if ( ! $this->request->get('same_address')) {
+        if (!$this->request->get('same_address')) {
             $this->paymentRules + $this->billingRules;
         }
 
@@ -74,7 +75,7 @@ class CheckoutStoreBilling
             'card_type' => $this->request->get('card_type'),
             'expiration_date_month' => $this->request->get('expiration_date_month'),
             'expiration_date_year' => $this->request->get('expiration_date_year'),
-            'ccv_code' => $this->request->get('ccv_code')
+            'ccv_code' => $this->request->get('ccv_code'),
         ];
 
         if ($this->request->get('same_address')) {
@@ -89,13 +90,13 @@ class CheckoutStoreBilling
                 'state' => $this->request->get('state'),
                 'country' => $this->request->get('country'),
                 'phone' => $this->request->get('phone'),
-                'zipcode' => $this->request->get('zipcode')
+                'zipcode' => $this->request->get('zipcode'),
             ];
         }
 
         $this->checkout->set(
             'account.name',
-            $billingAddress['first_name'] . ' ' . $billingAddress['last_name']
+            $billingAddress['first_name'].' '.$billingAddress['last_name']
         );
         $this->checkout->set('payment', $payment);
         $this->checkout->set('billing', $billingAddress);
@@ -105,12 +106,10 @@ class CheckoutStoreBilling
         );
 
         if ($this->checkout->get('checkout.type') !== 'customer') {
-
             if ($this->checkout->get('checkout.type') === 'new-customer') {
                 $role = 'customer';
                 $password = $this->checkout->get('account.password');
                 $active = true;
-
             } else {
                 $role = 'guest';
                 $password = '';
@@ -160,7 +159,7 @@ class CheckoutStoreBilling
     }
 
     /**
-     * Mask credit card number
+     * Mask credit card number.
      *
      * @param string $number
      *
@@ -168,6 +167,6 @@ class CheckoutStoreBilling
      */
     private function cardMasking($number)
     {
-        return str_repeat("*", strlen($number) - 4) . substr($number, -4);
+        return str_repeat('*', strlen($number) - 4).substr($number, -4);
     }
 }

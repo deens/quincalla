@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Entities;
 
 use Gloudemans\Shoppingcart\Cart as PackageCart;
