@@ -70,8 +70,8 @@ class ProductsController extends Controller
 	 */
 	public function edit($id)
 	{
-        $product = $this->products->findOrFail($id);
-        $collections = $this->collections->lists('name', 'id')->toArray();
+        $product = $this->products->with('collection')->findOrFail($id);
+        $collections = $this->collections->getArrayListManualPublished();
         $tags = $this->tags->lists('name', 'id');
 
         return view('admin.products.edit', compact('product', 'collections', 'tags'));

@@ -148,7 +148,7 @@
 
             <div class="form-group">
                 <label for="type" class="control-label">Collections</label>
-                {!! Form::select('collection_id', ['Select Manual Collection'] + $collections, old('collection_id'), ['class' => 'form-control', 'id' => 'collections-list']) !!}
+                {!! Form::select('collection_id', $collections, old('collection_id'), ['class' => 'form-control', 'multiple', 'id' => 'collections-list']) !!}
             </div>
             <div class="form-group">
                 <label for="type" class="control-label">Tags</label>
