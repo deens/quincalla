@@ -53,15 +53,35 @@ class Collection extends Model
      *
      * @param array $value
      *
-     * @return string
+     * @return void
      */
     public function setRulesAttribute($value)
     {
         $this->attributes['rules'] = json_encode($value);
     }
 
+    /**
+     * Set Published Scope.
+     *
+     * @param $query Illuminate\Database\Eloquent\Builder
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
     public function scopePublished($query)
     {
         return $query->where('published', true);
+    }
+
+    /**
+     * Retrive an array of collections name and ids
+     *
+     * @return array
+     */
+    public function getArrayListManualPublished()
+    {
+        return $this->published()
+            ->where('type', 'manual')
+            ->lists('name', 'id')
+            ->toArray();
     }
 }

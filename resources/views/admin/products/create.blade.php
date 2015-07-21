@@ -148,11 +148,11 @@
 
             <div class="form-group">
                 <label for="type" class="control-label">Collections</label>
-                {!! Form::select('collection_id',['Select Manual Collection'] + $collections, old('collection_id'), ['class' => 'form-control']) !!}
+                {!! Form::select('collection_id', ['Select Manual Collection'] + $collections, old('collection_id'), ['class' => 'form-control', 'id' => 'collections-list']) !!}
             </div>
             <div class="form-group">
                 <label for="type" class="control-label">Tags</label>
-                {!! Form::select('tags[]', $tags, old('tags[]'), ['class' => 'form-control', 'multiple'] ) !!}
+                {!! Form::select('tags[]', $tags, old('tags[]'), ['class' => 'form-control', 'multiple', 'id' => 'tags-list'] ) !!}
             </div>
         </div>
     </div>

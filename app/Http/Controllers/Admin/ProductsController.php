@@ -41,7 +41,7 @@ class ProductsController extends Controller
 	 */
 	public function create()
 	{
-        $collections = $this->collections->lists('name', 'id')->toArray();
+        $collections = $this->collections->getArrayListManualPublished();
         $tags = $this->tags->lists('name', 'id');
 
         return view('admin.products.create', compact('collections', 'tags'));
