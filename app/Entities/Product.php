@@ -5,7 +5,6 @@ namespace Quincalla\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Laracasts\Presenter\PresentableTrait;
-use Quincalla\Entities\SmartRulesTrait;
 
 class Product extends Model
 {
@@ -30,17 +29,31 @@ class Product extends Model
         'columns' => [
             'name' => 10,
             'description' => 5,
-        ]
+        ],
     ];
     protected $rulesColumns = [
-        'name'              => 'Name',
-        'type'              => 'Type',
-        'vendor'            => 'Vendor',
-        'price'             => 'Price',
-        'tag'               => 'Tag',
-        'price'             => 'Compare price at',
-        'weitgh'            => 'Weitgh',
-        'inventory_stock'   => 'Inventory Stock',
+        'name' => 'Name',
+        'type' => 'Type',
+        'vendor' => 'Vendor',
+        'price' => 'Price',
+        'tag' => 'Tag',
+        'price' => 'Compare price at',
+        'weitgh' => 'Weitgh',
+        'inventory_stock' => 'Inventory Stock',
+    ];
+    protected $rulesSortOptions = [
+        'name' => [
+            'asc' => 'Alphabetical: A-Z',
+            'desc' => 'Alphabetical: Z-A',
+        ],
+        'price' => [
+            'asc' => 'Price: Lowest to highest',
+            'desc' => 'Price: Highest to lowest',
+        ],
+        'created_at' => [
+            'asc' => 'By date: Oldest to newest',
+            'desc' => 'By date: Newest to oldest',
+        ],
     ];
 
     public function collection()
@@ -54,8 +67,15 @@ class Product extends Model
         return $this->belongsToMany('Quincalla\Entities\Tag');
     }
 
-    public function getConditionalProducts($collection)
+    /**
+     * Define published scope.
+     *
+     * @param object $query
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublished($query)
     {
-        return false;
+        return $query->where('published', true);
     }
 }

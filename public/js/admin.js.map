@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA","file":"admin.js","sourcesContent":["(function($, window, document) {\n    console.log('Welcome to admin');\n\n}(window.jQuery, window, document));\n"],"sourceRoot":"/source/"}

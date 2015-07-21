@@ -4,10 +4,10 @@ namespace Quincalla\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderProduct extends Model 
+class OrderProduct extends Model
 {
     protected $table = 'order_products';
-    protected $fillable =  [
+    protected $fillable = [
         'product_id',
         'product_name',
         'attributes',

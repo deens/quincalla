@@ -10,6 +10,6 @@ class CollectionComposer
 
     public function compose(View $view)
     {
-        $view->with('collections', Collection::all());
+        $view->with('collections', Collection::published()->get());
     }
 }

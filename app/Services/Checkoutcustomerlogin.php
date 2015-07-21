@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Services;
 
 use Illuminate\Http\Request;
@@ -6,9 +7,8 @@ use Illuminate\Auth\Guard;
 use Illuminate\Validation\Factory as Validator;
 use Quincalla\Entities\Checkout;
 
-class CheckoutCustomerLogin
+class Checkoutcustomerlogin
 {
-
     protected $request;
     protected $validator;
     protected $auth;
@@ -18,15 +18,15 @@ class CheckoutCustomerLogin
     protected $accountTypes = [
             'customer',
             'guest',
-            'new-customer'
+            'new-customer',
     ];
 
     public function __construct(
         Checkout $checkout,
         Request $request,
         Guard $auth,
-        Validator $validator)
-    {
+        Validator $validator
+    ) {
         $this->checkout = $checkout;
         $this->request = $request;
         $this->auth = $auth;
@@ -37,7 +37,7 @@ class CheckoutCustomerLogin
     {
         $this->listener = $listener;
 
-        if (! $this->validAccountType($this->request->get('account_type'))) {
+        if (!$this->validAccountType($this->request->get('account_type'))) {
             return $this->listener->redirectBackWithMessage(
                 'Invalid Account Type Selected'
             );
@@ -49,7 +49,7 @@ class CheckoutCustomerLogin
         );
 
         if ($this->checkout->get('checkout.type') === 'customer') {
-            return $this->loginCustomer();
+            return $this->customerLogin();
         }
 
         $this->checkout->store();
@@ -57,44 +57,54 @@ class CheckoutCustomerLogin
         return $this->listener->redirectToShipping();
     }
 
-    public function loginCustomer()
+    public function customerLogin()
     {
-        $rules = [
-            'email' => 'required|email',
-            'password' => 'required'
-        ];
-
-        $this->credentials = [
+        $credentials = [
             'email' => $this->request->get('email'),
-            'password' => $this->request->get('password')
+            'password' => $this->request->get('password'),
         ];
 
-        $validator = $this->validator->make($this->credentials, $rules);
+        $validator = $this->customerLoginValidator($credentials);
 
         if ($validator->fails()) {
             return $this->listener->redirectBackWithValidationErrors($validator);
         }
 
-        $this->credentials['active'] = true;
-        $loggedIn = $this->auth->attempt($this->credentials);
+        $credentials['active'] = true;
 
-        if (!$loggedIn) {
+        $customer = $this->auth->attempt($credentials);
+
+        if (!$customer) {
             return $this->listener->redirectBackWithInvalidCredentials();
         }
 
         $this->checkout->set('account.id', $this->auth->user()->id);
-        $this->checkout->set('account.email', $this->auth->user()->email) ;
+        $this->checkout->set('account.email', $this->auth->user()->email);
 
         $this->checkout->store();
 
         return $this->listener->redirectToShipping();
     }
 
+    public function customerLoginValidator($credentials)
+    {
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+
+        return $this->validator->make($credentials, $rules);
+    }
+
+    /**
+     * Verify if checkout account type is valid.
+     *
+     * @param string $type account type
+     *
+     * @return boolen
+     */
     private function validAccountType($type)
     {
-        if (! in_array($type, $this->accountTypes)) {
-            return false;
-        }
-        return true;
+        return in_array($type, $this->accountTypes);
     }
 }

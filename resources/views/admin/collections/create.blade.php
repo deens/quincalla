@@ -52,10 +52,10 @@
             <div class="form-group">
                 Products must match:
                 <label class="radio-inline">
-                  {!! Form::radio('condition', 'all', true) !!} all conditions
+                  {!! Form::radio('match', 'all', true) !!} all conditions
                 </label>
                 <label class="radio-inline">
-                  {!! Form::radio('condition', 'any', false) !!} any condition
+                  {!! Form::radio('match', 'any', false) !!} any condition
                 </label>
             </div>
 

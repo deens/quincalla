@@ -45,8 +45,10 @@ class CollectionsController extends Controller
 	{
         $rulesColumns = $this->products->getRulesColumns();
         $rulesRelations = $this->products->getRulesRelations();
+        $sortOptions = $this->products->getRulesSortOptions();
 
-        return view('admin.collections.create', compact('rulesColumns', 'rulesRelations'));
+        return view('admin.collections.create', 
+            compact('rulesColumns', 'rulesRelations', 'sortOptions'));
 	}
 
 	/**
@@ -59,28 +61,12 @@ class CollectionsController extends Controller
 	{
         if ($request->get('type') === 'condition') {
             $rules = $this->splitRules($request->get('rules'));
-            $request->merge(['rules' => json_encode($rules)]);
+            $request->merge(['rules' => $rules]);
         }
 
         $collection = $this->collections->create($request->all());
 
-        return redirect()->route('admin.collections.show', [$collection->id]);
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-        $collection = $this->collections->findOrFail($id);
-        $products = $collection->products;
-
-        return view('admin.collections.show', 
-            compact('collection', 'products')
-        );
+        return redirect()->route('admin.collections.edit', [$collection->id]);
 	}
 
 	/**
@@ -92,21 +78,28 @@ class CollectionsController extends Controller
 	public function edit($id)
 	{
         $collection = $this->collections->findOrFail($id);
-
         $rulesColumns = $this->products->getRulesColumns();
         $rulesRelations = $this->products->getRulesRelations();
+        $sortOptions = $this->products->getRulesSortOptions();
 
         if ($collection->type === 'manual') {
             $products = $collection->products;
         } else {
         	$products = $this->products->getByRules(
-        		$collection->match, 
-        		$collection->rules
+        		$collection->match,
+        		$collection->rules,
+                $collection->sort_order
         		);
         }
 
-        return view('admin.collections.edit', 
-            compact('collection', 'rulesColumns', 'rulesRelations', 'products')
+        return view('admin.collections.edit',
+            compact(
+                'collection',
+                'rulesColumns',
+                'rulesRelations',
+                'sortOptions',
+                'products'
+            )
         );
 	}
 
@@ -118,7 +111,16 @@ class CollectionsController extends Controller
 	 */
 	public function update($id, Request $request)
 	{
-        dd($request->all());
+        $collection = $this->collections->findOrFail($id);
+
+        if ($request->get('type') === 'condition') {
+            $rules = $this->splitRules($request->get('rules'));
+            $request->merge(['rules' => $rules]);
+        }
+
+        $collection->update($request->all());
+
+        return redirect()->route('admin.collections.edit', [$collection->id]);
 	}
 
 	/**

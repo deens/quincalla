@@ -13,5 +13,9 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.less('app.less')
-    .less('admin.less', 'public/css/admin.css');
+    .less('admin.less', 'public/css/admin.css')
+    .scripts('app.js')
+    .scripts('admin.js', 'public/js/admin.js');
+
+
 });

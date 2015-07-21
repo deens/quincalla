@@ -3,8 +3,6 @@
 namespace Quincalla\Entities;
 
 use Illuminate\Config\Repository;
-use Illuminate\Http\Request;
-use Illuminate\Session\SessionManager;
 use Illuminate\Session\Store;
 
 class Checkout extends Repository
@@ -25,7 +23,7 @@ class Checkout extends Repository
         'shipping' => [
         ],
         'billing' => [
-        ]
+        ],
     ];
 
     public function __construct(Store $session)
