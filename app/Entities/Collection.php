@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Collection extends Model
 {
     /**
-     * @var string Entity table name
+     * @var string Table name
      */
     protected $table = 'collections';
 
     /**
-     * @var array Definition of mass assignable fields
+     * @var array Define mass assignable fields
      */
     protected $fillable = [
         'name',
@@ -29,7 +29,7 @@ class Collection extends Model
     /**
      * Get all the products that belongs to a collection.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products()
     {
