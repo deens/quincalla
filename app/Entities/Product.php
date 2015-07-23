@@ -38,7 +38,7 @@ class Product extends Model
         'price' => 'Price',
         'tag' => 'Tag',
         'price' => 'Compare price at',
-        'weitgh' => 'Weitgh',
+        'weight' => 'Weight',
         'inventory_stock' => 'Inventory Stock',
     ];
     protected $rulesSortOptions = [
