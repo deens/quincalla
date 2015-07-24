@@ -1,10 +1,8 @@
 <?php
-namespace Quincalla\Tests\Functional;
+
+namespace Quincalla\tests\functional;
 
 use Quincalla\Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Quincalla\Tests\Functional\Helpers\ProductTrait;
 
 class CartTest extends TestCase
@@ -23,7 +21,7 @@ class CartTest extends TestCase
         $this->visit('/cart')
             ->see($this->productName)
             ->click($this->productName)
-            ->seePageIs('/products/' . $this->productSlug);
+            ->seePageIs('/products/'.$this->productSlug);
     }
 
     /**
@@ -33,7 +31,7 @@ class CartTest extends TestCase
     {
         $this->addProductToCart('first-necklace-yellow-gold');
         $this->visit('/cart')
-            ->see($productName)
+            ->see($this->productName)
             ->click('remove')
             ->see('Your shopping cart is empty.');
     }
