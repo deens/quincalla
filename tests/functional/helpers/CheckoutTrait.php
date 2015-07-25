@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Tests\Functional\Helpers;
 
 trait CheckoutTrait
@@ -22,7 +23,7 @@ trait CheckoutTrait
     }
 
     /**
-     * Continue as Guest or New Customer
+     * Continue as Guest or New Customer.
      *
      * @param $role guest or new
      */
@@ -60,7 +61,7 @@ trait CheckoutTrait
             ->type($address['zipcode'], 'zipcode')
             ->type($address['phone'], 'phone');
 
-         $this->press('Continue to payment');
+        $this->press('Continue to payment');
     }
 
     public function fillPaymentAndContinue($payment = [])
