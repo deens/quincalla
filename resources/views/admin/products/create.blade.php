@@ -126,11 +126,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="type" class="control-label">Date</label>
+                <label for="publish_date" class="control-label">Date</label>
                 <input type="text" class="form-control" name="publish_date" value="{{ old('publish_date') }}">
             </div>
             <div class="form-group">
-                <label for="type" class="control-label">Time</label>
+                <label for="publish_time" class="control-label">Time</label>
                 <input type="text" class="form-control" name="publish_time" value="{{ old('publish_time') }}">
             </div>
 
@@ -147,12 +147,12 @@
             <hr>
 
             <div class="form-group">
-                <label for="type" class="control-label">Collections</label>
+                <label for="collections" class="control-label">Collections</label>
                 {!! Form::select('collections[]', $collections, old('collections[]'), ['class' => 'form-control', 'multiple', 'id' => 'collections-list']) !!}
             </div>
             <div class="form-group">
-                <label for="type" class="control-label">Tags</label>
-                {!! Form::select('tags[]', $tags, old('tags[]'), ['class' => 'form-control', 'multiple', 'id' => 'tags-list'] ) !!}
+                <label for="tags[]" class="control-label">Tags</label>
+                {!! Form::select('tags[]', $tags, old('tags[]'), ['class' => 'form-control tags-list', 'multiple', 'id' => 'tags-list'] ) !!}
             </div>
         </div>
     </div>
