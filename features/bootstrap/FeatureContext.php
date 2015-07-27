@@ -22,4 +22,14 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct()
     {
     }
+
+    /**
+     * @Given I add to cart :productSlug
+     */
+    public function iAddToCart($productSlug)
+    {
+        $this->visit('/products/' . $productSlug);
+        $this->pressButton('Add To Shopping Cart');
+        $this->assertPageContainsText('Product has been added to your shopping cart');
+    }
 }
