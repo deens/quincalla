@@ -38,7 +38,7 @@ class Product extends Model
         'price' => 'Price',
         'tag' => 'Tag',
         'price' => 'Compare price at',
-        'weitgh' => 'Weitgh',
+        'weight' => 'Weight',
         'inventory_stock' => 'Inventory Stock',
     ];
     protected $rulesSortOptions = [
@@ -56,12 +56,21 @@ class Product extends Model
         ],
     ];
 
-    public function collection()
+    /**
+     * Get all the collections that belongs to a product
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function collections()
     {
-        return $this->belongsToMany('Quincalla\Entities\Collection')
-            ->withTimestamps();
+        return $this->belongsToMany('Quincalla\Entities\Collection');
     }
 
+    /**
+     * Get all the tags that belongs to a product
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     public function tags()
     {
         return $this->belongsToMany('Quincalla\Entities\Tag');

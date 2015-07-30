@@ -1,5 +1,6 @@
 <?php
-namespace  Quincalla\Tests\Functional\Helpers;
+
+namespace  Quincalla\tests\Functional\Helpers;
 
 trait CartTrait
 {

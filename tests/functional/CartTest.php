@@ -1,10 +1,8 @@
 <?php
+
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Quincalla\Tests\Functional\Helpers\ProductTrait;
 
 class CartTest extends TestCase
@@ -14,34 +12,25 @@ class CartTest extends TestCase
     protected $productSlug = 'first-necklace-yellow-gold';
     protected $productName = 'First Necklace Yellow Gold';
 
-    /**
-     * @test
-     */
-    public function it_should_add_product_to_cart()
+    public function test_it_should_add_product_to_cart()
     {
         $this->addProductToCart($this->productSlug);
         $this->visit('/cart')
             ->see($this->productName)
             ->click($this->productName)
-            ->seePageIs('/products/' . $this->productSlug);
+            ->seePageIs('/products/'.$this->productSlug);
     }
 
-    /**
-     * @test
-     */
-    public function it_should_remove_product_from_cart()
+    public function test_it_should_remove_product_from_cart()
     {
         $this->addProductToCart('first-necklace-yellow-gold');
         $this->visit('/cart')
-            ->see($productName)
+            ->see($this->productName)
             ->click('remove')
             ->see('Your shopping cart is empty.');
     }
 
-    /**
-     * @test
-     */
-    public function it_should_empty_shopping_cart()
+    public function test_it_should_empty_shopping_cart()
     {
         $this->addProductToCart($this->productSlug);
         $this->visit('/cart')

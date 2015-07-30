@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
@@ -12,7 +13,7 @@ class CheckoutAsCustomerTest extends TestCase
     use ProductTrait;
     use CheckoutTrait;
 
-    public function testCheckoutAsExistingCustomer()
+    public function test_it_should_checkout_an_existing_customer()
     {
         $this->addProductToCart('first-necklace-yellow-gold');
         $this->continueToCheckout();
@@ -26,14 +27,14 @@ class CheckoutAsCustomerTest extends TestCase
             'city' => 'San Francisco',
             'state' => '1',
             'zipcode' => '94109',
-            'phone' => '4152345678'
+            'phone' => '4152345678',
         ]);
 
         $this->fillPaymentAndContinue([
             'name_on_card' => 'Johnny',
             'card_number' => '4242424242424242',
             'card_type' => '1',
-            'ccv_code' => '123'
+            'ccv_code' => '123',
         ]);
 
         $this->seePageIs('/checkout/confirm');

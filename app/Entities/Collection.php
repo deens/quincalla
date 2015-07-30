@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Collection extends Model
 {
     /**
-     * @var string Entity table name
+     * @var string Table name
      */
     protected $table = 'collections';
 
     /**
-     * @var array Definition of mass assignable fields
+     * @var array Define mass assignable fields
      */
     protected $fillable = [
         'name',
@@ -29,11 +29,12 @@ class Collection extends Model
     /**
      * Get all the products that belongs to a collection.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products()
     {
-        return $this->belongsToMany('Quincalla\Entities\Product');
+        return $this->belongsToMany('Quincalla\Entities\Product')
+            ->withTimestamps();
     }
 
     /**
@@ -53,15 +54,35 @@ class Collection extends Model
      *
      * @param array $value
      *
-     * @return string
+     * @return void
      */
     public function setRulesAttribute($value)
     {
         $this->attributes['rules'] = json_encode($value);
     }
 
+    /**
+     * Set Published Scope.
+     *
+     * @param $query Illuminate\Database\Eloquent\Builder
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
     public function scopePublished($query)
     {
         return $query->where('published', true);
+    }
+
+    /**
+     * Retrive an array of collections name and ids
+     *
+     * @return array
+     */
+    public function getArrayListManualPublished()
+    {
+        return $this->published()
+            ->where('type', 'manual')
+            ->lists('name', 'id')
+            ->toArray();
     }
 }

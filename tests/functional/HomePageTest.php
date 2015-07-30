@@ -1,15 +1,12 @@
 <?php
+
 namespace Quincalla\Tests\Functional;
 
 use Quincalla\Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class HomePageTest extends TestCase
 {
-
-    public function testHomePage()
+    public function test_it_should_have_site_name()
     {
         $this->visit('/')
             ->see('quincalla');

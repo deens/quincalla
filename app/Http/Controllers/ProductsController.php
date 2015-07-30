@@ -17,7 +17,7 @@ class ProductsController extends Controller
 
 	public function show($slug)
 	{
-        $product = $this->products->with('collection')
+        $product = $this->products->with('collections')
             ->whereSlug($slug)
             ->first();
 
