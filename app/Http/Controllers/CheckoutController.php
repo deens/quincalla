@@ -11,6 +11,7 @@ use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
 use Webpatser\Countries\Countries;
+use Quincalla\Jobs\CheckoutCustomerAuth;
 
 class CheckoutController extends Controller
 {
@@ -24,7 +25,7 @@ class CheckoutController extends Controller
         State $states
     ) {
         $this->middleware('checkout', [
-            'except' => ['customer', 'postCustomer'],
+            'except' => ['customer', 'postCustomer', 'postGuest'],
         ]);
 
         $this->checkout = $checkout;
@@ -50,9 +51,34 @@ class CheckoutController extends Controller
         return view('checkout.customer');
     }
 
-    public function postCustomer(CheckoutCustomerLogin $checkoutCustomerLogin)
+    public function postGuest(Request $request, Checkout $checkout)
     {
-        return $checkoutCustomerLogin->run($this);
+        $checkout->set('checkout.type', $request->get('account_type'));
+        $checkout->store();
+
+        return $this->redirectToShipping();
+    }
+
+    public function postCustomer(Request $request, CheckoutCustomerLogin $checkoutCustomerLogin)
+    {
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+
+        $validator = \Validator::make($request->only('email', 'password'), $rules);
+
+        if ($validator->fails()) {
+            return $this->redirectBackWithValidationErrors($validator);
+        }
+
+        try {
+            $this->dispatchFrom(CheckoutCustomerAuth::class, $request);
+        } catch (\Exception $e) {
+            return $this->redirectBackWithInvalidCredentials();
+        }
+
+        return $this->redirectToShipping();
     }
 
     public function shipping(Request $request)

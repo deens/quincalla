@@ -10,7 +10,7 @@
             <h3>New Customer</h3>
             <p>Dont have an account? Pick one of the options below.</p>
 
-            {!! Form::open(['route' => 'checkout.customer']) !!}
+            {!! Form::open(['route' => 'checkout.guest']) !!}
 
                 <div class="radio">
                     <label><input value="new-customer" name="account_type" type="radio" checked="">Register Account</label>
@@ -42,8 +42,6 @@
             @endif
 
             {!! Form::open(['route' => 'checkout.customer']) !!}
-
-                {!! Form::hidden('account_type', 'customer') !!}
 
                 <div class="form-group">
                     <label>Email Address</label>

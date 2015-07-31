@@ -5,31 +5,20 @@ namespace Quincalla\Jobs;
 use Quincalla\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Quincalla\Entities\Checkout;
+use Illuminate\Auth\Guard;
 
-class InvalidCheckoutTypeException extends \Exception {}
 class CheckoutCustomerAuth extends Job implements SelfHandling
 {
-    protected $type;
     protected $email;
     protected $password;
-
-    /**
-     * Types of customers
-     */
-    protected $checkoutTypes = [
-        'guest',
-        'customer',
-        'new_customer'
-    ];
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($type, $email, $password)
+    public function __construct($email, $password)
     {
-        $this->type = $type;
         $this->email = $email;
         $this->password = $password;
     }
@@ -39,22 +28,23 @@ class CheckoutCustomerAuth extends Job implements SelfHandling
      *
      * @return void
      */
-    public function handle()
+    public function handle(Guard $auth, Checkout $checkout)
     {
-        var_dump($this->type);
-        if ( ! $this->validType()) {
-            throw new InvalidCheckoutTypeException();
-        }
-        return [];
-    }
+        $credentials = [
+            'email' => $this->email,
+            'password' => $this->password,
+            'active' => true
+        ];
 
-    /**
-     * Verify if checkout account type is valid.
-     *
-     * @return boolen
-     */
-    private function validType()
-    {
-        return in_array($this->type, $this->checkoutTypes);
+        $customer = $auth->attempt($credentials);
+
+        if (!$customer) {
+            throw new \Exception('Invalid credentials');
+        }
+
+        $checkout->set('checkout.type', 'customer');
+        $checkout->set('account.id', $auth->user()->id);
+        $checkout->set('account.email', $auth->user()->email);
+        $checkout->store();
     }
 }
