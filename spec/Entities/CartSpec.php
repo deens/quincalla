@@ -3,11 +3,12 @@
 namespace spec\Quincalla\Entities;
 
 use PhpSpec\Laravel\LaravelObjectBehavior;
+use Prophecy\Argument;
 
-class TagSpec extends LaravelObjectBehavior
+class CartSpec extends LaravelObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType('Quincalla\Entities\Tag');
+        $this->shouldHaveType('Quincalla\Entities\Cart');
     }
 }

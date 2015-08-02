@@ -39,7 +39,6 @@ class CheckoutSpec extends ObjectBehavior
         $sessionData = ['property' => ['value' => 'working']];
         $sessionExpectedData = ['property' => ['value' => 'working', 'newvalue' => 'progress']];
 
-
         $session->has(Argument::type('string'))->willReturn(true);
         $session->get(Argument::exact('checkout'))
             ->shouldBeCalled()
@@ -65,5 +64,4 @@ class CheckoutSpec extends ObjectBehavior
 
         $this->destroy()->shouldBe('checkout_destroyed');
     }
-
 }
