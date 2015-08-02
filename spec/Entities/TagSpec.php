@@ -6,8 +6,8 @@ use PhpSpec\Laravel\LaravelObjectBehavior;
 
 class TagSpec extends LaravelObjectBehavior
 {
-    public function it_belongs_to_many_products()
+    function it_is_initializable()
     {
-        $this->products()->shouldHaveType('Illuminate\Database\Eloquent\Relations\BelongsToMany');
+        $this->shouldHaveType('Quincalla\Entities\Tag');
     }
 }
