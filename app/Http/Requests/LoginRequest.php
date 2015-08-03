@@ -4,7 +4,7 @@ namespace Quincalla\Http\Requests;
 
 use Quincalla\Http\Requests\Request;
 
-class CustomerLoginRequest extends Request
+class LoginRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

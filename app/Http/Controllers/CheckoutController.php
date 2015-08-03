@@ -12,7 +12,7 @@ use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
 use Webpatser\Countries\Countries;
 use Quincalla\Jobs\CheckoutCustomerAuth;
-use Quincalla\Http\Requests\CustomerLoginRequest;
+use Quincalla\Http\Requests\LoginRequest;
 
 class CheckoutController extends Controller
 {
@@ -61,7 +61,7 @@ class CheckoutController extends Controller
     }
 
     public function postCustomer(
-        CustomerLoginRequest $request,
+        LoginRequest $request,
         CheckoutCustomerLogin $checkoutCustomerLogin
     ) {
         try {
