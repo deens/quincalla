@@ -7,12 +7,12 @@ use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Country;
 use Quincalla\Entities\State;
-use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
-use Webpatser\Countries\Countries;
 use Quincalla\Jobs\CheckoutCustomerAuth;
 use Quincalla\Http\Requests\LoginRequest;
+use Quincalla\Http\Requests\CheckoutShippingRequest;
+use Webpatser\Countries\Countries;
 
 class CheckoutController extends Controller
 {
@@ -60,10 +60,8 @@ class CheckoutController extends Controller
         return $this->redirectToShipping();
     }
 
-    public function postCustomer(
-        LoginRequest $request,
-        CheckoutCustomerLogin $checkoutCustomerLogin
-    ) {
+    public function postCustomer(LoginRequest $request) 
+    {
         try {
             $this->dispatchFrom(CheckoutCustomerAuth::class, $request);
         } catch (\Exception $e) {
@@ -116,8 +114,10 @@ class CheckoutController extends Controller
             ->with($this->checkout->get('shipping'));
     }
 
-    public function postShipping(CheckoutStoreShipping $storeShipping)
-    {
+    public function postShipping(
+        CheckoutShippingRequest $request,
+        CheckoutStoreShipping $storeShipping
+    ) {
         return $storeShipping->run($this);
     }
 
