@@ -12,6 +12,7 @@ use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
 use Webpatser\Countries\Countries;
 use Quincalla\Jobs\CheckoutCustomerAuth;
+use Quincalla\Http\Requests\CustomerLoginRequest;
 
 class CheckoutController extends Controller
 {
@@ -59,19 +60,10 @@ class CheckoutController extends Controller
         return $this->redirectToShipping();
     }
 
-    public function postCustomer(Request $request, CheckoutCustomerLogin $checkoutCustomerLogin)
-    {
-        $rules = [
-            'email' => 'required|email',
-            'password' => 'required',
-        ];
-
-        $validator = \Validator::make($request->only('email', 'password'), $rules);
-
-        if ($validator->fails()) {
-            return $this->redirectBackWithValidationErrors($validator);
-        }
-
+    public function postCustomer(
+        CustomerLoginRequest $request,
+        CheckoutCustomerLogin $checkoutCustomerLogin
+    ) {
         try {
             $this->dispatchFrom(CheckoutCustomerAuth::class, $request);
         } catch (\Exception $e) {
