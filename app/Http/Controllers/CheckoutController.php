@@ -13,6 +13,7 @@ use Quincalla\Services\CheckoutStoreBilling;
 use Quincalla\Jobs\CheckoutCustomerAuth;
 use Quincalla\Http\Requests\LoginRequest;
 use Quincalla\Http\Requests\CheckoutShippingRequest;
+use Quincalla\Http\Requests\CheckoutBillingRequest;
 use Webpatser\Countries\Countries;
 
 class CheckoutController extends Controller
@@ -141,7 +142,9 @@ class CheckoutController extends Controller
             ->with($this->checkout->get('billing'));
     }
 
-    public function postBilling(CheckoutStoreBilling $storeBilling)
+    public function postBilling(
+        CheckoutBillingRequest $request,
+        CheckoutStoreBilling $storeBilling)
     {
         return $storeBilling->run($this);
     }

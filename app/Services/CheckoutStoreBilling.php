@@ -55,20 +55,6 @@ class CheckoutStoreBilling
     {
         $this->listener = $listener;
 
-        if (!$this->request->get('same_address')) {
-            $this->paymentRules + $this->billingRules;
-        }
-
-        $validator = $this->validator->make($this->request->all(), $this->paymentRules);
-
-        if ($validator->fails()) {
-            $this->checkout->set('billing.same_address', $this->request->get('same_address'));
-
-            $this->checkout->store();
-
-            return $this->listener->redirectBackWithValidationErrors($validator);
-        }
-
         $payment = [
             'name_on_card' => $this->request->get('name_on_card'),
             'card_number' => $this->request->get('card_number'),
@@ -116,40 +102,12 @@ class CheckoutStoreBilling
                 $active = false;
             }
 
-            $user = $this->users->newInstance();
-            $user->role = $role;
-            $user->name = $this->checkout->get('account.name');
-            $user->email = $this->checkout->get('account.email');
-            $user->password = $password;
-            $user->active = $active;
-            $user->save();
+            $this->createCustomer($role, $password, $active);
         }
 
-        // Create order
-        $order = $this->orders->newInstance();
-        $order->customer_email = $this->checkout->get('account.email');
-        $order->customer_name = $this->checkout->get('account.name');
-        $order->total_amount = $this->cart->total();
-        $order->status = 'new';
-        $order->card_name = $this->checkout->get('payment.name_on_card');
-        $order->card_type = $this->checkout->get('payment.card_type');
-        $order->card_number = $this->cardMasking($this->checkout->get('payment.card_number'));
-        $order->shipping_address = json_encode($this->checkout->get('shipping'));
-        $order->billing_address = json_encode($this->checkout->get('billing'));
-        $order->save();
+        $order = $this->createOrder();
 
-        // Create order products
-        $cartContent = $this->cart->content();
-
-        foreach ($cartContent as $item) {
-            $order->items()->create([
-                'product_id' => $item->id,
-                'product_name' => $item->name,
-                'attributes' => json_encode($item->options),
-                'quantity' => $item->qty,
-                'price' => $item->price,
-            ]);
-        }
+        $this->createOrderItems($order);
 
         $this->cart->destroy();
 
@@ -169,4 +127,50 @@ class CheckoutStoreBilling
     {
         return str_repeat('*', strlen($number) - 4).substr($number, -4);
     }
+
+    private function createCustomer($role, $password, $active = false)
+    {
+        $user = $this->users->newInstance();
+        $user->role = $role;
+        $user->name = $this->checkout->get('account.name');
+        $user->email = $this->checkout->get('account.email');
+        $user->password = $password;
+        $user->active = $active;
+        $user->save();
+
+        return $user;
+    }
+
+    private function createOrder()
+    {
+        $order = $this->orders->newInstance();
+        $order->customer_email = $this->checkout->get('account.email');
+        $order->customer_name = $this->checkout->get('account.name');
+        $order->total_amount = $this->cart->total();
+        $order->status = 'new';
+        $order->card_name = $this->checkout->get('payment.name_on_card');
+        $order->card_type = $this->checkout->get('payment.card_type');
+        $order->card_number = $this->cardMasking($this->checkout->get('payment.card_number'));
+        $order->shipping_address = json_encode($this->checkout->get('shipping'));
+        $order->billing_address = json_encode($this->checkout->get('billing'));
+        $order->save();
+
+        return $order;
+    }
+
+    private function createOrderItems($order)
+    {
+        $cartContent = $this->cart->content();
+
+        foreach ($cartContent as $item) {
+            $order->items()->create([
+                'product_id' => $item->id,
+                'product_name' => $item->name,
+                'attributes' => json_encode($item->options),
+                'quantity' => $item->qty,
+                'price' => $item->price,
+            ]);
+        }
+    }
+
 }
