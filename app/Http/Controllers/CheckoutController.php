@@ -3,15 +3,18 @@
 namespace Quincalla\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Quincalla\Entities\Address;
 use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Country;
 use Quincalla\Entities\State;
-use Quincalla\Services\CheckoutCustomerLogin;
 use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
-use Webpatser\Countries\Countries;
 use Quincalla\Jobs\CheckoutCustomerAuth;
+use Quincalla\Http\Requests\LoginRequest;
+use Quincalla\Http\Requests\CheckoutShippingRequest;
+use Quincalla\Http\Requests\CheckoutBillingRequest;
+use Webpatser\Countries\Countries;
 
 class CheckoutController extends Controller
 {
@@ -59,19 +62,8 @@ class CheckoutController extends Controller
         return $this->redirectToShipping();
     }
 
-    public function postCustomer(Request $request, CheckoutCustomerLogin $checkoutCustomerLogin)
+    public function postCustomer(LoginRequest $request) 
     {
-        $rules = [
-            'email' => 'required|email',
-            'password' => 'required',
-        ];
-
-        $validator = \Validator::make($request->only('email', 'password'), $rules);
-
-        if ($validator->fails()) {
-            return $this->redirectBackWithValidationErrors($validator);
-        }
-
         try {
             $this->dispatchFrom(CheckoutCustomerAuth::class, $request);
         } catch (\Exception $e) {
@@ -81,24 +73,11 @@ class CheckoutController extends Controller
         return $this->redirectToShipping();
     }
 
-    public function shipping(Request $request)
+    public function shipping(Request $request, Address $address)
     {
         $accountType = $this->checkout->get('checkout.type');
 
-        $shippingFields = [
-            'first_name',
-            'last_name',
-            'email',
-            'address',
-            'address1',
-            'city',
-            'state',
-            'country',
-            'zipcode',
-            'phone',
-        ];
-
-        foreach ($shippingFields as $key) {
+        foreach ($address->getFields() as $key) {
             $shippingKey = 'shipping.'.$key;
             $this->checkout->set(
                 $shippingKey,
@@ -124,12 +103,14 @@ class CheckoutController extends Controller
             ->with($this->checkout->get('shipping'));
     }
 
-    public function postShipping(CheckoutStoreShipping $storeShipping)
-    {
+    public function postShipping(
+        CheckoutShippingRequest $request,
+        CheckoutStoreShipping $storeShipping
+    ) {
         return $storeShipping->run($this);
     }
 
-    public function billing(Request $request)
+    public function billing(Request $request, Address $address)
     {
         if (
             !$this->checkout->has('shipping')
@@ -142,20 +123,7 @@ class CheckoutController extends Controller
             $this->checkout->set('billing.same_address', 1);
         }
 
-        $billingFields = [
-            'first_name',
-            'last_name',
-            'email',
-            'address',
-            'address1',
-            'city',
-            'state',
-            'country',
-            'zipcode',
-            'phone',
-        ];
-
-        foreach ($billingFields as $key) {
+        foreach ($address->getFields() as $key) {
             $billingKey = 'billing.'.$key;
             $this->checkout->set(
                 $billingKey,
@@ -174,7 +142,9 @@ class CheckoutController extends Controller
             ->with($this->checkout->get('billing'));
     }
 
-    public function postBilling(CheckoutStoreBilling $storeBilling)
+    public function postBilling(
+        CheckoutBillingRequest $request,
+        CheckoutStoreBilling $storeBilling)
     {
         return $storeBilling->run($this);
     }
@@ -207,18 +177,6 @@ class CheckoutController extends Controller
     public function redirectToConfirmation()
     {
         return redirect()->route('checkout.confirm');
-    }
-
-    public function redirectBackWithMessage($message)
-    {
-        return redirect()->back()
-            ->with('error', $message);
-    }
-
-    public function redirectBackWithValidationErrors($validator)
-    {
-        return redirect()->back()
-            ->withErrors($validator->errors())->withInput();
     }
 
     public function redirectBackWithInvalidCredentials()
