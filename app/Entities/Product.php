@@ -24,13 +24,23 @@ class Product extends Model
         'vendor',
         'type',
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['abs_price'];
+
     protected $presenter = 'Quincalla\Http\Presenters\ProductPresenter';
+
     protected $searchable = [
         'columns' => [
             'name' => 10,
             'description' => 5,
         ],
     ];
+
     protected $rulesColumns = [
         'name' => 'Name',
         'type' => 'Type',
@@ -41,6 +51,7 @@ class Product extends Model
         'weight' => 'Weight',
         'inventory_stock' => 'Inventory Stock',
     ];
+
     protected $rulesSortOptions = [
         'name' => [
             'asc' => 'Alphabetical: A-Z',
@@ -86,5 +97,17 @@ class Product extends Model
     public function scopePublished($query)
     {
         return $query->where('published', true);
+    }
+
+    /**
+     * Get the absolute price of product
+     *
+     * @return float
+     */
+    public function getAbsPriceAttribute()
+    {
+        return ($this->compare_price < $this->price)
+            ? $this->compare_price
+            : $this->price;
     }
 }

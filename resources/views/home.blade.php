@@ -17,7 +17,7 @@
             <div class="row text-center">
 
             @foreach($collections as $collection)
-                <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
                         <a href="{{ route('collections.show', [$collection->slug])}}">
                             <img src="http://placehold.it/800x500" alt="">
@@ -41,14 +41,14 @@
 
         <div class="row text-center">
             @foreach($products as $product)
-            <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="col-sm-4 col-lg-4 col-md-4">
                 <div class="thumbnail">
                     <a href="{{ route('products.show', [$product->slug]) }}">
                         <img src="http://placehold.it/800x500" alt="">
                     </a>
                     <div class="caption">
                         <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
-                        <h4> {{ $product->present()->format_price }}</h4>
+                        <h4> {!! $product->present()->format_price !!}</h4>
                     </div>
                 </div>
             </div>

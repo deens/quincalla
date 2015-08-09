@@ -30,7 +30,7 @@
             <div class="pricing">
                 <div class="row">
                     <div class="col-md-4">
-                        <h4>{{ $product->present()->format_price }}</h4>
+                        <h4>{!! $product->present()->format_price !!}</h4>
                     </div>
                     <div class="col-md-8">
                         {!! Form::open(['route' => 'cart.store', 'method' => 'POST', 'class' => 'form-inline']) !!}
