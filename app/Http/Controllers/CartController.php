@@ -31,7 +31,7 @@ class CartController extends Controller
             $product->id,
             $product->name,
             $request->get('qty', 1),
-            $product->price
+            $product->abs_price
         );
 
         return $this->redirectBackWithMessage(

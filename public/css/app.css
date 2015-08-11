@@ -6236,6 +6236,11 @@ label,
 .hero-feature {
   margin-bottom: 30px;
 }
+.scratch {
+  font-size: 0.9em;
+  text-decoration: line-through;
+  color: #ccc;
+}
 footer {
   margin: 50px 0;
 }
