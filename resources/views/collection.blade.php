@@ -28,18 +28,7 @@
                                     <h4 class="text-center">
                                         <a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a>
                                     </h4>
-                                    <h4 class="text-center">{{ $product->present()->format_price}}</h4>
-                                </div>
-                                <hr>
-                                <div class="ratings">
-                                    <p class="pull-right">15 reviews</p>
-                                    <p>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                    </p>
+                                    <h4 class="text-center">{!! $product->present()->format_price !!}</h4>
                                 </div>
                             </div>
                         </div>

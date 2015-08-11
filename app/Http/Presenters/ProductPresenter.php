@@ -8,8 +8,14 @@ class ProductPresenter extends Presenter
 {
     public function format_price()
     {
-        return '$'.number_format($this->price, 2);
+        if ($this->compare_price < $this->price) {
+            return '$'.number_format($this->compare_price, 2) 
+                . ' <span class="scratch">$'
+                . number_format($this->price, 2) 
+                . '</span>';
+        } else {
+            return '$'.number_format($this->price, 2);
+        }
     }
-
 }
 

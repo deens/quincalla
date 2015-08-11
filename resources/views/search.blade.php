@@ -19,22 +19,12 @@
                     @foreach($results as $product)
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
-                                <img src="http://placehold.it/320x150" alt="">
+                                <a href="{{ route('products.show', [$product->slug]) }}">
+                                    <img src="http://placehold.it/800x500" alt="">
+                                </a>
                                 <div class="caption">
-                                    <h4 class="pull-right">${{ $product->price}}</h4>
-                                    <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a>
-                                    </h4>
-                                    <p>{{ $product->description }}</p>
-                                </div>
-                                <div class="ratings">
-                                    <p class="pull-right">15 reviews</p>
-                                    <p>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                        <span class="glyphicon glyphicon-star"></span>
-                                    </p>
+                                    <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
+                                    <h4> {!! $product->present()->format_price !!}</h4>
                                 </div>
                             </div>
                         </div>
