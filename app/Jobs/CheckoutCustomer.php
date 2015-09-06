@@ -7,7 +7,7 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Quincalla\Entities\Checkout;
 use Illuminate\Auth\Guard;
 
-class CheckoutCustomerAuth extends Job implements SelfHandling
+class CheckoutCustomer extends Job implements SelfHandling
 {
     protected $email;
     protected $password;

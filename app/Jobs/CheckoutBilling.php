@@ -4,17 +4,21 @@ namespace Quincalla\Jobs;
 
 use Quincalla\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Quincalla\Entities\Address;
+use Quincalla\Entities\Checkout;
 
 class CheckoutBilling extends Job implements SelfHandling
 {
+    public $request;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($request)
     {
-        //
+        $this->request = $request;
     }
 
     /**
@@ -22,7 +26,7 @@ class CheckoutBilling extends Job implements SelfHandling
      *
      * @return void
      */
-    public function handle()
+    public function handle(Address $address, Checkout $checkout)
     {
         //
     }

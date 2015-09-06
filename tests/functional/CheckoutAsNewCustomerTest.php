@@ -8,7 +8,7 @@ use Quincalla\Tests\Functional\Helpers\CheckoutTrait;
 use Quincalla\Tests\Functional\Helpers\CartTrait;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CheckoutAsNewCustomerTest extends TestCase
+class InvalidCheckoutAsNewCustomerTest extends TestCase
 {
     use DatabaseTransactions;
     use ProductTrait;

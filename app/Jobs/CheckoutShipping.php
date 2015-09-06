@@ -26,7 +26,7 @@ class CheckoutShipping extends Job implements SelfHandling
      *
      * @return void
      */
-    public function handle(Checkout $checkout, Hash $hash)
+    public function handle(Address $address, Checkout $checkout, Hash $hash)
     {
         $checkout->set('account.email', $this->request->get('account_email'));
         $checkout->set('account.password', $this->request->get('password'));

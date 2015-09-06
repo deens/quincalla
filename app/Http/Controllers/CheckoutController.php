@@ -10,7 +10,7 @@ use Quincalla\Entities\Country;
 use Quincalla\Entities\State;
 use Quincalla\Services\CheckoutStoreShipping;
 use Quincalla\Services\CheckoutStoreBilling;
-use Quincalla\Jobs\CheckoutCustomerAuth;
+use Quincalla\Jobs\CheckoutCustomer;
 use Quincalla\Http\Requests\LoginRequest;
 use Quincalla\Http\Requests\CheckoutShippingRequest;
 use Quincalla\Http\Requests\CheckoutBillingRequest;
@@ -65,7 +65,7 @@ class CheckoutController extends Controller
     public function postCustomer(LoginRequest $request) 
     {
         try {
-            $this->dispatchFrom(CheckoutCustomerAuth::class, $request);
+            $this->dispatchFrom(CheckoutCustomer::class, $request);
         } catch (\Exception $e) {
             return $this->redirectBackWithInvalidCredentials();
         }

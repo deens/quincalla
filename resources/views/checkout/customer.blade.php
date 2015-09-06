@@ -8,16 +8,12 @@
         <div class="col-md-6">
 
             <h3>New Customer</h3>
-            <p>Dont have an account? Pick one of the options below.</p>
+            <p>Don't have an account?</p>
 
             {!! Form::open(['route' => 'checkout.guest']) !!}
 
                 <div class="radio">
                     <label><input value="new-customer" name="account_type" type="radio" checked="">Register Account</label>
-                </div>
-
-                <div class="radio">
-                    <label><input value="guest" name="account_type" type="radio">Checkout as guest</label>
                 </div>
 
                 <p>Register with us for a fast and easy checkout and easy access to your order history and status</p>
