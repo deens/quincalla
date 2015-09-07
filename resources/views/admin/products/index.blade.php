@@ -28,7 +28,7 @@
             </td>
             <td>N/A</td>
             <td>
-                {{ $product->present()->format_price }}
+                {!! $product->present()->format_price !!}
             </td>
         </tr>
         @endforeach
