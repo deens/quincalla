@@ -11,6 +11,7 @@ Route::put('cart/update', ['as' => 'cart.update', 'uses' => 'CartController@upda
 Route::resource('cart', 'CartController', ['except' => ['create', 'update', 'edit', 'destroy']]);
 Route::get('search', ['as' => 'search.index', 'uses' => 'SearchController@index']);
 Route::get('checkout', ['as' => 'checkout', 'uses' => 'CheckoutController@index']);
+Route::get('order', ['as' => 'order', 'uses' => 'OrderController@index']);
 
 // Account
 Route::get('account', 'AccountController@index');
@@ -32,6 +33,19 @@ Route::group(['prefix' => 'checkout'], function() {
     Route::get('billing', ['as' => 'checkout.billing', 'uses' => 'CheckoutController@billing']);
     Route::post('billing', ['as' => 'checkout.billing', 'uses' => 'CheckoutController@postBilling']);
     Route::get('confirm', ['as' => 'checkout.confirm', 'uses' => 'CheckoutController@confirm']);
+});
+
+Route::group(['prefix' => 'order'], function() {
+    Route::get('/', ['as' => 'order.index', 'uses' => 'OrderController@index']);
+    Route::get('customer', ['as' => 'order.customer', 'uses' => 'OrderController@customer']);
+    Route::post('customer', ['as' => 'order.customer', 'uses' => 'OrderController@postCustomer']);
+    Route::get('register', ['as' => 'order.register', 'uses' => 'OrderController@register']);
+    Route::post('register', ['as' => 'order.register', 'uses' => 'OrderController@postRegister']);
+    Route::get('delivery', ['as' => 'order.delivery', 'uses' => 'OrderController@delivery']);
+    Route::post('delivery', ['as' => 'order.delivery', 'uses' => 'OrderController@postDelivery']);
+    Route::get('payment', ['as' => 'order.payment', 'uses' => 'OrderController@payment']);
+    Route::post('payment', ['as' => 'order.payment', 'uses' => 'OrderController@postPayment']);
+    Route::get('confirm', ['as' => 'order.confirm', 'uses' => 'OrderController@confirm']);
 });
 
 // Admin

@@ -6,71 +6,50 @@ trait CheckoutTrait
 {
     public function continueAsCustomer($email, $password)
     {
-        $this->seePageIs('/checkout/customer')
+        return $this->seePageIs('/order/customer')
             ->type($email, 'email')
             ->type($password, 'password')
-            ->press('Sign in');
-    }
-
-    public function continueAsGuest()
-    {
-        $this->continueCheckoutAuthAs('guest');
+            ->press('Sign in to checkout');
     }
 
     public function continueAsNewCustomer()
     {
-        $this->continueCheckoutAuthAs('new-customer');
+        return $this->seePageIs('/order/customer')
+            ->press('Continue to checkout');
     }
 
-    /**
-     * Continue as Guest or New Customer.
-     *
-     * @param $role guest or new
-     */
-    public function continueCheckoutAuthAs($role = 'guest')
+    public function fillRegisterCustomerWith()
     {
-        $this->seePageIs('/checkout/customer')
-            ->see('New Customer')
-            ->select($role, 'account_type')
-            ->press('Continue');
+        return $this->seePageIs('/order/register')
+            ->type($name, 'name')
+            ->type($email,  'email')
+            ->type($password, 'password')
+            ->type($passwordConfirm, 'password_confirmation')
+            ->press('Continue to Delivery');
     }
 
-    public function fillShippingAddressWith(
-        $address = [],
-        $email = null,
-        $password = null,
-        $passwordConfirm = null)
+    public function fillDeliveryWith($address = [], $shipping = 'free_shipping')
     {
-        $this->seePageIs('/checkout/shipping');
-
-        if ($email) {
-            $this->type($email, 'account_email');
-        }
-
-        if ($password && $passwordConfirm) {
-            $this->type($password, 'password');
-            $this->type($passwordConfirm, 'password_confirmation');
-        }
-
-        $this->type($address['first_name'], 'first_name')
-            ->type($address['last_name'], 'last_name')
+        return $this->seePageIs('/order/delivery')
+            ->type($address['name'], 'name')
             ->type($address['address'], 'address')
             ->type($address['address1'], 'address1')
             ->type($address['city'], 'city')
             ->select($address['state'], 'state')
+            ->select(840, 'country')
             ->type($address['zipcode'], 'zipcode')
-            ->type($address['phone'], 'phone');
-
-        $this->press('Continue to payment');
+            ->type($address['phone'], 'phone')
+            ->select($shipping, 'shipping_method')
+            ->press('Continue to payment');
     }
 
-    public function fillPaymentAndContinue($payment = [])
+    public function fillPaymentWith($payment = [])
     {
-        $this->seePageIs('/checkout/billing')
-            ->type($payment['name_on_card'], 'name_on_card')
+        return $this->seePageIs('/order/payment')
             ->type($payment['card_number'], 'card_number')
-            ->select($payment['card_type'], 'card_type')
-            ->type($payment['ccv_code'], 'ccv_code')
-            ->press('Continue to confirm');
+            ->select($payment['exp_month'], 'exp-month')
+            ->type($payment['exp_year'], 'exp-year')
+            ->type($payment['cvc'], 'cvc')
+            ->press('Continue to confirmation');
     }
 }

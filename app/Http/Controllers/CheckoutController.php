@@ -62,7 +62,7 @@ class CheckoutController extends Controller
         return $this->redirectToShipping();
     }
 
-    public function postCustomer(LoginRequest $request) 
+    public function postCustomer(LoginRequest $request)
     {
         try {
             $this->dispatchFrom(CheckoutCustomer::class, $request);

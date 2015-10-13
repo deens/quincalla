@@ -74,7 +74,7 @@
                     </table>
 
                     <div class="text-center">
-                        <a class="btn btn-lg btn-block btn-danger" href="{{ route('checkout') }}">Continue to checkout</a>
+                        <a class="btn btn-lg btn-block btn-danger" href="{{ route('order') }}">Continue to checkout</a>
 
                         <p><a href="{{ url('/')}}">Continue Shopping</a></p>
                     </div>
