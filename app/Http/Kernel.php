@@ -30,6 +30,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.admin' => \Quincalla\Http\Middleware\AdminAuthenticate::class,
         'checkout' => \Quincalla\Http\Middleware\CheckoutSession::class,
+        'order.auth' => \Quincalla\Http\Middleware\OrderAuth::class,
         'guest' => \Quincalla\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }

@@ -30,9 +30,9 @@ return [
     ],
 
     'stripe' => [
-        'model'  => Quincalla\User::class,
-        'key' => '',
-        'secret' => '',
+        'model'  => Quincalla\Entities\User::class,
+        'key' =>  env('STRIPE_API_KEY'),
+        'secret' =>  env('STRIPE_API_SECRET'),
     ],
 
 ];

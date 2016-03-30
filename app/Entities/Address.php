@@ -4,9 +4,8 @@ namespace Quincalla\Entities;
 
 class Address
 {
-    protected $fields = [
-        'first_name',
-        'last_name',
+    protected static $fields = [
+        'name',
         'address',
         'address1',
         'city',
@@ -16,8 +15,18 @@ class Address
         'zipcode',
     ];
 
-    public function getFields()
+    public static function getFields()
     {
-        return $this->fields;
+        return self::$fields;
+    }
+
+    public function __get($name)
+    {
+        return isset(self::$fields[$name]) ? self::$fields[$name] : '';
+    }
+
+    public function __set($name, $value)
+    {
+        self::$fields[$name] = $value;
     }
 }

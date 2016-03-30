@@ -151,6 +151,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Webpatser\Countries\CountriesServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
 
     ],
 

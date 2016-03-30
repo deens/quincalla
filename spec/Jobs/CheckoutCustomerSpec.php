@@ -9,7 +9,7 @@ use Quincalla\Entities\Checkout;
 use Illuminate\Auth\Guard;
 use Quincalla\Entities\User;
 
-class CheckoutCustomerAuthSpec extends ObjectBehavior
+class CheckoutCustomerSpec extends ObjectBehavior
 {
     function let()
     {

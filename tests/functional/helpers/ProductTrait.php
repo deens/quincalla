@@ -6,7 +6,7 @@ trait ProductTrait
 {
     public function addProductToCart($slug)
     {
-        $this->visit('/products/'.$slug)
+        return $this->visit('/products/'.$slug)
             ->press('Add To Shopping Cart');
     }
 }

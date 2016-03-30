@@ -2,7 +2,10 @@
 @section('content')
 <div class="container">
 
-    <h2>Quincalla <small>Checkout</small></h2>
+    <h2>Checkout</h2>
+
+    @include('order.steps')
+
     <div class="row">
 
         <div class="col-md-6">
@@ -10,16 +13,9 @@
             <h3>New Customer</h3>
             <p>Don't have an account?</p>
 
-            {!! Form::open(['route' => 'checkout.guest']) !!}
+            <p>Register with us for a fast and easy checkout and easy access to your order history and status</p>
 
-                <div class="radio">
-                    <label><input value="new-customer" name="account_type" type="radio" checked="">Register Account</label>
-                </div>
-
-                <p>Register with us for a fast and easy checkout and easy access to your order history and status</p>
-
-                <button class="btn btn-default btn-bigger">Continue to checkout</button>
-            {!! Form::close() !!}
+            <a class="btn btn-primary btn-bigger" href="{{ route('order.register')}}">Continue to checkout</a>
         </div>
 
         <div class="col-md-6">
@@ -37,7 +33,7 @@
                 </div>
             @endif
 
-            {!! Form::open(['route' => 'checkout.customer']) !!}
+            {!! Form::open(['route' => 'order.customer']) !!}
 
                 <div class="form-group">
                     <label>Email Address</label>
@@ -53,7 +49,7 @@
                     <label class="checkbox-inline"><input type="checkbox" value="">Remember me </label>
                 </div>
 
-                <button class="btn btn-default btn-bigger">Sign in</button>
+                <button class="btn btn-default btn-bigger">Sign in to checkout</button>
 
             {!! Form::close() !!}
 
