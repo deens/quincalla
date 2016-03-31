@@ -10,8 +10,6 @@ Route::get('cart/destroy', ['as' => 'cart.destroy', 'uses' => 'CartController@de
 Route::put('cart/update', ['as' => 'cart.update', 'uses' => 'CartController@update']);
 Route::resource('cart', 'CartController', ['except' => ['create', 'update', 'edit', 'destroy']]);
 Route::get('search', ['as' => 'search.index', 'uses' => 'SearchController@index']);
-Route::get('checkout', ['as' => 'checkout', 'uses' => 'CheckoutController@index']);
-Route::get('order', ['as' => 'order', 'uses' => 'OrderController@index']);
 
 // Account
 Route::get('account', 'AccountController@index');
