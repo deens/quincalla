@@ -1,6 +1,6 @@
 # Quincalla
 
-Quincalla is a minimal e-commerce site build with Laravel 5.1
+Quincalla is a minimal e-commerce site build with Laravel 5.2
 
 ## Installation
 
