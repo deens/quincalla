@@ -2,12 +2,12 @@
 
 namespace spec\Quincalla\Jobs;
 
-use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use PhpSpec\ObjectBehavior;
+use Quincalla\Entities\User;
 use Illuminate\Http\Request;
 use Quincalla\Entities\Checkout;
-use Illuminate\Auth\Guard;
-use Quincalla\Entities\User;
+use Illuminate\Auth\SessionGuard as Guard;
 
 class CheckoutCustomerSpec extends ObjectBehavior
 {
@@ -18,7 +18,8 @@ class CheckoutCustomerSpec extends ObjectBehavior
 
     function it_should_throw_exception_when_provide_invalid_credentials(Guard $auth, Checkout $checkout)
     {
-        $auth->attempt(Argument::type('array'))->shouldBeCalled()->willReturn(false);
+        $auth->attempt(Argument::type('array'))
+            ->willReturn(false);
 
         $this->beConstructedWith('invalid@example.com', 'password');
         $this->shouldThrow(new \Exception('Invalid credentials'))->during('handle', [$auth, $checkout]);
@@ -28,6 +29,7 @@ class CheckoutCustomerSpec extends ObjectBehavior
     {
         $auth->attempt(Argument::type('array'))->shouldBeCalled()->willReturn(true);
         $auth->user()->shouldBeCalled()->willReturn($user);
+
         $checkout->set(Argument::any(), Argument::any())->shouldBeCalledTimes(3);
         $checkout->store()->shouldBeCalled();
 

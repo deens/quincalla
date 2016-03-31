@@ -3,9 +3,9 @@
 namespace Quincalla\Jobs;
 
 use Quincalla\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Quincalla\Entities\Checkout;
-use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Auth\SessionGuard as Guard;
 
 class CheckoutCustomer extends Job implements SelfHandling
 {
