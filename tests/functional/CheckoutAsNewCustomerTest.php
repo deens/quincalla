@@ -8,7 +8,7 @@ use Quincalla\Tests\Functional\Helpers\CheckoutTrait;
 use Quincalla\Tests\Functional\Helpers\CartTrait;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class InvalidCheckoutAsNewCustomerTest extends TestCase
+class CheckoutAsNewCustomerTest extends TestCase
 {
     use DatabaseTransactions;
     use ProductTrait;
@@ -17,11 +17,16 @@ class InvalidCheckoutAsNewCustomerTest extends TestCase
 
     public function test_it_should_checkout_a_new_customer()
     {
+        $name = 'Johnny Curley';
+        $email = 'johnny@example.com';
+        $pass = 'password';
+
         $this->addProductToCart('first-necklace-yellow-gold');
         $this->continueToCheckout();
         $this->continueAsNewCustomer();
+        $this->fillRegisterCustomerWith($name, $email, $pass, $pass);
         $this->fillDeliveryWith([
-            'name' => 'Johnny Curley',
+            'name' => $name,
             'address' => '1 First St.',
             'address1' => '',
             'city' => 'San Francisco',
@@ -29,12 +34,13 @@ class InvalidCheckoutAsNewCustomerTest extends TestCase
             'zipcode' => '94109',
             'phone' => '4152345678',
         ]);
-        $this->fillPaymentAndContinue([
+        $this->fillPaymentWith([
             'card_number' => '4242424242424242',
-            'card_type' => '1',
-            'ccv_code' => '123',
+            'exp_month' => '11',
+            'exp_year' => '2016',
+            'cvc' => '123',
         ]);
 
-        $this->seePageIs('/checkout/confirm');
+        $this->seePageIs('/order/confirm');
     }
 }
