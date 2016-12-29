@@ -2,11 +2,12 @@
 
 namespace Quincalla\Entities;
 
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 use Laracasts\Presenter\PresentableTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Product extends Model
+class Product extends Model implements Buyable
 {
     use SearchableTrait;
     use PresentableTrait;
@@ -47,7 +48,7 @@ class Product extends Model
         'vendor'          => 'Vendor',
         'price'           => 'Price',
         'tag'             => 'Tag',
-        'price'           => 'Compare price at',
+        'compare_price'   => 'Compare price at',
         'weight'          => 'Weight',
         'inventory_stock' => 'Inventory Stock',
     ];
@@ -70,7 +71,7 @@ class Product extends Model
     /**
      * Get all the collections that belongs to a product.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function collections()
     {
@@ -80,7 +81,7 @@ class Product extends Model
     /**
      * Get all the tags that belongs to a product.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
     {
@@ -109,5 +110,20 @@ class Product extends Model
         return ($this->compare_price < $this->price)
             ? $this->compare_price
             : $this->price;
+    }
+
+    public function getBuyableIdentifier($options = null)
+    {
+        return $this->id;
+    }
+
+    public function getBuyableDescription($options = null)
+    {
+        return $this->name;
+    }
+
+    public function getBuyablePrice($options = null)
+    {
+        return $this->getAbsPriceAttribute();
     }
 }

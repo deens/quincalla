@@ -2,8 +2,8 @@
 @section('content')
 <div class="container">
     <div class="row">
+    @if ($products->count())
         <div class="col-md-12">
-            @if($products->count())
             <div class="row">
                 <div class="col-md-9">
                     <h1>Shopping Cart </h1>
@@ -22,14 +22,14 @@
                             <tr>
                                 <td><img src="http://placehold.it/50x50" alt=""></td>
                                 <td>
-                                    <p><a href="{{ route('products.show', [$product->product->slug])}}">{{ $product->name }}</a></p>
+                                    <p><a href="{{ route('products.show', [$product->model->slug])}}">{{ $product->name }}</a></p>
                                 </td>
                                 <td>
                                     <p>${{ $product->price }}</p>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        {!! Form::text('quantities['.$product->rowid.']', $product->qty, ['class' => 'form-control input-sm']) !!}
+                                        {!! Form::text('quantities['.$product->rowId.']', $product->qty, ['class' => 'form-control input-sm']) !!}
                                     </div>
                                 </td>
                                 <td>
@@ -37,7 +37,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <a class="btn btn-danger btn-sm" title="Delete" href="{{ route('cart.remove', [$product->rowid]) }}">remove</a>
+                                        <a class="btn btn-danger btn-sm" title="Delete" href="{{ route('cart.remove', [$product->rowId]) }}">remove</a>
                                     </div>
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
                         <tbody>
                             <tr>
                                 <td>Item(s) Total</td>
-                                <td>${{ number_format($cartTotal, 2) }}</td>
+                                <td>${{ $cartTotal }}</td>
                             </tr>
                             <tr>
                                 <td>Shipping</td>
@@ -68,7 +68,7 @@
                             </tr>
                             <tr>
                                 <td><h4>Total</h4></td>
-                                <td><h4>${{ number_format($cartTotal, 2) }}</h4></td>
+                                <td><h4>${{ $cartTotal }}</h4></td>
                             </tr>
                         </tbody>
                     </table>
@@ -83,18 +83,16 @@
             </div>
         </div>
     @else
+        <h1>Shopping Cart</h1>
 
-    <h1>Shopping Cart</h1>
-
-    <div class="well">
-        <h2 class="text-center">
-            Your shopping cart is empty.
-        </h2>
-        <div class="text-center">
-            <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>
+        <div class="well">
+            <h2 class="text-center">
+                Your shopping cart is empty.
+            </h2>
+            <div class="text-center">
+                <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>
+            </div>
         </div>
-    </div>
-
     @endif
 </div>
 

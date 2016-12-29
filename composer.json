@@ -26,7 +26,8 @@
         "behat/mink-extension": "^2.0@dev",
         "laracasts/behat-laravel-extension": "dev-master",
         "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*"
+        "symfony/dom-crawler": "2.8.*|3.0.*",
+        "barryvdh/laravel-ide-helper": "^2.2"
 
     },
     "autoload": {

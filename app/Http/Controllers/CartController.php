@@ -9,6 +9,16 @@ use Quincalla\Http\Requests\StoreCartRequest;
 
 class CartController extends Controller
 {
+    /**
+     * @var Cart
+     */
+    protected $cart;
+
+    /**
+     * CartController constructor.
+     *
+     * @param Cart $cart
+     */
     public function __construct(Cart $cart)
     {
         $this->cart = $cart;
@@ -22,17 +32,17 @@ class CartController extends Controller
         return view('cart', compact('products', 'cartTotal'));
     }
 
+    /**
+     * @param Product          $products
+     * @param StoreCartRequest $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Product $products, StoreCartRequest $request)
     {
-        $product = $products->whereSlug($request->get('product'))
-            ->first();
+        $product = $products->whereSlug($request->get('product'))->first();
 
-        $this->cart->associate('Product', 'Quincalla\Entities')->add(
-            $product->id,
-            $product->name,
-            $request->get('qty', 1),
-            $product->abs_price
-        );
+        $this->cart->add($product, $request->get('qty', 1));
 
         return $this->redirectBackWithMessage(
             'Product has been added to your shopping cart'
