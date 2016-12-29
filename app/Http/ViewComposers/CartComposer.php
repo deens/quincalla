@@ -1,4 +1,5 @@
 <?php
+
 namespace Quincalla\Http\ViewComposers;
 
 use Illuminate\Contracts\View\View;
@@ -16,7 +17,6 @@ class CartComposer
     public function compose(View $view)
     {
         $view->with('cart_total', $this->cart->total());
-        $view->with('cart_count', $this->cart->count() ?: 0 );
+        $view->with('cart_count', $this->cart->count() ?: 0);
     }
 }
-

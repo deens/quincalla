@@ -27,7 +27,7 @@ $factory->define(Quincalla\Entities\Product::class, function ($faker) {
         'name'          => $faker->unique()->sentence(3),
         'slug'          => $faker->unique()->slug,
         'description'   => $faker->text,
-        'image'       => $faker->unique()->md5() .'.png',
+        'image'         => $faker->unique()->md5().'.png',
         'price'         => $faker->randomFloat(2, 100, 199),
         'compare_price' => $faker->randomFloat(2, 10, 99),
         'vendor'        => $faker->randomElement(['Apple', 'Nike', 'Levis']),
@@ -38,6 +38,6 @@ $factory->define(Quincalla\Entities\Product::class, function ($faker) {
 
 $factory->define(Quincalla\Entities\Tag::class, function ($faker) {
     return [
-        'name' => $faker->unique()->word()
+        'name' => $faker->unique()->word(),
     ];
 });

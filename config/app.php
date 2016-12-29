@@ -156,7 +156,7 @@ return [
         Quincalla\Providers\EventServiceProvider::class,
         Quincalla\Providers\RouteServiceProvider::class,
 
-        /**
+        /*
          * Packages Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
@@ -212,12 +212,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        /**
+        /*
          * Packages Aliases
          */
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Form'      => Collective\Html\FormFacade::class,
+        'Html'      => Collective\Html\HtmlFacade::class,
+        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
     ],
 

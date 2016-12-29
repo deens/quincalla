@@ -15,9 +15,9 @@ class Checkout extends Repository
             'type' => 'customer',
         ],
         'account' => [
-            'id' => 1,
-            'name' => '',
-            'email' => '',
+            'id'       => 1,
+            'name'     => '',
+            'email'    => '',
             'register' => false,
         ],
         'shipping' => [

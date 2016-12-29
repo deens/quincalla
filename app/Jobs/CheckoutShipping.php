@@ -2,10 +2,8 @@
 
 namespace Quincalla\Jobs;
 
-use Quincalla\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Quincalla\Entities\Checkout;
-use Quincalla\Entities\User;
 
 class CheckoutShipping extends Job implements SelfHandling
 {

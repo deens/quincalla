@@ -8,12 +8,12 @@ use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Country;
 use Quincalla\Entities\State;
-use Quincalla\Services\CheckoutStoreShipping;
-use Quincalla\Services\CheckoutStoreBilling;
-use Quincalla\Jobs\CheckoutCustomer;
-use Quincalla\Http\Requests\LoginRequest;
-use Quincalla\Http\Requests\CheckoutShippingRequest;
 use Quincalla\Http\Requests\CheckoutBillingRequest;
+use Quincalla\Http\Requests\CheckoutShippingRequest;
+use Quincalla\Http\Requests\LoginRequest;
+use Quincalla\Jobs\CheckoutCustomer;
+use Quincalla\Services\CheckoutStoreBilling;
+use Quincalla\Services\CheckoutStoreShipping;
 use Webpatser\Countries\Countries;
 
 class CheckoutController extends Controller

@@ -1,29 +1,28 @@
-<?php namespace Quincalla\Http\Requests;
+<?php
 
-use Quincalla\Http\Requests\Request;
+namespace Quincalla\Http\Requests;
 
-class SearchQueryRequest extends Request {
+class SearchQueryRequest extends Request
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
 
-	/**
-	 * Determine if the user is authorized to make this request.
-	 *
-	 * @return bool
-	 */
-	public function authorize()
-	{
-		return true;
-	}
-
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array
-	 */
-	public function rules()
-	{
-		return [
-            'query' => 'required'
-		];
-	}
-
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'query' => 'required',
+        ];
+    }
 }

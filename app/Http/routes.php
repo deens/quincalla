@@ -16,12 +16,12 @@ Route::get('account', 'AccountController@index');
 
 // Auth
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth'     => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);
 
 // Checkout
-Route::group(['prefix' => 'checkout'], function() {
+Route::group(['prefix' => 'checkout'], function () {
     Route::get('/', ['as' => 'checkout.index', 'uses' => 'CheckoutController@index']);
     Route::get('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@customer']);
     Route::post('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@postCustomer']);
@@ -33,7 +33,7 @@ Route::group(['prefix' => 'checkout'], function() {
     Route::get('confirm', ['as' => 'checkout.confirm', 'uses' => 'CheckoutController@confirm']);
 });
 
-Route::group(['prefix' => 'order'], function() {
+Route::group(['prefix' => 'order'], function () {
     Route::get('/', ['as' => 'order.index', 'uses' => 'OrderController@index']);
     Route::get('customer', ['as' => 'order.customer', 'uses' => 'OrderController@customer']);
     Route::post('customer', ['as' => 'order.customer', 'uses' => 'OrderController@postCustomer']);
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'order'], function() {
 Route::get('admin/login', ['as' => 'admin.login', 'uses' => 'Admin\AuthController@login']);
 Route::post('admin/login', ['as' => 'admin.login', 'uses' => 'Admin\AuthController@postLogin']);
 Route::get('admin/logout', ['as' => 'admin.logout', 'uses' => 'Admin\AuthController@getLogout']);
-Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin', 'namespace' => 'Admin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth.admin', 'namespace' => 'Admin'], function () {
     Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@index']);
     Route::resource('products', 'ProductsController', ['except' => ['show']]);
     Route::resource('collections', 'CollectionsController', ['except' => ['show']]);

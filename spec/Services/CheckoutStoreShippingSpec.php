@@ -2,27 +2,26 @@
 
 namespace spec\Quincalla\Services;
 
+use Illuminate\Contracts\Hashing\Hasher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Quincalla\Entities\Checkout;
-use Quincalla\Http\Requests\Request;
 use Quincalla\Http\Controllers\CheckoutController as Listener;
-use Illuminate\Contracts\Hashing\Hasher;
+use Quincalla\Http\Requests\Request;
 
 class CheckoutStoreShippingSpec extends ObjectBehavior
 {
-    function let(Request $request, Checkout $checkout, Hasher $hash)
+    public function let(Request $request, Checkout $checkout, Hasher $hash)
     {
         $this->beConstructedWith($request, $checkout, $hash);
     }
 
-    function it_should_redirect_to_billing_and_store_shipping_in_checkout_session(
+    public function it_should_redirect_to_billing_and_store_shipping_in_checkout_session(
         Request $request,
         Checkout $checkout,
         Hasher $hash,
         Listener $listener
-    )
-    {
+    ) {
         $request->merge(Argument::type('array'))->shouldBeCalled();
         $request->except('password', 'password_confirmation')->shouldBeCalled()->willReturn([]);
         $request->get(Argument::type('string'), Argument::any())->shouldBeCalledTimes(11)->willReturn('');
