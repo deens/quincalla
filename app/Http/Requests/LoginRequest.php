@@ -2,8 +2,6 @@
 
 namespace Quincalla\Http\Requests;
 
-use Quincalla\Http\Requests\Request;
-
 class LoginRequest extends Request
 {
     /**
@@ -24,8 +22,8 @@ class LoginRequest extends Request
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required'
+            'email'    => 'required|email',
+            'password' => 'required',
         ];
     }
 }

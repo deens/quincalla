@@ -17,7 +17,7 @@ class Tag extends Model
     protected $fillable = ['name'];
 
     /**
-     * Get all products that belongs to a collection
+     * Get all products that belongs to a collection.
      *
      * return Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -47,9 +47,9 @@ class Tag extends Model
     }
 
     /**
-     * Return a list of ids from old and newly created tags
+     * Return a list of ids from old and newly created tags.
      *
-     * @param array $tags 
+     * @param array $tags
      *
      * @return array
      */

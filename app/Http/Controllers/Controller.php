@@ -3,15 +3,15 @@
 namespace Quincalla\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
 abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
     /**
-     * Returns a HTTP redirect back with error message
+     * Returns a HTTP redirect back with error message.
      */
     public function redirectBackWithMessage($message)
     {
@@ -20,7 +20,7 @@ abstract class Controller extends BaseController
     }
 
     /**
-     * Returns a HTTP redirect back with validation message
+     * Returns a HTTP redirect back with validation message.
      */
     public function redirectBackWithValidationErrors($validator)
     {

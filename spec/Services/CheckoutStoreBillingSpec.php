@@ -1,21 +1,21 @@
 <?php
+
 namespace spec\Quincalla\Services;
 
 use Illuminate\Validation\Factory as Validator;
 use Illuminate\Validation\Validator as ValidatorInstance;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Order;
 use Quincalla\Entities\User;
 use Quincalla\Http\Controllers\CheckoutController as Listener;
 use Quincalla\Http\Requests\Request;
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-use Quincalla\Entities\Cart;
-
 
 class CheckoutStoreBillingSpec extends ObjectBehavior
 {
-    function let(
+    public function let(
         Request $request,
         Checkout $checkout,
         Validator $validator,
@@ -26,7 +26,7 @@ class CheckoutStoreBillingSpec extends ObjectBehavior
         $this->beConstructedWith($request, $checkout, $validator, $orders, $users, $cart);
     }
 
-    function it_should_use_same_shipping_address_as_billing(
+    public function it_should_use_same_shipping_address_as_billing(
         Request $request,
         Checkout $checkout,
         Listener $listener,
@@ -43,7 +43,7 @@ class CheckoutStoreBillingSpec extends ObjectBehavior
             ->shouldBeCalled()
             ->willReturn([
                 'first_name' => 'john',
-                'last_name' => 'doe'
+                'last_name'  => 'doe',
             ]);
 
         $checkout->get(Argument::exact('checkout.type'))->shouldBeCalled()->willReturn('guest');

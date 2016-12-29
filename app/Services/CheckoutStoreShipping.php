@@ -2,9 +2,9 @@
 
 namespace Quincalla\Services;
 
+use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Http\Request;
 use Quincalla\Entities\Checkout;
-use Illuminate\Contracts\Hashing\Hasher;
 
 class CheckoutStoreShipping
 {

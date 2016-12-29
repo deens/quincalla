@@ -22,7 +22,7 @@ trait CheckoutTrait
     {
         return $this->seePageIs('/order/register')
             ->type($name, 'name')
-            ->type($email,  'email')
+            ->type($email, 'email')
             ->type($password, 'password')
             ->type($passwordConfirm, 'password_confirmation')
             ->press('Continue to Delivery');

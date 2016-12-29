@@ -1,20 +1,19 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateCollectionTable extends Migration {
-
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('collections', function(Blueprint $table)
-		{
-			$table->increments('id');
+class CreateCollectionTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('collections', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
@@ -24,18 +23,17 @@ class CreateCollectionTable extends Migration {
             $table->string('sort_order')->default('manually');
             $table->text('rules');
             $table->boolean('published')->default(true);
-			$table->timestamps();
-		});
-	}
+            $table->timestamps();
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('collections');
-	}
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('collections');
+    }
 }

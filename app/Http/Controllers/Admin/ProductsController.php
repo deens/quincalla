@@ -2,11 +2,11 @@
 
 namespace Quincalla\Http\Controllers\Admin;
 
-use Quincalla\Entities\Product;
+use Illuminate\Http\Request;
 use Quincalla\Entities\Collection;
+use Quincalla\Entities\Product;
 use Quincalla\Entities\Tag;
 use Quincalla\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -108,5 +108,4 @@ class ProductsController extends Controller
     {
         //
     }
-
 }

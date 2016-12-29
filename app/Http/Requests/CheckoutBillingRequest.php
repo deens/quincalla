@@ -2,8 +2,6 @@
 
 namespace Quincalla\Http\Requests;
 
-use Quincalla\Http\Requests\Request;
-
 class CheckoutBillingRequest extends Request
 {
     /**
@@ -24,24 +22,24 @@ class CheckoutBillingRequest extends Request
     public function rules()
     {
         $rules = [
-            'name_on_card' => 'required',
-            'card_number' => 'required',
+            'name_on_card'          => 'required',
+            'card_number'           => 'required',
             'expiration_date_month' => 'required',
-            'expiration_date_year' => 'required',
-            'ccv_code' => 'required',
-            'card_type' => 'required|not_in:0',
+            'expiration_date_year'  => 'required',
+            'ccv_code'              => 'required',
+            'card_type'             => 'required|not_in:0',
         ];
 
-        if ( ! $this->get('same_address')) {
+        if (!$this->get('same_address')) {
             $rules + [
                 'first_name' => 'required',
-                'last_name' => 'required',
-                'address' => 'required',
-                'city' => 'required',
-                'state' => 'required|not_in:0',
-                'country' => 'required|not_in:0',
-                'zipcode' => 'required',
-                'phone' => 'required',
+                'last_name'  => 'required',
+                'address'    => 'required',
+                'city'       => 'required',
+                'state'      => 'required|not_in:0',
+                'country'    => 'required|not_in:0',
+                'zipcode'    => 'required',
+                'phone'      => 'required',
             ];
         }
 

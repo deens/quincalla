@@ -24,15 +24,15 @@ return [
     ],
 
     'ses' => [
-        'key' => '',
+        'key'    => '',
         'secret' => '',
         'region' => 'us-east-1',
     ],
 
     'stripe' => [
         'model'  => Quincalla\Entities\User::class,
-        'key' =>  env('STRIPE_API_KEY'),
-        'secret' =>  env('STRIPE_API_SECRET'),
+        'key'    => env('STRIPE_API_KEY'),
+        'secret' => env('STRIPE_API_SECRET'),
     ],
 
 ];

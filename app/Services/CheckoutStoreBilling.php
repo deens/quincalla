@@ -2,12 +2,12 @@
 
 namespace Quincalla\Services;
 
-use Quincalla\Entities\Checkout;
-use Quincalla\Entities\Order;
-use Quincalla\Entities\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Factory as Validator;
 use Quincalla\Entities\Cart;
+use Quincalla\Entities\Checkout;
+use Quincalla\Entities\Order;
+use Quincalla\Entities\User;
 
 class CheckoutStoreBilling
 {
@@ -17,22 +17,22 @@ class CheckoutStoreBilling
     protected $orders;
     protected $users;
     protected $paymentRules = [
-        'name_on_card' => 'required',
-        'card_number' => 'required',
+        'name_on_card'          => 'required',
+        'card_number'           => 'required',
         'expiration_date_month' => 'required',
-        'expiration_date_year' => 'required',
-        'ccv_code' => 'required',
-        'card_type' => 'required|not_in:0',
+        'expiration_date_year'  => 'required',
+        'ccv_code'              => 'required',
+        'card_type'             => 'required|not_in:0',
     ];
     protected $billingRules = [
         'first_name' => 'required',
-        'last_name' => 'required',
-        'address' => 'required',
-        'city' => 'required',
-        'state' => 'required|not_in:0',
-        'country' => 'required|not_in:0',
-        'zipcode' => 'required',
-        'phone' => 'required',
+        'last_name'  => 'required',
+        'address'    => 'required',
+        'city'       => 'required',
+        'state'      => 'required|not_in:0',
+        'country'    => 'required|not_in:0',
+        'zipcode'    => 'required',
+        'phone'      => 'required',
     ];
 
     public function __construct(
@@ -56,12 +56,12 @@ class CheckoutStoreBilling
         $this->listener = $listener;
 
         $payment = [
-            'name_on_card' => $this->request->get('name_on_card'),
-            'card_number' => $this->request->get('card_number'),
-            'card_type' => $this->request->get('card_type'),
+            'name_on_card'          => $this->request->get('name_on_card'),
+            'card_number'           => $this->request->get('card_number'),
+            'card_type'             => $this->request->get('card_type'),
             'expiration_date_month' => $this->request->get('expiration_date_month'),
-            'expiration_date_year' => $this->request->get('expiration_date_year'),
-            'ccv_code' => $this->request->get('ccv_code'),
+            'expiration_date_year'  => $this->request->get('expiration_date_year'),
+            'ccv_code'              => $this->request->get('ccv_code'),
         ];
 
         if ($this->request->get('same_address')) {
@@ -69,14 +69,14 @@ class CheckoutStoreBilling
         } else {
             $billingAddress = [
                 'first_name' => $this->request->get('first_name'),
-                'last_name' => $this->request->get('last_name'),
-                'address' => $this->request->get('address'),
-                'address1' => $this->request->get('address1'),
-                'city' => $this->request->get('city'),
-                'state' => $this->request->get('state'),
-                'country' => $this->request->get('country'),
-                'phone' => $this->request->get('phone'),
-                'zipcode' => $this->request->get('zipcode'),
+                'last_name'  => $this->request->get('last_name'),
+                'address'    => $this->request->get('address'),
+                'address1'   => $this->request->get('address1'),
+                'city'       => $this->request->get('city'),
+                'state'      => $this->request->get('state'),
+                'country'    => $this->request->get('country'),
+                'phone'      => $this->request->get('phone'),
+                'zipcode'    => $this->request->get('zipcode'),
             ];
         }
 
@@ -164,13 +164,12 @@ class CheckoutStoreBilling
 
         foreach ($cartContent as $item) {
             $order->items()->create([
-                'product_id' => $item->id,
+                'product_id'   => $item->id,
                 'product_name' => $item->name,
-                'attributes' => json_encode($item->options),
-                'quantity' => $item->qty,
-                'price' => $item->price,
+                'attributes'   => json_encode($item->options),
+                'quantity'     => $item->qty,
+                'price'        => $item->price,
             ]);
         }
     }
-
 }

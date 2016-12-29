@@ -3,9 +3,9 @@
 namespace Quincalla\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Quincalla\Entities\Cart;
 use Quincalla\Entities\Product;
 use Quincalla\Http\Requests\StoreCartRequest;
-use Quincalla\Entities\Cart;
 
 class CartController extends Controller
 {
