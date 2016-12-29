@@ -2,7 +2,6 @@
 
 namespace Quincalla\Http\Requests;
 
-use Quincalla\Http\Requests\Request;
 use Quincalla\Entities\Checkout;
 
 class CheckoutShippingRequest extends Request
@@ -35,13 +34,13 @@ class CheckoutShippingRequest extends Request
 
         $rules = [
             'first_name' => 'required',
-            'last_name' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'state' => 'required|not_in:0',
-            'country' => 'required|not_in:0',
-            'zipcode' => 'required',
-            'phone' => 'required',
+            'last_name'  => 'required',
+            'address'    => 'required',
+            'city'       => 'required',
+            'state'      => 'required|not_in:0',
+            'country'    => 'required|not_in:0',
+            'zipcode'    => 'required',
+            'phone'      => 'required',
         ];
 
         if ($accountType === 'new-customer' || $accountType === 'guest') {
@@ -51,6 +50,7 @@ class CheckoutShippingRequest extends Request
         if ($accountType === 'new-customer') {
             $rules['password'] = 'required|confirmed';
         }
+
         return $rules;
     }
 }

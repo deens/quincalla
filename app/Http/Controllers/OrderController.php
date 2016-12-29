@@ -3,12 +3,12 @@
 namespace Quincalla\Http\Controllers;
 
 use Auth;
-use Quincalla\Entities\Checkout;
-use Quincalla\Entities\State;
-use Quincalla\Entities\Country;
-use Quincalla\Entities\User;
 use Illuminate\Http\Request;
 use Quincalla\Entities\Address;
+use Quincalla\Entities\Checkout;
+use Quincalla\Entities\Country;
+use Quincalla\Entities\State;
+use Quincalla\Entities\User;
 
 class OrderController extends Controller
 {
@@ -18,7 +18,7 @@ class OrderController extends Controller
             'customer',
             'postCustomer',
             'register',
-            'postRegister'
+            'postRegister',
         ]]);
     }
 
@@ -37,9 +37,8 @@ class OrderController extends Controller
         if (Auth::attempt([
             'email' => $request->get('email'),
             'password' => $request->get('password'),
-            'active' => true
+            'active' => true,
         ], $request->get('remember'))) {
-
             return redirect()->intended('order.delivery');
         }
 
@@ -49,7 +48,7 @@ class OrderController extends Controller
     public function register()
     {
         if (Auth::guest()) {
-            $user = new User;
+            $user = new User();
         } else {
             $user = Auth::user();
         }
@@ -62,10 +61,10 @@ class OrderController extends Controller
         if (Auth::guest()) {
             //  register a new user
             $newUser = $user->create([
-                'name' => $request->get('first_name') . ' ' . $request->get('last_name'),
-                'email' => $request->get('email'),
+                'name'     => $request->get('first_name').' '.$request->get('last_name'),
+                'email'    => $request->get('email'),
                 'password' => bcrypt($request->get('password')),
-                'active' => true
+                'active'   => true,
             ]);
             // authenticate new user
             Auth::login($newUser);
@@ -87,7 +86,6 @@ class OrderController extends Controller
 
     public function postDelivery(Request $request, Checkout $checkout)
     {
-
         $fields = Address::getFields();
         foreach ($fields as $field) {
             $checkout->set('delivery.'.$field, $request->get($field));
@@ -100,7 +98,6 @@ class OrderController extends Controller
 
     public function payment()
     {
-
         $sameAddress = true;
         $address = new Address();
         $address->name = Auth::user()->name;
@@ -119,6 +116,4 @@ class OrderController extends Controller
     {
         return view('order.confirm');
     }
-
 }
-

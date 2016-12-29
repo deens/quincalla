@@ -74,7 +74,7 @@ class Collection extends Model
     }
 
     /**
-     * Retrive an array of collections name and ids
+     * Retrive an array of collections name and ids.
      *
      * @return array
      */

@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateCollectionProductTable extends Migration
 {
@@ -12,8 +12,7 @@ class CreateCollectionProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('collection_product', function(Blueprint $table)
-        {
+        Schema::create('collection_product', function (Blueprint $table) {
             $table->integer('collection_id')->unsigned()->index();
             $table->foreign('collection_id')->references('id')->on('collections')->onDelete('cascade');
             $table->integer('product_id')->unsigned()->index();

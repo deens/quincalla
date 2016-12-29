@@ -1,10 +1,9 @@
 <?php
+
 namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Product;
-use Quincalla\Http\Requests;
-use Quincalla\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
 
 class ProductsController extends Controller
 {
@@ -15,12 +14,12 @@ class ProductsController extends Controller
         $this->products = $products;
     }
 
-	public function show($slug)
-	{
+    public function show($slug)
+    {
         $product = $this->products->with('collections')
             ->whereSlug($slug)
             ->first();
 
         return view('product', compact('product'));
-	}
+    }
 }

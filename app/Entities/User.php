@@ -2,12 +2,12 @@
 
 namespace Quincalla\Entities;
 
-use Laravel\Cashier\Billable;
 use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Cashier\Billable;
 
 class User extends Model implements CanResetPassword, Authenticatable
 {

@@ -5,7 +5,6 @@ namespace Quincalla\Http\Controllers;
 use Quincalla\Entities\Collection;
 use Quincalla\Entities\Product;
 
-
 class CollectionsController extends Controller
 {
     protected $collections;

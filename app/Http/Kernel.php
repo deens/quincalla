@@ -26,11 +26,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Quincalla\Http\Middleware\Authenticate::class,
+        'auth'       => \Quincalla\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.admin' => \Quincalla\Http\Middleware\AdminAuthenticate::class,
-        'checkout' => \Quincalla\Http\Middleware\CheckoutSession::class,
+        'checkout'   => \Quincalla\Http\Middleware\CheckoutSession::class,
         'order.auth' => \Quincalla\Http\Middleware\OrderAuth::class,
-        'guest' => \Quincalla\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest'      => \Quincalla\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }
