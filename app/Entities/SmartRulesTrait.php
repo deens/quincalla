@@ -2,6 +2,8 @@
 
 namespace Quincalla\Entities;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait SmartRulesTrait
 {
     protected $rulesRelations = [
@@ -66,7 +68,7 @@ trait SmartRulesTrait
      * @param array  $rules     List of rules to apply
      * @param string $sortOrder Sort by field and direction
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function getByRules($match, $rules = [], $sortOrder = 'manually')
     {
@@ -90,7 +92,7 @@ trait SmartRulesTrait
      * @param string $sortOrder Sort by field and direction
      * @param int    $limit     Limit of items to paginate
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function paginateByRules($match, $rules = [], $sortOrder = 'manually', $limit = 6)
     {
@@ -109,11 +111,11 @@ trait SmartRulesTrait
     /**
      * Apply rules.
      *
-     * @param object @query Illuminate\Database\Eloquent\Builder
-     * @param string @match
-     * @param array @rules Array of rules.
+     * @param Builder $query
+     * @param string  $match
+     * @param array   $rules Array of rules.
      */
-    public static function applyRules($query, $match, $rules)
+    public static function applyRules(Builder $query, $match, $rules)
     {
         foreach ($rules as $key => $rule) {
             $method = camel_case($match.'_'.$rule[1]->relation);
@@ -131,10 +133,10 @@ trait SmartRulesTrait
     /**
      * Sort items base on sort order.
      *
-     * @param object $query     Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
      * @param string $sortOrder
      */
-    public static function sortOrderRule($query, $sortOrder)
+    public static function sortOrderRule(Builder $query, $sortOrder)
     {
         if ($sortOrder !== 'manually' && $sortOrder !== 'best-match') {
             $sort = explode('-', $sortOrder);
@@ -142,87 +144,87 @@ trait SmartRulesTrait
         }
     }
 
-    public static function allIsEqualTo($query, $field, $condition)
+    public static function allIsEqualTo(Builder $query, $field, $condition)
     {
         return $query->where($field, $condition);
     }
 
-    public static function allIsNotEqualTo($query, $field, $condition)
+    public static function allIsNotEqualTo(Builder $query, $field, $condition)
     {
         return $query->where($field, '<>', $condition);
     }
 
-    public static function allIsGreaterThan($query, $field, $condition)
+    public static function allIsGreaterThan(Builder $query, $field, $condition)
     {
         return $query->where($field, '<', $condition);
     }
 
-    public static function allLessThan($query, $field, $condition)
+    public static function allLessThan(Builder $query, $field, $condition)
     {
         return $query->where($field, '>', $condition);
     }
 
-    public static function allStartWith($query, $field, $condition)
+    public static function allStartWith(Builder $query, $field, $condition)
     {
         return $query->where($field, 'LIKE', $condition.'%');
     }
 
-    public static function allEndsWith($query, $field, $condition)
+    public static function allEndsWith(Builder $query, $field, $condition)
     {
         return $query->where($field, 'LIKE', '%'.$condition);
     }
 
-    public static function allContains($query, $field, $condition)
+    public static function allContains(Builder $query, $field, $condition)
     {
         return $query->where($field, 'LIKE', '%'.$condition.'%');
     }
 
-    public static function allDoesNotContains($query, $field, $condition)
+    public static function allDoesNotContains(Builder $query, $field, $condition)
     {
         return $query->where($field, 'NOT LIKE', '%'.$condition.'%');
     }
 
-    public static function anyIsEqualTo($query, $field, $condition)
+    public static function anyIsEqualTo(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, $condition);
     }
 
-    public static function anyIsNotEqualTo($query, $field, $condition)
+    public static function anyIsNotEqualTo(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, '<>', $condition);
     }
 
-    public static function anyIsGreaterThan($query, $field, $condition)
+    public static function anyIsGreaterThan(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, '<', $condition);
     }
 
-    public static function anyLessThan($query, $field, $condition)
+    public static function anyLessThan(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, '>', $condition);
     }
 
-    public static function anyStartWith($query, $field, $condition)
+    public static function anyStartWith(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, 'LIKE', $condition.'%');
     }
 
-    public static function anyEndsWith($query, $field, $condition)
+    public static function anyEndsWith(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, 'LIKE', '%'.$condition);
     }
 
-    public static function anyContains($query, $field, $condition)
+    public static function anyContains(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, 'LIKE', '%'.$condition.'%');
     }
 
-    public static function anyDoesNotContains($query, $field, $condition)
+    public static function anyDoesNotContains(Builder $query, $field, $condition)
     {
         return $query->orWhere($field, 'NOT LIKE', '%'.$condition.'%');
     }
 
-    public static function sortOrderByField($query, $field, $sortOrder = 'asc')
+    public static function sortOrderByField(Builder $query, $field, $sortOrder = 'asc')
     {
         return $query->orderBy($field, $sortOrder);
     }

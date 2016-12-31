@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Quincalla\Entities\States;
 
 class StatesTableSeeder extends Seeder
 {
