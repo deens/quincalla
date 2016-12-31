@@ -42,7 +42,7 @@ class ProductsController extends Controller
     public function create()
     {
         $collections = $this->collections->getArrayListManualPublished();
-        $tags = $this->tags->lists('name', 'id');
+        $tags = $this->tags->pluck('name', 'id');
 
         return view('admin.products.create', compact('collections', 'tags'));
     }
@@ -73,7 +73,7 @@ class ProductsController extends Controller
     {
         $product = $this->products->with('collections')->findOrFail($id);
         $collections = $this->collections->getArrayListManualPublished();
-        $tags = $this->tags->lists('name', 'id');
+        $tags = $this->tags->pluck('name', 'id');
 
         return view('admin.products.edit', compact('product', 'collections', 'tags'));
     }

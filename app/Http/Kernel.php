@@ -48,9 +48,12 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.admin' => \Quincalla\Http\Middleware\AdminAuthenticate::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Quincalla\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'checkout'   => \Quincalla\Http\Middleware\CheckoutSession::class,
+        'order.auth' => \Quincalla\Http\Middleware\OrderAuth::class,
     ];
 }

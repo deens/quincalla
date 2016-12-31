@@ -93,10 +93,8 @@ class CheckoutController extends Controller
             )
         );
 
-        $countries = $this->countries->orderBy('name')
-            ->lists('name', 'id');
-        $states = $this->states->orderBy('name')
-            ->lists('name', 'id');
+        $countries = $this->countries->orderBy('name')->pluck('name', 'id');
+        $states = $this->states->orderBy('name')->pluck('name', 'id');
 
         return view('checkout.shipping', compact('countries', 'states'))
             ->with('account_type', $accountType)
@@ -129,10 +127,8 @@ class CheckoutController extends Controller
 
         $this->checkout->store();
 
-        $countries = $this->countries->orderBy('name')
-            ->lists('name', 'id');
-        $states = $this->states->orderBy('name')
-            ->lists('name', 'id');
+        $countries = $this->countries->orderBy('name')->pluck('name', 'id');
+        $states = $this->states->orderBy('name')->pluck('name', 'id');
 
         return view('checkout.billing', compact('countries', 'states'))
             ->with($this->checkout->get('billing'));
