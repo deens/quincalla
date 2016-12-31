@@ -1,6 +1,13 @@
-const elixir = require('laravel-elixir');
+const elixir = require('laravel-elixir'),
+    del = require('del');
 
 require('laravel-elixir-vue-2');
+
+elixir.extend('delete', function (path) {
+    new elixir.Task('delete', function () {
+        del(path);
+    });
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -14,6 +21,20 @@ require('laravel-elixir-vue-2');
  */
 
 elixir(mix => {
-    mix.sass('app.scss')
+    mix.sass('admin.scss')
+       .sass('app.scss')
+       .webpack('admin.js')
        .webpack('app.js');
+
+    // mix.version(['css/app.css', 'js/app.js']);
+    // mix.version(['css/admin.css', 'js/admin.js']);
+
+    // mix.delete([
+    //     'public/js/admin.js',
+    //     'public/js/app.js',
+    //     'public/css/admin.css',
+    //     'public/css/admin.css.map',
+    //     'public/css/app.css',
+    //     'public/css/app.css.map'
+    // ]);
 });

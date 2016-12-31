@@ -18,3 +18,7 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app'
 });
+
+(function($, window, document) {
+    console.log('Welcome to Quincalla');
+}(window.jQuery, window, document));

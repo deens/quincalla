@@ -12,5 +12,3 @@
     });
 
 }(window.jQuery, window, document));
-
-//# sourceMappingURL=admin.js.map
