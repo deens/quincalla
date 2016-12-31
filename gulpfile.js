@@ -26,15 +26,19 @@ elixir(mix => {
        .webpack('admin.js')
        .webpack('app.js');
 
-    // mix.version(['css/app.css', 'js/app.js']);
-    // mix.version(['css/admin.css', 'js/admin.js']);
+    mix.version([
+        'css/admin.css',
+        'css/app.css',
+        'js/admin.js',
+        'js/app.js'
+    ]);
 
-    // mix.delete([
-    //     'public/js/admin.js',
-    //     'public/js/app.js',
-    //     'public/css/admin.css',
-    //     'public/css/admin.css.map',
-    //     'public/css/app.css',
-    //     'public/css/app.css.map'
-    // ]);
+    mix.delete([
+        'public/js/admin.js',
+        'public/js/app.js',
+        'public/css/admin.css',
+        'public/css/admin.css.map',
+        'public/css/app.css',
+        'public/css/app.css.map'
+    ]);
 });
