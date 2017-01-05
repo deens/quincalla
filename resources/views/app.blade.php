@@ -84,7 +84,7 @@
         <footer>
             <div class="row text-center">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Quincalla 2015</p>
+                    <p>Copyright &copy; Quincalla {{ date('Y') }}</p>
                 </div>
             </div>
         </footer>
