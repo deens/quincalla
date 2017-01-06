@@ -2,10 +2,9 @@
 
 namespace Quincalla\Jobs;
 
-use Quincalla\Jobs\Job;
+use Illuminate\Auth\SessionGuard as Guard;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Quincalla\Entities\Checkout;
-use Illuminate\Auth\Guard;
 
 class CheckoutCustomer extends Job implements SelfHandling
 {
@@ -31,9 +30,9 @@ class CheckoutCustomer extends Job implements SelfHandling
     public function handle(Guard $auth, Checkout $checkout)
     {
         $credentials = [
-            'email' => $this->email,
+            'email'    => $this->email,
             'password' => $this->password,
-            'active' => true
+            'active'   => true,
         ];
 
         $customer = $auth->attempt($credentials);

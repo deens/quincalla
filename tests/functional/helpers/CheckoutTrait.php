@@ -15,14 +15,14 @@ trait CheckoutTrait
     public function continueAsNewCustomer()
     {
         return $this->seePageIs('/order/customer')
-            ->press('Continue to checkout');
+            ->click('Continue as New Customer');
     }
 
-    public function fillRegisterCustomerWith()
+    public function fillRegisterCustomerWith($name = '', $email = '', $password = '', $passwordConfirm = '')
     {
         return $this->seePageIs('/order/register')
             ->type($name, 'name')
-            ->type($email,  'email')
+            ->type($email, 'email')
             ->type($password, 'password')
             ->type($passwordConfirm, 'password_confirmation')
             ->press('Continue to Delivery');

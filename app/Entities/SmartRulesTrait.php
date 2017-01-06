@@ -5,18 +5,18 @@ namespace Quincalla\Entities;
 trait SmartRulesTrait
 {
     protected $rulesRelations = [
-        'is_equal_to' => 'is equal to',
-        'is_not_equal_to' => 'is not equal to',
-        'is_greater_than' => 'is greater than',
-        'is_less_than' => 'is less than',
-        'start_with' => 'start with',
-        'ends_with' => 'ends with',
-        'contains' => 'contains',
+        'is_equal_to'      => 'is equal to',
+        'is_not_equal_to'  => 'is not equal to',
+        'is_greater_than'  => 'is greater than',
+        'is_less_than'     => 'is less than',
+        'start_with'       => 'start with',
+        'ends_with'        => 'ends with',
+        'contains'         => 'contains',
         'does_not_contain' => 'does not contain',
     ];
 
     protected $rulesSortDefaults = [
-        'manually' => 'Manually',
+        'manually'   => 'Manually',
         'best-match' => 'Best Match',
     ];
 
@@ -119,7 +119,7 @@ trait SmartRulesTrait
             $method = camel_case($match.'_'.$rule[1]->relation);
 
             if (method_exists(get_called_class(), $method)) {
-                call_user_func_array(array(get_called_class(), $method), [
+                call_user_func_array([get_called_class(), $method], [
                     $query,
                     $rule[0]->column,
                     $rule[2]->condition,

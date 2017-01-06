@@ -15,7 +15,7 @@
 
             <p>Register with us for a fast and easy checkout and easy access to your order history and status</p>
 
-            <a class="btn btn-primary btn-bigger" href="{{ route('order.register')}}">Continue to checkout</a>
+            <a class="btn btn-primary btn-bigger" href="{{ route('order.register')}}">Continue as New Customer</a>
         </div>
 
         <div class="col-md-6">

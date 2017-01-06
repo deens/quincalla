@@ -2,18 +2,17 @@
 
 namespace spec\Quincalla\Jobs;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Illuminate\Http\Request;
+use PhpSpec\ObjectBehavior;
 
 class CheckoutShippingSpec extends ObjectBehavior
 {
-    function let(Request $request)
+    public function let(Request $request)
     {
         $this->beConstructedWith($request);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Quincalla\Jobs\CheckoutShipping');
     }

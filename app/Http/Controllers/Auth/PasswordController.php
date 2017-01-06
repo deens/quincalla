@@ -1,8 +1,9 @@
 <?php
+
 namespace Quincalla\Http\Controllers\Auth;
 
-use Quincalla\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Quincalla\Http\Controllers\Controller;
 
 class PasswordController extends Controller
 {

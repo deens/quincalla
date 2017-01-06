@@ -6,7 +6,7 @@ use PhpSpec\Laravel\LaravelObjectBehavior;
 
 class TagSpec extends LaravelObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Quincalla\Entities\Tag');
     }

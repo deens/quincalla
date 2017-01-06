@@ -1,9 +1,9 @@
-<?php namespace Quincalla\Http\Requests;
+<?php
 
-use Quincalla\Http\Requests\Request;
+namespace Quincalla\Http\Requests;
 
-class StoreCartRequest extends Request {
-
+class StoreCartRequest extends Request
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,8 +22,7 @@ class StoreCartRequest extends Request {
     public function rules()
     {
         return [
-            'qty' => 'required|numeric'
+            'qty' => 'required|numeric',
         ];
     }
-
 }

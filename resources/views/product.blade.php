@@ -6,25 +6,13 @@
         <div class="col-md-5">
             <div class="thumbnail">
                 <img src="http://placehold.it/420x420" alt="">
-                <hr>
-                <div class="thumbnail-preview text-center">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="http://placehold.it/100x100" alt="">
-                        </div>
-                        <div class="col-md-4">
-                            <img src="http://placehold.it/100x100" alt="">
-                        </div>
-                        <div class="col-md-4">
-                            <img src="http://placehold.it/100x100" alt="">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-md-7">
             <h1>{{ $product->name }}</h1>
-
+            <div class="description">
+                <p>{{ $product->description }}</p>
+            </div>
             <hr>
 
             <div class="pricing">
@@ -43,13 +31,6 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-            </div>
-
-            <hr>
-
-            <div class="description">
-                <h3>Product Description</h3>
-                <p>{{ $product->description }}</p>
             </div>
 
         </div>

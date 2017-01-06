@@ -2,7 +2,6 @@
 
 namespace Quincalla\Jobs;
 
-use Quincalla\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Quincalla\Entities\Address;
 use Quincalla\Entities\Checkout;

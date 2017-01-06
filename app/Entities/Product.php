@@ -2,11 +2,12 @@
 
 namespace Quincalla\Entities;
 
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
 use Laracasts\Presenter\PresentableTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Product extends Model
+class Product extends Model implements Buyable
 {
     use SearchableTrait;
     use PresentableTrait;
@@ -36,41 +37,41 @@ class Product extends Model
 
     protected $searchable = [
         'columns' => [
-            'name' => 10,
+            'name'        => 10,
             'description' => 5,
         ],
     ];
 
     protected $rulesColumns = [
-        'name' => 'Name',
-        'type' => 'Type',
-        'vendor' => 'Vendor',
-        'price' => 'Price',
-        'tag' => 'Tag',
-        'price' => 'Compare price at',
-        'weight' => 'Weight',
+        'name'            => 'Name',
+        'type'            => 'Type',
+        'vendor'          => 'Vendor',
+        'price'           => 'Price',
+        'tag'             => 'Tag',
+        'compare_price'   => 'Compare price at',
+        'weight'          => 'Weight',
         'inventory_stock' => 'Inventory Stock',
     ];
 
     protected $rulesSortOptions = [
         'name' => [
-            'asc' => 'Alphabetical: A-Z',
+            'asc'  => 'Alphabetical: A-Z',
             'desc' => 'Alphabetical: Z-A',
         ],
         'price' => [
-            'asc' => 'Price: Lowest to highest',
+            'asc'  => 'Price: Lowest to highest',
             'desc' => 'Price: Highest to lowest',
         ],
         'created_at' => [
-            'asc' => 'By date: Oldest to newest',
+            'asc'  => 'By date: Oldest to newest',
             'desc' => 'By date: Newest to oldest',
         ],
     ];
 
     /**
-     * Get all the collections that belongs to a product
+     * Get all the collections that belongs to a product.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function collections()
     {
@@ -78,9 +79,9 @@ class Product extends Model
     }
 
     /**
-     * Get all the tags that belongs to a product
+     * Get all the tags that belongs to a product.
      *
-     * @return Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tags()
     {
@@ -100,7 +101,7 @@ class Product extends Model
     }
 
     /**
-     * Get the absolute price of product
+     * Get the absolute price of product.
      *
      * @return float
      */
@@ -109,5 +110,20 @@ class Product extends Model
         return ($this->compare_price < $this->price)
             ? $this->compare_price
             : $this->price;
+    }
+
+    public function getBuyableIdentifier($options = null)
+    {
+        return $this->id;
+    }
+
+    public function getBuyableDescription($options = null)
+    {
+        return $this->name;
+    }
+
+    public function getBuyablePrice($options = null)
+    {
+        return $this->getAbsPriceAttribute();
     }
 }

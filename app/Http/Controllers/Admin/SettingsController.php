@@ -1,31 +1,29 @@
 <?php
+
 namespace Quincalla\Http\Controllers\Admin;
 
-use Quincalla\Http\Requests;
-use Quincalla\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Quincalla\Http\Controllers\Controller;
 
-class SettingsController extends Controller {
-
-	public function general()
-	{
+class SettingsController extends Controller
+{
+    public function general()
+    {
         return view('admin.settings.general');
-	}
+    }
 
     public function postGeneral(Request $request)
     {
         dd($request->all());
     }
 
-	public function payment()
-	{
+    public function payment()
+    {
         return view('admin.settings.payment');
-	}
+    }
 
     public function postPayment(Request $request)
     {
         dd($request->all());
     }
 }
-
-

@@ -2,12 +2,17 @@
 
 namespace spec\Quincalla\Jobs;
 
+use Illuminate\Http\Request;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class CheckoutBillingSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function let(Request $request)
+    {
+        $this->beConstructedWith($request);
+    }
+
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Quincalla\Jobs\CheckoutBilling');
     }

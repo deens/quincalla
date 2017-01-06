@@ -2,10 +2,10 @@
 
 namespace Quincalla\Tests\Functional;
 
-use Quincalla\Tests\TestCase;
 use Quincalla\Tests\Functional\Helpers\CartTrait;
-use Quincalla\Tests\Functional\Helpers\ProductTrait;
 use Quincalla\Tests\Functional\Helpers\CheckoutTrait;
+use Quincalla\Tests\Functional\Helpers\ProductTrait;
+use Quincalla\Tests\TestCase;
 
 class CheckoutAsCustomerTest extends TestCase
 {
@@ -19,19 +19,19 @@ class CheckoutAsCustomerTest extends TestCase
             ->continueToCheckout()
             ->continueAsCustomer('john@example.com', 'password')
             ->fillDeliveryWith([
-                'name' => 'John Doe',
-                'address' => '1 First St.',
+                'name'     => 'John Doe',
+                'address'  => '1 First St.',
                 'address1' => '',
-                'city' => 'San Francisco',
-                'state' => '1',
-                'zipcode' => '94109',
-                'phone' => '4152345678',
+                'city'     => 'San Francisco',
+                'state'    => '1',
+                'zipcode'  => '94109',
+                'phone'    => '4152345678',
             ])
             ->fillPaymentWith([
                 'card_number' => '4242424242424242',
-                'exp_month' => '1',
-                'exp_year' => '2018',
-                'cvc' => '123',
+                'exp_month'   => '1',
+                'exp_year'    => '2018',
+                'cvc'         => '123',
             ])
             ->seePageIs('/order/confirm');
     }
