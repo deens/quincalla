@@ -1,6 +1,5 @@
 <?php
 
-namespace Quincalla\Tests;
 
 class TestCase extends \Illuminate\Foundation\Testing\TestCase
 {
