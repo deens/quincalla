@@ -17,6 +17,12 @@ php artisan migrate
 ```
 php artisan db:seed
 ```
+- Frontend
+```
+npm install yarn gulp -g
+yarn install
+gulp
+```
 
 ## Testing
 

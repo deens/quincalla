@@ -77,8 +77,8 @@ class OrderController extends Controller
     {
         $address = new Address();
         $address->name = Auth::user()->name;
-        $states = State::orderBy('name')->lists('name', 'id');
-        $countries = Country::orderBy('name')->lists('name', 'id');
+        $states = State::orderBy('name')->pluck('name', 'id');
+        $countries = Country::orderBy('name')->pluck('name', 'id');
         $shipping = null;
 
         return view('order.delivery', compact('states', 'countries', 'address', 'shipping'));
@@ -101,8 +101,8 @@ class OrderController extends Controller
         $sameAddress = true;
         $address = new Address();
         $address->name = Auth::user()->name;
-        $states = State::orderBy('name')->lists('name', 'id');
-        $countries = Country::orderBy('name')->lists('name', 'id');
+        $states = State::orderBy('name')->pluck('name', 'id');
+        $countries = Country::orderBy('name')->pluck('name', 'id');
 
         return view('order.payment', compact('sameAddress', 'address', 'states', 'countries'));
     }

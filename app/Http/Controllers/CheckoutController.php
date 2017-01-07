@@ -14,7 +14,6 @@ use Quincalla\Http\Requests\LoginRequest;
 use Quincalla\Jobs\CheckoutCustomer;
 use Quincalla\Services\CheckoutStoreBilling;
 use Quincalla\Services\CheckoutStoreShipping;
-use Webpatser\Countries\Countries;
 
 class CheckoutController extends Controller
 {
@@ -26,7 +25,8 @@ class CheckoutController extends Controller
         Checkout $checkout,
         Country $countries,
         State $states
-    ) {
+    )
+    {
         $this->middleware('checkout', [
             'except' => ['customer', 'postCustomer', 'postGuest'],
         ]);
@@ -43,7 +43,7 @@ class CheckoutController extends Controller
 
     public function customer(Cart $cart)
     {
-        if (!$cart->content()->count()) {
+        if (! $cart->content()->count()) {
             return redirect()
                 ->route('cart.index')
                 ->with('error', 'Please add products to your shopping cart');
@@ -93,33 +93,27 @@ class CheckoutController extends Controller
             )
         );
 
-        $countries = $this->countries->orderBy('name')
-            ->lists('name', 'id');
-        $states = $this->states->orderBy('name')
-            ->lists('name', 'id');
+        $countries = $this->countries->orderBy('name')->pluck('name', 'id');
+        $states = $this->states->orderBy('name')->pluck('name', 'id');
 
         return view('checkout.shipping', compact('countries', 'states'))
             ->with('account_type', $accountType)
             ->with($this->checkout->get('shipping'));
     }
 
-    public function postShipping(
-        CheckoutShippingRequest $request,
-        CheckoutStoreShipping $storeShipping
-    ) {
+    public function postShipping(CheckoutShippingRequest $request, CheckoutStoreShipping $storeShipping)
+    {
         return $storeShipping->run($this);
     }
 
     public function billing(Request $request, Address $address)
     {
-        if (
-            !$this->checkout->has('shipping')
-            || !count($this->checkout->get('shipping'))
-        ) {
+        if (! $this->checkout->has('shipping') ||
+            ! count($this->checkout->get('shipping'))) {
             return back()->with('error', 'Invalid shipping address');
         }
 
-        if (!$this->checkout->has('billing.same_address')) {
+        if (! $this->checkout->has('billing.same_address')) {
             $this->checkout->set('billing.same_address', 1);
         }
 
@@ -133,28 +127,21 @@ class CheckoutController extends Controller
 
         $this->checkout->store();
 
-        $countries = $this->countries->orderBy('name')
-            ->lists('name', 'id');
-        $states = $this->states->orderBy('name')
-            ->lists('name', 'id');
+        $countries = $this->countries->orderBy('name')->pluck('name', 'id');
+        $states = $this->states->orderBy('name')->pluck('name', 'id');
 
         return view('checkout.billing', compact('countries', 'states'))
             ->with($this->checkout->get('billing'));
     }
 
-    public function postBilling(
-        CheckoutBillingRequest $request,
-        CheckoutStoreBilling $storeBilling)
+    public function postBilling(CheckoutBillingRequest $request, CheckoutStoreBilling $storeBilling)
     {
         return $storeBilling->run($this);
     }
 
     public function confirm()
     {
-        if (
-            !$this->checkout->has('payment')
-            || !count($this->checkout->get('payment'))
-        ) {
+        if (! $this->checkout->has('payment') || ! count($this->checkout->get('payment'))) {
             return back()->with('error', 'Invalid payment');
         }
 

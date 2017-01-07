@@ -82,7 +82,7 @@ class Collection extends Model
     {
         return $this->published()
             ->where('type', 'manual')
-            ->lists('name', 'id')
+            ->pluck('name', 'id')
             ->toArray();
     }
 }

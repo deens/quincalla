@@ -1,1 +1,0 @@
-{"version":3,"sources":["app.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA","file":"all.js","sourcesContent":["(function($, window, document) {\n    console.log('Welcome to Quincalla');\n}(window.jQuery, window, document));\n\n"],"sourceRoot":"/source/"}
