@@ -1,0 +1,29 @@
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+body, label, .checkbox label {
+  font-weight: 300;
+}
+
+.hero-feature {
+  margin-bottom: 30px;
+}
+
+.scratch{
+  font-size: 0.9em;
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+footer {
+  margin: 50px 0;
+}

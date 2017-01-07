@@ -8,6 +8,7 @@ use Quincalla\Entities\Cart;
 use Quincalla\Entities\Checkout;
 use Quincalla\Entities\Order;
 use Quincalla\Entities\User;
+use Quincalla\Http\Controllers\CheckoutController;
 
 class CheckoutStoreBilling
 {
@@ -34,6 +35,7 @@ class CheckoutStoreBilling
         'zipcode'    => 'required',
         'phone'      => 'required',
     ];
+    protected $listener;
 
     public function __construct(
         Request $request,
@@ -51,7 +53,7 @@ class CheckoutStoreBilling
         $this->cart = $cart;
     }
 
-    public function run($listener)
+    public function run(CheckoutController $listener)
     {
         $this->listener = $listener;
 
@@ -80,16 +82,10 @@ class CheckoutStoreBilling
             ];
         }
 
-        $this->checkout->set(
-            'account.name',
-            $billingAddress['first_name'].' '.$billingAddress['last_name']
-        );
+        $this->checkout->set('account.name', $billingAddress['first_name'].' '.$billingAddress['last_name']);
         $this->checkout->set('payment', $payment);
         $this->checkout->set('billing', $billingAddress);
-        $this->checkout->set(
-            'billing.same_address',
-            (bool) $this->request->get('same_address')
-        );
+        $this->checkout->set('billing.same_address', (bool) $this->request->get('same_address'));
 
         if ($this->checkout->get('checkout.type') !== 'customer') {
             if ($this->checkout->get('checkout.type') === 'new-customer') {
@@ -158,7 +154,7 @@ class CheckoutStoreBilling
         return $order;
     }
 
-    private function createOrderItems($order)
+    private function createOrderItems(Order $order)
     {
         $cartContent = $this->cart->content();
 

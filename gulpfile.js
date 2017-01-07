@@ -1,4 +1,13 @@
-var elixir = require('laravel-elixir');
+const elixir = require('laravel-elixir'),
+    del = require('del');
+
+require('laravel-elixir-vue-2');
+
+elixir.extend('delete', function (path) {
+    new elixir.Task('delete', function () {
+        del(path);
+    });
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -6,17 +15,30 @@ var elixir = require('laravel-elixir');
  |--------------------------------------------------------------------------
  |
  | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Less
+ | for your Laravel application. By default, we are compiling the Sass
  | file for our application, as well as publishing vendor resources.
  |
  */
 
-elixir(function(mix) {
-    mix.less('app.less')
-    .less('admin.less', 'public/css/admin.css')
-    .scripts('app.js')
-    .scripts('admin.js', 'public/js/admin.js')
-    .phpUnit();
+elixir(mix => {
+    mix.sass('admin.scss')
+       .sass('app.scss')
+       .webpack('admin.js')
+       .webpack('app.js');
 
+    mix.version([
+        'css/admin.css',
+        'css/app.css',
+        'js/admin.js',
+        'js/app.js'
+    ]);
 
+    mix.delete([
+        'public/js/admin.js',
+        'public/js/app.js',
+        'public/css/admin.css',
+        'public/css/admin.css.map',
+        'public/css/app.css',
+        'public/css/app.css.map'
+    ]);
 });

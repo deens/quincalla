@@ -5,6 +5,7 @@ namespace Quincalla\Services;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Http\Request;
 use Quincalla\Entities\Checkout;
+use Quincalla\Http\Controllers\CheckoutController;
 
 class CheckoutStoreShipping
 {
@@ -22,18 +23,16 @@ class CheckoutStoreShipping
         $this->hash = $hash;
     }
 
-    public function run($listener)
+    public function run(CheckoutController $listener)
     {
         // Trim values except password & password_confirmation
         $this->request->merge(array_map('trim', $this->request->except('password', 'password_confirmation')));
-
-        // Get account type
-        $accountType = $this->checkout->get('checkout.type');
 
         // Save account information
         $this->checkout->set('account.email', $this->request->get('account_email', ''));
         $this->checkout->set('account.password', $this->hash->make($this->request->get('password', '')));
 
+        $shippingData = [];
         foreach ($this->addressFields() as $field) {
             $shippingData[$field] = $this->request->get($field);
         }
