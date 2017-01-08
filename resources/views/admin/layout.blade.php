@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Quincalla</title>
 
-    <link href="{{ asset('/css/admin.css') }}" rel="stylesheet">
+    <link href="{{ elixir('css/admin.css') }}" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
     <!-- Fonts -->
@@ -66,7 +66,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-md-2 sidebar">
+            <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li><h5>My Store</h5></li>
                     <li>{!! link_to_route('admin.dashboard', 'Dashboard') !!}</li>
@@ -94,7 +94,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-    <script src="{{ asset('/js/admin.js') }}"></script>
+    <script src="{{ elixir('js/admin.js') }}"></script>
 </body>
 </html>
 <body>

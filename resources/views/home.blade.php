@@ -16,18 +16,24 @@
 
             <div class="row text-center">
 
-            @foreach($collections as $collection)
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="{{ route('collections.show', [$collection->slug])}}">
-                            <img src="http://placehold.it/800x500" alt="">
-                        </a>
-                        <div class="caption">
-                            <h4><a href="{{ route('collections.show', [$collection->slug])}}">{{ $collection->name }}</a></h4>
-                        </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="text-center">Collections</h2>
                     </div>
                 </div>
-            @endforeach
+
+                @foreach($collections as $collection)
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <a href="{{ route('collections.show', [$collection->slug])}}">
+                                <img src="http://placehold.it/800x500" alt="">
+                            </a>
+                            <div class="caption">
+                                <h4><a href="{{ route('collections.show', [$collection->slug])}}">{{ $collection->name }}</a></h4>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         @endif
 
@@ -35,23 +41,23 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="text-center">New arrivals</h3>
+                <h2 class="text-center">New Arrivals</h2>
             </div>
         </div>
 
         <div class="row text-center">
             @foreach($products as $product)
-            <div class="col-sm-4 col-lg-4 col-md-4">
-                <div class="thumbnail">
-                    <a href="{{ route('products.show', [$product->slug]) }}">
-                        <img src="http://placehold.it/800x500" alt="">
-                    </a>
-                    <div class="caption">
-                        <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
-                        <h4> {!! $product->present()->format_price !!}</h4>
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="thumbnail">
+                        <a href="{{ route('products.show', [$product->slug]) }}">
+                            <img src="http://placehold.it/800x500" alt="">
+                        </a>
+                        <div class="caption">
+                            <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
+                            <h4> {!! $product->present()->format_price !!}</h4>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
 
