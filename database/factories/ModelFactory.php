@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(Quincalla\User::class, function (Faker\Generator $faker) {
+$factory->define(Quincalla\Entities\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
