@@ -16,8 +16,8 @@ class CreateCollectionTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->text('description');
-            $table->string('image');
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
             $table->enum('type', ['manual', 'condition'])->default('manual');
             $table->enum('match', ['any', 'all'])->default('all');
             $table->string('sort_order')->default('manually');
