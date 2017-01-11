@@ -30,17 +30,17 @@ Route::get('account', 'AccountController@index');
 //]);
 
 // Checkout
-Route::group(['prefix' => 'checkout'], function () {
-    Route::get('/', ['as' => 'checkout.index', 'uses' => 'CheckoutController@index']);
-    Route::get('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@customer']);
-    Route::post('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@postCustomer']);
-    Route::post('customer/guest', ['as' => 'checkout.guest', 'uses' => 'CheckoutController@postGuest']);
-    Route::get('shipping', ['as' => 'checkout.shipping', 'uses' => 'CheckoutController@shipping']);
-    Route::post('shipping', ['as' => 'checkout.shipping', 'uses' => 'CheckoutController@postShipping']);
-    Route::get('billing', ['as' => 'checkout.billing', 'uses' => 'CheckoutController@billing']);
-    Route::post('billing', ['as' => 'checkout.billing', 'uses' => 'CheckoutController@postBilling']);
-    Route::get('confirm', ['as' => 'checkout.confirm', 'uses' => 'CheckoutController@confirm']);
-});
+/* Route::group(['prefix' => 'checkout'], function () { */
+/*     Route::get('/', ['as' => 'checkout.index', 'uses' => 'CheckoutController@index']); */
+/*     Route::get('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@customer']); */
+/*     Route::post('customer', ['as' => 'checkout.customer', 'uses' => 'CheckoutController@postCustomer']); */
+/*     Route::post('customer/guest', ['as' => 'checkout.guest', 'uses' => 'CheckoutController@postGuest']); */
+/*     Route::get('shipping', ['as' => 'checkout.shipping', 'uses' => 'CheckoutController@shipping']); */
+/*     Route::post('shipping', ['as' => 'checkout.shipping', 'uses' => 'CheckoutController@postShipping']); */
+/*     Route::get('billing', ['as' => 'checkout.billing', 'uses' => 'CheckoutController@billing']); */
+/*     Route::post('billing', ['as' => 'checkout.billing', 'uses' => 'CheckoutController@postBilling']); */
+/*     Route::get('confirm', ['as' => 'checkout.confirm', 'uses' => 'CheckoutController@confirm']); */
+/* }); */
 
 Route::group(['prefix' => 'order'], function () {
     Route::get('/', ['as' => 'order.index', 'uses' => 'OrderController@index']);
@@ -48,10 +48,13 @@ Route::group(['prefix' => 'order'], function () {
     Route::post('customer', ['as' => 'order.customer', 'uses' => 'OrderController@postCustomer']);
     Route::get('register', ['as' => 'order.register', 'uses' => 'OrderController@register']);
     Route::post('register', ['as' => 'order.register', 'uses' => 'OrderController@postRegister']);
-    Route::get('delivery', ['as' => 'order.delivery', 'uses' => 'OrderController@delivery']);
-    Route::post('delivery', ['as' => 'order.delivery', 'uses' => 'OrderController@postDelivery']);
-    Route::get('payment', ['as' => 'order.payment', 'uses' => 'OrderController@payment']);
-    Route::post('payment', ['as' => 'order.payment', 'uses' => 'OrderController@postPayment']);
+
+    Route::get('delivery', ['as' => 'order.delivery.create', 'uses' => 'OrderDeliveryController@create']);
+    Route::post('delivery', ['as' => 'order.delivery.store', 'uses' => 'OrderDeliveryController@store']);
+
+    Route::get('payment', ['as' => 'order.payment.create', 'uses' => 'OrderPaymentController@create']);
+    Route::post('payment', ['as' => 'order.payment.store', 'uses' => 'OrderPaymentController@store']);
+
     Route::get('confirm', ['as' => 'order.confirm', 'uses' => 'OrderController@confirm']);
 });
 

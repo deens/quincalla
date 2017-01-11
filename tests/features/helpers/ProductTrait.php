@@ -1,7 +1,5 @@
 <?php
 
-namespace Quincalla\Tests\Functional\Helpers;
-
 trait ProductTrait
 {
     public function addProductToCart($slug)
