@@ -6,11 +6,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CheckoutAsNewCustomerTest extends TestCase
 {
-    use DatabaseMigrations;
     use CheckoutTrait;
+    use DatabaseMigrations;
 
     /** @test */
-    public function it_should_checkout_a_new_customer()
+    public function blindly_follow_the_steps_of_checkout_as_new_customer()
     {
         $name = 'John Doe';
         $email = 'john@example.com';
@@ -52,6 +52,7 @@ class CheckoutAsNewCustomerTest extends TestCase
             'zipcode'  => '94109',
             'phone'    => '4152345678',
         ]);
+
         $this->fillPaymentWith([
             'card_number' => '4242424242424242',
             'exp_month'   => '11',
