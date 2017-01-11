@@ -30,8 +30,8 @@ $factory->define(Quincalla\Entities\Product::class, function ($faker) {
         'slug'          => $faker->unique()->slug,
         'description'   => $faker->text,
         'image'         => $faker->unique()->md5().'.png',
-        'price'         => $faker->randomFloat(2, 100, 199),
-        'compare_price' => $faker->randomFloat(2, 10, 99),
+        'price'         => 19900,
+        /* 'compare_price' => 0, */
         'vendor'        => $faker->randomElement(['Apple', 'Nike', 'Levis']),
         'type'          => $faker->randomElement(['Cell Phone', 'Pants', 'Shoes']),
         'published'     => $faker->randomElement([true, false]),

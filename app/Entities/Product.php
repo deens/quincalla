@@ -107,9 +107,9 @@ class Product extends Model implements Buyable
      */
     public function getAbsPriceAttribute()
     {
-        return ($this->compare_price < $this->price)
-            ? $this->compare_price
-            : $this->price;
+        return ( ! is_null($this->compare_price) && (int) $this->compare_price < (int) $this->price)
+            ? $this->compare_price / 100
+            : $this->price / 100;
     }
 
     public function getBuyableIdentifier($options = null)
