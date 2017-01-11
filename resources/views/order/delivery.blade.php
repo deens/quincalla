@@ -8,7 +8,7 @@
     <div class="col-md-8">
         <h1>Your delivery address and shipping</h1>
 
-        {!! Form::open(['route' => 'order.delivery']) !!}
+        {!! Form::open(['route' => 'order.delivery.store']) !!}
         <h3>Your delivery address</h3>
         <div class="row">
             <div class="col-md-12">

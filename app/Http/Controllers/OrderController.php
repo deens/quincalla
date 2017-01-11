@@ -24,7 +24,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        return redirect()->route('order.delivery');
+        return redirect()->route('order.delivery.create');
     }
 
     public function customer()
@@ -39,7 +39,7 @@ class OrderController extends Controller
             'password' => $request->get('password'),
             'active' => true,
         ], $request->get('remember'))) {
-            return redirect()->intended('order.delivery');
+            return redirect()->route('order.delivery.create');
         }
 
         return redirect()->back()->with('error', 'Invalid credentials');
@@ -70,46 +70,7 @@ class OrderController extends Controller
             Auth::login($newUser);
         }
 
-        return redirect()->route('order.delivery');
-    }
-
-    public function delivery()
-    {
-        $address = new Address();
-        $address->name = Auth::user()->name;
-        $states = State::orderBy('name')->pluck('name', 'id');
-        $countries = Country::orderBy('name')->pluck('name', 'id');
-        $shipping = null;
-
-        return view('order.delivery', compact('states', 'countries', 'address', 'shipping'));
-    }
-
-    public function postDelivery(Request $request, Checkout $checkout)
-    {
-        $fields = Address::getFields();
-        foreach ($fields as $field) {
-            $checkout->set('delivery.'.$field, $request->get($field));
-        }
-
-        $checkout->store();
-
-        return redirect()->route('order.payment');
-    }
-
-    public function payment()
-    {
-        $sameAddress = true;
-        $address = new Address();
-        $address->name = Auth::user()->name;
-        $states = State::orderBy('name')->pluck('name', 'id');
-        $countries = Country::orderBy('name')->pluck('name', 'id');
-
-        return view('order.payment', compact('sameAddress', 'address', 'states', 'countries'));
-    }
-
-    public function postPayment(Request $request)
-    {
-        return redirect()->route('order.confirm');
+        return redirect()->route('order.delivery.create');
     }
 
     public function confirm()

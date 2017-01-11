@@ -4,7 +4,6 @@ namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Product;
 
-
 class ProductsController extends Controller
 {
     protected $products;

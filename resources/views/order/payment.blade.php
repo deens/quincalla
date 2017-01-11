@@ -4,7 +4,7 @@
 
     @include('order.steps')
 
-    {!! Form::open(['route' => 'order.payment', 'id' => 'payment-form']) !!}
+    {!! Form::open(['route' => 'order.payment.store', 'id' => 'payment-form']) !!}
     <div class="row">
         <div class="col-md-8">
             <h1>Payment</h1>

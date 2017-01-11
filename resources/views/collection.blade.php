@@ -1,10 +1,12 @@
 @extends('app')
 @section('content')
-<!-- Page Content -->
+
+    <!-- Page Content -->
     <div class="container">
 
         <div class="row">
 
+            <!-- Sidenav -->
             <div class="col-md-3">
                 <h2>Collections</h2>
                 <div class="list-group">
@@ -14,28 +16,29 @@
                 </div>
             </div>
 
+            <!-- Main Content -->
             <div class="col-md-9">
                 <h2>{{ $collection->name }}</h2>
                 <div class="row">
                     @if ($products->count())
-                    @foreach($products as $key=>$product)
-                        <div class="col-sm-6 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <a href="{{ route('products.show', [$product->slug]) }}">
-                                    <img src="http://placehold.it/320x150" alt="">
-                                </a>
-                                <div class="caption">
-                                    <h4 class="text-center">
-                                        <a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a>
-                                    </h4>
-                                    <h4 class="text-center">{!! $product->present()->format_price !!}</h4>
+                        @foreach($products as $key=>$product)
+                            <div class="col-sm-6 col-lg-4 col-md-4">
+                                <div class="thumbnail">
+                                    <a href="{{ route('products.show', [$product->slug]) }}">
+                                        <img src="http://placehold.it/320x150" alt="">
+                                    </a>
+                                    <div class="caption">
+                                        <h4 class="text-center">
+                                            <a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a>
+                                        </h4>
+                                        <h4 class="text-center">{!! $product->present()->format_price !!}</h4>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @if (($key + 1) % 3 == 0)
-                            <div class="clearfix hidden-sm"></div>
-                        @endif
-                    @endforeach
+                            @if (($key + 1) % 3 == 0)
+                                <div class="clearfix hidden-sm"></div>
+                            @endif
+                        @endforeach
                     @else
                         <div class="col-md-12">
                             <div class="well text-center">
@@ -45,6 +48,7 @@
                     @endif
                 </div>
 
+                <!-- Product Pagination -->
                 <nav>
                     {!! $products->render() !!}
                 </nav>

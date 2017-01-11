@@ -1,7 +1,5 @@
 <?php
 
-namespace Quincalla\Tests\Functional\Helpers;
-
 trait CheckoutTrait
 {
     public function continueAsCustomer($email, $password)
@@ -36,7 +34,7 @@ trait CheckoutTrait
             ->type($address['address1'], 'address1')
             ->type($address['city'], 'city')
             ->select($address['state'], 'state')
-            ->select(840, 'country')
+            ->select($address['country'], 'country')
             ->type($address['zipcode'], 'zipcode')
             ->type($address['phone'], 'phone')
             ->select($shipping, 'shipping_method')

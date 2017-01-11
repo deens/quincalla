@@ -17,9 +17,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->string('image');
-            $table->float('price');
-            $table->float('compare_price');
+            $table->string('image')->nullable();
+            $table->integer('price')->default(0);
+            $table->integer('compare_price')->nullable();
             $table->string('vendor')->nullable();
             $table->string('type')->nullable();
             $table->boolean('published')->default(true);

@@ -2,6 +2,7 @@
 @section('content')
 
     <!-- Jumbotron Header -->
+
     <header class="jumbotron hero-spacer">
         <div class="container text-center">
             <h1>Welcome to Quincalla!</h1>
@@ -12,6 +13,7 @@
 
     <div class="container">
 
+        <!-- Collections -->
         @if ($collections->count())
 
             <div class="row text-center">
@@ -39,27 +41,30 @@
 
         <hr>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="text-center">New Arrivals</h2>
+        <!-- New Arrivals -->
+        @if($products->count())
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="text-center">New Arrivals</h2>
+                </div>
             </div>
-        </div>
 
-        <div class="row text-center">
-            @foreach($products as $product)
-                <div class="col-sm-4 col-lg-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="{{ route('products.show', [$product->slug]) }}">
-                            <img src="http://placehold.it/800x500" alt="">
-                        </a>
-                        <div class="caption">
-                            <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
-                            <h4> {!! $product->present()->format_price !!}</h4>
+            <div class="row text-center">
+                @foreach($products as $product)
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <a href="{{ route('products.show', [$product->slug]) }}">
+                                <img src="http://placehold.it/800x500" alt="">
+                            </a>
+                            <div class="caption">
+                                <h4><a href="{{ route('products.show', [$product->slug]) }}">{{ $product->name }}</a></h4>
+                                <h4> {!! $product->present()->format_price !!}</h4>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @endif
 
         <hr>
 

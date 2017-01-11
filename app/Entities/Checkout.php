@@ -3,39 +3,28 @@
 namespace Quincalla\Entities;
 
 use Illuminate\Config\Repository;
-use Illuminate\Session\Store;
+use Illuminate\Session\SessionManager;
 
 class Checkout extends Repository
 {
     protected $session;
     protected $sessionKey = 'checkout';
-    protected $sessionItems;
-    protected $defaults = [
-        'checkout' => [
-            'type' => 'customer',
-        ],
-        'account' => [
-            'id'       => 1,
-            'name'     => '',
-            'email'    => '',
-            'register' => false,
-        ],
-        'shipping' => [
-        ],
-        'billing' => [
-        ],
+    protected $items = [
+        'checkout' => ['type' => 'customer'],
+        'account' => ['id' => 1, 'name' => '', 'email' => ''],
+        'shipping' => [],
+        'billing' => [],
+        'payment' => []
     ];
 
-    public function __construct(Store $session)
+    public function __construct(SessionManager $session)
     {
         $this->session = $session;
 
         if ($this->session->has($this->sessionKey)) {
-            parent::__construct(
-                $this->session->get($this->sessionKey)
-            );
+            parent::__construct($this->session->get($this->sessionKey));
         } else {
-            parent::__construct($this->defaults);
+            parent::__construct($this->items);
         }
     }
 
