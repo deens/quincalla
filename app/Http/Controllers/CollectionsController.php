@@ -29,13 +29,14 @@ class CollectionsController extends Controller
 
         if ($collection->type === 'condition') {
             $products = $products->paginateByRules(
-                $collection->match,
-                $collection->rules,
-                $collection->sort_order,
-                $pageLimit
+                    $collection->match,
+                    $collection->rules,
+                    $collection->sort_order,
+                    $pageLimit
                 );
         } else {
             $products = $collection->products()
+                ->published()
                 ->simplePaginate($pageLimit);
         }
 

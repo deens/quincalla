@@ -43,7 +43,7 @@ $factory->define(Quincalla\Entities\Product::class, function ($faker) {
         'price'         => 19900,
         'vendor'        => $faker->randomElement(['Apple', 'Nike', 'Levis']),
         'type'          => $faker->randomElement(['Cell Phone', 'Pants', 'Shoes']),
-        'published'     => $faker->randomElement([true, false]),
+        'published'     => true,
     ];
 });
 
