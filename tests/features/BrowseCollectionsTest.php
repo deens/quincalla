@@ -18,7 +18,7 @@ class BrowseCollectionsTest extends TestCase
     }
 
     /** @test */
-    public function user_should_receive_a_not_found_when_navigate_to_a_no_existing_collection()
+    public function user_should_receive_404_on_unpiblished_collection()
     {
         $collection = factory(Quincalla\Entities\Collection::class)->create([
             'published' => false,
@@ -30,7 +30,7 @@ class BrowseCollectionsTest extends TestCase
     }
 
     /** @test */
-    public function see_products_available_on_collection()
+    public function user_should_see_available_products_on_collection()
     {
         $collection = factory(Quincalla\Entities\Collection::class)->create([
             'name' => 'Electronics',
@@ -47,7 +47,7 @@ class BrowseCollectionsTest extends TestCase
     }
 
     /** @test */
-    public function display_products_in_collection_base_on_page_limit_of_six()
+    public function user_should_only_see_six_products_per_page()
     {
         $collection = factory(Quincalla\Entities\Collection::class)->create();
         $products = factory(Quincalla\Entities\Product::class, 12)->create();
@@ -62,7 +62,7 @@ class BrowseCollectionsTest extends TestCase
     }
 
     /** @test */
-    public function doent_display_unpublish_products()
+   public function user_should_not_see_unpublished_products_on_a_collection()
     {
         $collection = factory(Quincalla\Entities\Collection::class)->create();
         $products = factory(Quincalla\Entities\Product::class, 12)->create([

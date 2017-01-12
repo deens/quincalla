@@ -19,13 +19,9 @@ class CollectionsController extends Controller
     {
         $pageLimit = 6;
 
-        try {
-            $collection = $this->collections->published()
-                ->whereSlug($slug)
-                ->firstOrFail();
-        } catch (NotFoundHttpException $e) {
-            abort(404, 'Collection not found.');
-        }
+        $collection = $this->collections->published()
+            ->whereSlug($slug)
+            ->firstOrFail();
 
         if ($collection->type === 'condition') {
             $products = $products->paginateByRules(
