@@ -8,13 +8,7 @@ class BrowseCollectionsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function user_should_see_homepage_collections()
-    {
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @test */
+    /** @test */
     public function user_should_be_able_to_navigate_to_a_collection_page()
     {
         $collection = factory(Quincalla\Entities\Collection::class)->create();
@@ -53,7 +47,7 @@ class BrowseCollectionsTest extends TestCase
     }
 
     /** @test */
-    public function see_products_in_collection_base_on_page_limit_of_six()
+    public function display_products_in_collection_base_on_page_limit_of_six()
     {
         $collection = factory(Quincalla\Entities\Collection::class)->create();
         $products = factory(Quincalla\Entities\Product::class, 12)->create();
