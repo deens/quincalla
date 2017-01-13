@@ -34,6 +34,23 @@ class CartManagementTest extends TestCase
     }
 
     /** @test */
+    public function user_should_be_able_to_add_more_than_one_of_the_same_product()
+    {
+        $product = factory(Quincalla\Entities\Product::class)->create([
+            'price' => 1000,
+        ]);
+
+        $this->visit('/products/' . $product->slug)
+            ->type(2, 'qty')
+            ->press('Add To Shopping Cart')
+            ->see('Product has been added to your shopping cart')
+            ->visit('/cart')
+            ->see($product->name)
+            ->see('$10.00')
+            ->see('$20.00');
+    }
+
+    /** @test */
     public function user_should_be_able_to_remove_product_from_cart()
     {
         $product = factory(Quincalla\Entities\Product::class)->create([
