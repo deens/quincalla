@@ -25,11 +25,11 @@
                                             <p><a href="{{ route('products.show', [$product->model->slug])}}">{{ $product->name }}</a></p>
                                         </td>
                                         <td>
-                                            <p>${{ $product->price }}</p>
+                                            <p>${{ number_format($product->price, 2) }}</p>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                {!! Form::text('quantities['.$product->rowId.']', $product->qty, ['class' => 'form-control input-sm']) !!}
+                                                {!! Form::text('quantities['.$product->rowId.']', $product->qty, ['class' => 'form-control input-sm quantity']) !!}
                                             </div>
                                         </td>
                                         <td>
