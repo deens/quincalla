@@ -4,6 +4,7 @@ namespace Quincalla\Http\Controllers;
 
 use Quincalla\Entities\Collection;
 use Quincalla\Entities\Product;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CollectionsController extends Controller
 {
@@ -16,19 +17,23 @@ class CollectionsController extends Controller
 
     public function show($slug, Product $products)
     {
-        $collection = $this->collections->whereSlug($slug)
-            ->first();
+        $pageLimit = 6;
+
+        $collection = $this->collections->published()
+            ->whereSlug($slug)
+            ->firstOrFail();
 
         if ($collection->type === 'condition') {
             $products = $products->paginateByRules(
-                $collection->match,
-                $collection->rules,
-                $collection->sort_order,
-                6
+                    $collection->match,
+                    $collection->rules,
+                    $collection->sort_order,
+                    $pageLimit
                 );
         } else {
             $products = $collection->products()
-                ->simplePaginate(6);
+                ->published()
+                ->simplePaginate($pageLimit);
         }
 
         return view('collection', compact(

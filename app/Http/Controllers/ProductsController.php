@@ -16,8 +16,9 @@ class ProductsController extends Controller
     public function show($slug)
     {
         $product = $this->products->with('collections')
+            ->published()
             ->whereSlug($slug)
-            ->first();
+            ->firstOrFail();
 
         return view('product', compact('product'));
     }

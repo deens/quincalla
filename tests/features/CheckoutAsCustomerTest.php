@@ -6,11 +6,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CheckoutAsCustomerTest extends TestCase
 {
-
-    use DatabaseMigrations;
     use CheckoutTrait;
+    use DatabaseMigrations;
 
-    public function test_it_should_checkout_an_existing_customer()
+    /** @test */
+    public function blindly_follow_the_steps_of_checkout_as_returning_customer()
     {
         $password = 'secret';
 
