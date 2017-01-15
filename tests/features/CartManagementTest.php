@@ -12,7 +12,7 @@ class CartManagementTest extends TestCase
     public function user_should_see_the_cart_empty()
     {
         $this->visit('/cart')
-            ->see('Your shopping cart is empty.')
+            ->see('Your cart is empty.')
             ->see('Continue Shopping');
     }
 
@@ -26,9 +26,9 @@ class CartManagementTest extends TestCase
         $this->visit('/products/' . $product->slug)
             ->see($product->name)
             ->see('$99.99')
-            ->press('Add To Shopping Cart')
-            ->see('Product has been added to your shopping cart')
-            ->visit('/cart/')
+            ->press('Add To Cart')
+            ->see('Product has been added to your cart.')
+            ->visit('/cart')
             ->see($product->name)
             ->see('$99.99');
     }
@@ -42,8 +42,8 @@ class CartManagementTest extends TestCase
 
         $this->visit('/products/' . $product->slug)
             ->type(2, 'qty')
-            ->press('Add To Shopping Cart')
-            ->see('Product has been added to your shopping cart')
+            ->press('Add To Cart')
+            ->see('Product has been added to your cart.')
             ->visit('/cart')
             ->see($product->name)
             ->see('$10.00')
@@ -62,7 +62,8 @@ class CartManagementTest extends TestCase
             ->see('$10.00')
             ->click('remove')
             ->seePageIs('/cart')
-            ->see('Your shopping cart is empty.');
+            ->see('Your cart is empty.');
+        // Add see assert about your product have been deleted.
     }
 
     /** @test */
@@ -75,9 +76,9 @@ class CartManagementTest extends TestCase
         $this->addProductToCart($product->slug, $product->name, '$10.00')
             ->visit('/cart')
             ->see('$10.00')
-            ->click('Empty Shopping Cart')
+            ->click('Empty Cart')
             ->seePageIs('/cart')
-            ->see('Your shopping cart is empty.');
+            ->see('Your cart is empty.');
     }
 
     /** @test */
@@ -111,7 +112,7 @@ class CartManagementTest extends TestCase
         return $this->visit('/products/' .$slug)
             ->see($name)
             ->see($price)
-            ->press('Add To Shopping Cart')
-            ->see('Product has been added to your shopping cart');
+            ->press('Add To Cart')
+            ->see('Product has been added to your cart');
     }
 }

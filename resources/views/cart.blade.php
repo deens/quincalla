@@ -45,7 +45,7 @@
                             </table>
 
                             {!! Form::submit('Update Cart', ['class' => 'btn btn-default']) !!}
-                            <a class="btn btn-default" href="{{ route('cart.destroy') }}">Empty Shopping Cart</a>
+                            <a class="btn btn-default" href="{{ route('cart.destroy') }}">Empty Cart</a>
                             {!! Form::close() !!}
 
                         </div>
@@ -87,7 +87,7 @@
 
                 <div class="well">
                     <h2 class="text-center">
-                        Your shopping cart is empty.
+                        Your cart is empty.
                     </h2>
                     <div class="text-center">
                         <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>
