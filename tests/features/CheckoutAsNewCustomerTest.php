@@ -22,8 +22,8 @@ class CheckoutAsNewCustomerTest extends TestCase
         ]);
 
         $this->visit('/products/'.$product->slug)
-            ->press('Add To Shopping Cart')
-            ->see('Product has been added to your shopping cart')
+            ->press('Add To Cart')
+            ->see('Product has been added to your cart')
 
             // Product added to cart and checkout.
             ->visit('/cart')

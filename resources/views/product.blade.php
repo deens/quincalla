@@ -31,11 +31,10 @@
                     <!-- Add to cart -->
                     <div class="col-md-8">
                         {!! Form::open(['route' => 'cart.store', 'method' => 'POST', 'class' => 'form-inline']) !!}
-                        {!! Form::hidden('product', $product->slug) !!} 
+                        {!! Form::hidden('product', $product->slug) !!}
+                        {!! Form::hidden('qty', 1) !!}
                         <div class="form-group">
-                            {!! Form::label('qty', 'Quantity:') !!}
-                            {!! Form::text('qty', '1', ['class' => 'form-control']) !!} 
-                            {!! Form::submit('Add To Shopping Cart', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::submit('Add To Cart', ['class' => 'btn btn-danger']) !!}
                         </div>
                         {!! Form::close() !!}
                     </div>

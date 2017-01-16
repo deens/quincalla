@@ -45,7 +45,7 @@ class CartController extends Controller
         $this->cart->add($product, $request->get('qty', 1));
 
         return $this->redirectBackWithMessage(
-            'Product has been added to your shopping cart'
+            'Product has been added to your cart.'
         );
     }
 
@@ -58,7 +58,7 @@ class CartController extends Controller
         }
 
         return $this->redirectBackWithMessage(
-            'Product quantity updated'
+            'Product quantity has been updated.'
         );
     }
 
@@ -67,7 +67,7 @@ class CartController extends Controller
         $this->cart->remove($id);
 
         return $this->redirectBackWithMessage(
-            'Product has been deleted from your shopping cart'
+            'Product has been deleted from your cart.'
         );
     }
 
@@ -76,7 +76,7 @@ class CartController extends Controller
         $this->cart->destroy();
 
         return $this->redirectBackWithMessage(
-            'Your shopping cart is empty'
+            'Your cart is empty.'
         );
     }
 

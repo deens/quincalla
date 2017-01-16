@@ -38,7 +38,7 @@
                     @else
                         <div class="col-md-12">
                             <div class="well text-center">
-                                <h2 class="text-danger">Not Products Found</h2>
+                                <h2 class="text-danger">No Products Found</h2>
                             </div>
                         </div>
                     @endif

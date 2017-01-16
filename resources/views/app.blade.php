@@ -43,22 +43,27 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/') }}">Home</a></li>
                         @if(isset($collections) && $collections->count())
-                            @foreach($collections as $collection)
-                                <li><a href="{{ route('collections.show', [$collection->slug]) }}">{{ $collection->name }}</a></li>
-                            @endforeach
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Collections<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach($collections as $collection)
+                                        <li><a href="{{ route('collections.show', [$collection->slug]) }}">{{ $collection->name }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </li>
                         @endif
                     </ul>
-                    {!! Form::open(['route' => 'search.index', 'method' => 'get', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
-                    <div class="form-group">
-                        <input type="text" name="query" value="{{ $query or ''}}" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Search</button>
-                    {!! Form::close() !!}
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('cart.index') }}">Shopping Cart ({{ $cart_count }})</a></li>
+
+                        {!! Form::open(['route' => 'search.index', 'method' => 'get', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
+                            <div class="form-group">
+                                <input type="text" name="query" value="{{ $query or ''}}" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        {!! Form::close() !!}
+
+                        <li><a href="{{ route('cart.index') }}"> <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> ({{ $cart_count }})</a></li>
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
                             <li><a href="{{ url('/account') }}">My Account</a></li>
                             <li class="dropdown">

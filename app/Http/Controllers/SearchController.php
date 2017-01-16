@@ -17,10 +17,11 @@ class SearchController extends Controller
 
     public function index(SearchQueryRequest $request)
     {
-        $query = $request->get('query');
+        $pageLimit = 6;
 
+        $query = $request->get('query');
         $results = $this->products->search($query)
-            ->simplePaginate(6);
+            ->paginate($pageLimit);
 
         return view('search', compact('query', 'results'));
     }

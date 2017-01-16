@@ -41,4 +41,6 @@ elixir(mix => {
         'public/css/app.css',
         'public/css/app.css.map'
     ]);
+
+    mix.copy('node_modules/bootstrap-sass/assets/fonts/bootstrap', 'public/build/fonts/bootstrap');
 });
