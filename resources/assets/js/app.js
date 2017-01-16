@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * include Vue and Vue Resource. This gives a great starting point for
@@ -17,4 +16,30 @@ Vue.component('example', require('./components/Example.vue'));
 
 (function($, window, document) {
     console.log('Welcome to Quincalla');
+    // Navigation dropdown.
+    $(".dropdown-toggle").dropdown();
+
+    // Checkout billing.
+    var $billingAddress = $('.billing-address'),
+        $sameAddress = $('#same_address');
+
+    var checkout = {
+        init: function() {
+            this.toggleBillingAddress();
+        },
+        toggleBillingAddress: function() {
+            if ($sameAddress.is(":checked")) {
+                $billingAddress.hide();
+            } else {
+                $billingAddress.show();
+            }
+        }
+    };
+
+    // on click
+    $sameAddress.click(checkout.toggleBillingAddress);
+
+    // init
+    checkout.init();
+
 }(window.jQuery, window, document));
