@@ -9,16 +9,8 @@ use Quincalla\Http\Requests\StoreCartRequest;
 
 class CartController extends Controller
 {
-    /**
-     * @var Cart
-     */
     protected $cart;
 
-    /**
-     * CartController constructor.
-     *
-     * @param Cart $cart
-     */
     public function __construct(Cart $cart)
     {
         $this->cart = $cart;
@@ -32,15 +24,11 @@ class CartController extends Controller
         return view('cart', compact('products', 'cartTotal'));
     }
 
-    /**
-     * @param Product          $products
-     * @param StoreCartRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(Product $products, StoreCartRequest $request)
+    public function store(StoreCartRequest $request)
     {
-        $product = $products->whereSlug($request->get('product'))->first();
+        $product = Product::published()
+            ->whereSlug($request->get('product'))
+            ->first();
 
         $this->cart->add($product, $request->get('qty', 1));
 
@@ -57,27 +45,21 @@ class CartController extends Controller
             $this->cart->update($rowId, $quantity);
         }
 
-        return $this->redirectBackWithMessage(
-            'Product quantity has been updated.'
-        );
+        return $this->redirectBackWithMessage('Product quantity has been updated.');
     }
 
     public function remove($id)
     {
         $this->cart->remove($id);
 
-        return $this->redirectBackWithMessage(
-            'Product has been deleted from your cart.'
-        );
+        return $this->redirectBackWithMessage('Product has been deleted from your cart.');
     }
 
     public function destroy()
     {
         $this->cart->destroy();
 
-        return $this->redirectBackWithMessage(
-            'Your cart is empty.'
-        );
+        return $this->redirectBackWithMessage('Your cart is empty.');
     }
 
     public function redirectBackWithMessage($message)

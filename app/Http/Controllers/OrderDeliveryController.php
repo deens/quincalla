@@ -50,5 +50,4 @@ class OrderDeliveryController extends Controller
 
         return redirect()->route('order.payment.create');
     }
-
 }

@@ -25,7 +25,6 @@ class OrderPaymentController extends Controller
         $sameAddress = true;
         $address = new Address();
         $address->name = $request->user()->name;
-
         $states = State::orderBy('name')->pluck('name', 'id');
         $countries = Country::orderBy('name')->pluck('name', 'id');
 

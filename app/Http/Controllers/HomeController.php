@@ -6,17 +6,9 @@ use Quincalla\Entities\Product;
 
 class HomeController extends Controller
 {
-    protected $products;
-
-    public function __construct(Product $products)
-    {
-        $this->products = $products;
-    }
-
     public function index()
     {
-        $products = $this->products
-            ->published()
+        $products = Product::published()
             ->orderBy('created_at', 'desc')
             ->take(8)
             ->get();

@@ -47,25 +47,22 @@ class OrderController extends Controller
 
     public function register()
     {
-        if (Auth::guest()) {
-            $user = new User();
-        } else {
-            $user = Auth::user();
-        }
+        $user = (Auth::guest()) ? new User() : Auth::user();
 
         return view('order.register', compact('user'));
     }
 
-    public function postRegister(Request $request, User $user)
+    public function postRegister(Request $request)
     {
         if (Auth::guest()) {
             //  register a new user
-            $newUser = $user->create([
+            $newUser = User::create([
                 'name'     => $request->get('first_name').' '.$request->get('last_name'),
                 'email'    => $request->get('email'),
                 'password' => bcrypt($request->get('password')),
                 'active'   => true,
             ]);
+
             // authenticate new user
             Auth::login($newUser);
         }
