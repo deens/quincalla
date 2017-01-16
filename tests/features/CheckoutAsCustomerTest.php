@@ -28,7 +28,7 @@ class CheckoutAsCustomerTest extends TestCase
             // Product added to cart and checkout.
             ->visit('/cart')
             ->see($product->name)
-            ->click('Continue to checkout')
+            ->click('Checkout')
 
             // Start checkout as existing customer.
             ->seePageIs('/order/customer')

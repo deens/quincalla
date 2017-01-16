@@ -39,8 +39,6 @@
             </div>
         @endif
 
-        <hr>
-
         <!-- New Arrivals -->
         @if($products->count())
             <div class="row">
@@ -65,8 +63,5 @@
                 @endforeach
             </div>
         @endif
-
-        <hr>
-
     </div>
 @stop
