@@ -34,7 +34,7 @@
                         {!! Form::hidden('product', $product->slug) !!}
                         {!! Form::hidden('qty', 1) !!}
                         <div class="form-group">
-                            {!! Form::submit('Add To Cart', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::submit('Add To Cart', ['class' => 'btn btn-primary']) !!}
                         </div>
                         {!! Form::close() !!}
                     </div>

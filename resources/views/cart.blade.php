@@ -4,7 +4,8 @@
         <div class="row">
             @if ($products->count())
                 <div class="col-md-12">
-                    <h1 class="align-center">Cart </h1>
+                    <h1 class="text-center">Cart</h1>
+
                     {!! Form::open(['route' => ['cart.update'], 'method' => 'put', 'class' => 'form-inline']) !!}
 
                     <table class="table">
@@ -79,7 +80,7 @@
                         Your cart is empty.
                     </h2>
                     <div class="text-center">
-                        <a class="btn btn-lg btn-danger " href="{{ url('/')}}"> Continue Shopping</a>
+                        <a class="btn btn-lg btn-primary " href="{{ url('/')}}">Continue Shopping</a>
                     </div>
                 </div>
             @endif
