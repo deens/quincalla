@@ -4,7 +4,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ViewCatalogSearchTest extends TestCase
 {
-
     use DatabaseMigrations;
 
     /** @test */
@@ -14,20 +13,14 @@ class ViewCatalogSearchTest extends TestCase
             'name' => 'Example Product',
         ]);
 
-        $this->visit('/')
-            ->type('Example', 'query')
-            ->press('Search')
-            ->seePageIs('/search?query=Example')
+        $this->visit('/search?query=Example')
             ->see('Example Product');
     }
 
     /** @test */
     public function user_should_not_see_search_results()
     {
-        $this->visit('/')
-            ->type('Example', 'query')
-            ->press('Search')
-            ->seePageIs('/search?query=Example')
+        $this->visit('/search?query=Example')
             ->see('No Products Found');
     }
 
@@ -38,10 +31,7 @@ class ViewCatalogSearchTest extends TestCase
             'name' => 'Example Product'
         ]);
 
-        $this->visit('/')
-            ->type('Example', 'query')
-            ->press('Search')
-            ->seePageIs('/search?query=Example')
+        $this->visit('/search?query=Example')
             ->click('2')
             ->seePageIs('/search?page=2&query=Example');
     }
