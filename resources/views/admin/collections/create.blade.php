@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('slug', 'Url identifier (/collections/{url-identifier})') !!}
+                {!! Form::label('slug', 'URL identifier (/collections/{url-identifier})') !!}
                 {!! Form::text('slug', old('slug'), ['class' => 'form-control', 'placeholder' => 'product-url-identifier']) !!}
             </div>
 
@@ -45,7 +45,7 @@
 
                     <label class="control-label">
                         {!! Form::radio('type', 'condition', old('condition')) !!}
-                        Automaticly select products base on conditions.
+                        Automatically select products base on conditions.
                     </label>
                 </div>
             </div>
@@ -86,7 +86,7 @@
             <h4>Collection Image</h4>
             <div class="form-group">
                 {!! Form::label('image', 'Upload Image') !!}
-                {!! Form::file('image', '', ['class' => 'form-control']) !!}
+                {!! Form::file('image') !!}
             </div>
 
             <hr>
