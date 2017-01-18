@@ -2,26 +2,21 @@
 
 namespace Quincalla\Http\Controllers;
 
+use Cart;
 use Illuminate\Http\Request;
-use Quincalla\Entities\Cart;
 use Quincalla\Entities\Product;
 use Quincalla\Http\Requests\StoreCartRequest;
 
 class CartController extends Controller
 {
-    protected $cart;
-
-    public function __construct(Cart $cart)
-    {
-        $this->cart = $cart;
-    }
-
     public function index()
     {
-        $products = $this->cart->content();
-        $cartTotal = $this->cart->total();
+        $products = Cart::content();
+        $cartTotal = Cart::total();
+        $taxTotal = Cart::tax();
+        $cartSubtotal = Cart::subtotal();
 
-        return view('cart', compact('products', 'cartTotal'));
+        return view('cart', compact('products', 'cartSubtotal', 'cartTotal', 'taxTotal'));
     }
 
     public function store(StoreCartRequest $request)
@@ -30,7 +25,7 @@ class CartController extends Controller
             ->whereSlug($request->get('product'))
             ->first();
 
-        $this->cart->add($product, $request->get('qty', 1));
+        Cart::add($product, $request->get('qty', 1));
 
         return $this->redirectBackWithMessage(
             'Product has been added to your cart.'
@@ -42,7 +37,7 @@ class CartController extends Controller
         $quantities = $request->get('quantities');
 
         foreach ($quantities as $rowId => $quantity) {
-            $this->cart->update($rowId, $quantity);
+            Cart::update($rowId, $quantity);
         }
 
         return $this->redirectBackWithMessage('Product quantity has been updated.');
@@ -50,14 +45,14 @@ class CartController extends Controller
 
     public function remove($id)
     {
-        $this->cart->remove($id);
+        Cart::remove($id);
 
         return $this->redirectBackWithMessage('Product has been deleted from your cart.');
     }
 
     public function destroy()
     {
-        $this->cart->destroy();
+        Cart::destroy();
 
         return $this->redirectBackWithMessage('Your cart is empty.');
     }

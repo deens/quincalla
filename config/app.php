@@ -164,12 +164,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-
-        //
-
-        /*
          * Application Service Providers...
          */
         Quincalla\Providers\AppServiceProvider::class,
@@ -181,10 +175,11 @@ return [
         /*
          * Packages Service Providers...
          */
-        Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        Webpatser\Countries\CountriesServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
+        Webpatser\Countries\CountriesServiceProvider::class,
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
     ],
 
@@ -241,6 +236,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
+        'Cart'      => Gloudemans\Shoppingcart\Facades\Cart::class,
     ],
 
 ];

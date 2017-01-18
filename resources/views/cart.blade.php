@@ -32,7 +32,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <p>${{ $product->subtotal }}</p>
+                                <p>${{ number_format($product->subtotal, 2) }}</p>
                                 </td>
                                 <td>
                                     <div class="form-group">
@@ -51,12 +51,15 @@
                         <table class="table table-striped">
                             <tbody>
                                 <tr>
+                                    <td>SubTotal</td>
+                                    <td>${{ $cartSubtotal }}</td>
+                                <tr>
                                     <td>Shipping</td>
                                     <td>$0.00</td>
                                 </tr>
                                 <tr>
                                     <td>Tax</td>
-                                    <td>$0.00</td>
+                                    <td>${{ $taxTotal }}</td>
                                 </tr>
                                 <tr>
                                     <td><h4>Total</h4></td>
